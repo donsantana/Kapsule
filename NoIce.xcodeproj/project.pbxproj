@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B545E9401E48E4E1002DB5FE /* CChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545E93F1E48E4E1002DB5FE /* CChat.swift */; };
+		B56EBD581E4629BF003C85D8 /* CMensaje.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56EBD571E4629BF003C85D8 /* CMensaje.swift */; };
+		B57B4EB71E50F5F6003FAF01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57B4EB51E50F5F6003FAF01 /* Main.storyboard */; };
+		B57B4EBC1E510039003FAF01 /* MSGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57B4EBB1E510039003FAF01 /* MSGViewController.swift */; };
+		B5938CD91E4D0B6300FFD6C5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5938CD81E4D0B6300FFD6C5 /* ChatViewController.swift */; };
+		B59F9A8D1E30013B00FECA5F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59F9A8C1E30013B00FECA5F /* CloudKit.framework */; };
+		B59F9A8F1E3BB45500FECA5F /* CSolicitud.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59F9A8E1E3BB43600FECA5F /* CSolicitud.swift */; };
 		B5DCAE5C1E292770000C1325 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE5B1E292770000C1325 /* AppDelegate.swift */; };
 		B5DCAE5E1E292770000C1325 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE5D1E292770000C1325 /* ViewController.swift */; };
-		B5DCAE611E292770000C1325 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5DCAE5F1E292770000C1325 /* Main.storyboard */; };
 		B5DCAE641E292771000C1325 /* NoIce.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE621E292770000C1325 /* NoIce.xcdatamodeld */; };
 		B5DCAE661E292771000C1325 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5DCAE651E292771000C1325 /* Assets.xcassets */; };
 		B5DCAE691E292771000C1325 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5DCAE671E292771000C1325 /* LaunchScreen.storyboard */; };
 		B5DCAE741E292771000C1325 /* NoIceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE731E292771000C1325 /* NoIceTests.swift */; };
 		B5DCAE7F1E292771000C1325 /* NoIceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE7E1E292771000C1325 /* NoIceUITests.swift */; };
+		B5DCAE8D1E293CC6000C1325 /* Pods_NoIce.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5DCAE8C1E293CC6000C1325 /* Pods_NoIce.framework */; };
+		B5DCAE911E2A8D49000C1325 /* CUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE901E2A8D49000C1325 /* CUser.swift */; };
+		B5DCAE951E2AA1D8000C1325 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DCAE941E2AA1D8000C1325 /* user.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +44,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		79814D2D875FE8A75DF416A6 /* Pods-NoIce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoIce.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoIce/Pods-NoIce.debug.xcconfig"; sourceTree = "<group>"; };
+		B21AAB06A2A493A47FC79467 /* Pods_NoIce.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoIce.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B545E93F1E48E4E1002DB5FE /* CChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CChat.swift; sourceTree = "<group>"; };
+		B56EBD571E4629BF003C85D8 /* CMensaje.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMensaje.swift; sourceTree = "<group>"; };
+		B57B4EB61E50F5F6003FAF01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B57B4EBB1E510039003FAF01 /* MSGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSGViewController.swift; sourceTree = "<group>"; };
+		B58DC2D91E2FCBBB0038BBE2 /* NoIce.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NoIce.entitlements; sourceTree = "<group>"; };
+		B5938CD81E4D0B6300FFD6C5 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		B59F9A8C1E30013B00FECA5F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B59F9A8E1E3BB43600FECA5F /* CSolicitud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSolicitud.swift; sourceTree = "<group>"; };
 		B5DCAE581E292770000C1325 /* NoIce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoIce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5DCAE5B1E292770000C1325 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5DCAE5D1E292770000C1325 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B5DCAE601E292770000C1325 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B5DCAE631E292770000C1325 /* NoIce.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NoIce.xcdatamodel; sourceTree = "<group>"; };
 		B5DCAE651E292771000C1325 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5DCAE681E292771000C1325 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +67,10 @@
 		B5DCAE7A1E292771000C1325 /* NoIceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoIceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5DCAE7E1E292771000C1325 /* NoIceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoIceUITests.swift; sourceTree = "<group>"; };
 		B5DCAE801E292771000C1325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5DCAE8C1E293CC6000C1325 /* Pods_NoIce.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_NoIce.framework; path = "../../../../../Users/dsantana/Library/Developer/Xcode/DerivedData/NoIce-ckyddqztfylhtfgchfkibaxtrjvd/Build/Products/Debug-iphonesimulator/Pods_NoIce.framework"; sourceTree = "<group>"; };
+		B5DCAE901E2A8D49000C1325 /* CUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CUser.swift; sourceTree = "<group>"; };
+		B5DCAE941E2AA1D8000C1325 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user.png; path = ../../Imagenes/icons/user.png; sourceTree = "<group>"; };
+		FF11C155B493ADC191566ED0 /* Pods-NoIce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoIce.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoIce/Pods-NoIce.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B59F9A8D1E30013B00FECA5F /* CloudKit.framework in Frameworks */,
+				B5DCAE8D1E293CC6000C1325 /* Pods_NoIce.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +100,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B57B4EB81E50F993003FAF01 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B57B4EBB1E510039003FAF01 /* MSGViewController.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		B5938CD51E4CFE8B00FFD6C5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		B5DCAE4F1E292770000C1325 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +122,8 @@
 				B5DCAE721E292771000C1325 /* NoIceTests */,
 				B5DCAE7D1E292771000C1325 /* NoIceUITests */,
 				B5DCAE591E292770000C1325 /* Products */,
+				FF06F99C53DD39C152CD1578 /* Pods */,
+				CD80F499F0A58147F73A63CB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,13 +140,22 @@
 		B5DCAE5A1E292770000C1325 /* NoIce */ = {
 			isa = PBXGroup;
 			children = (
+				B57B4EB51E50F5F6003FAF01 /* Main.storyboard */,
+				B57B4EB81E50F993003FAF01 /* Model */,
+				B5938CD51E4CFE8B00FFD6C5 /* Views */,
+				B58DC2D91E2FCBBB0038BBE2 /* NoIce.entitlements */,
+				B5DCAE941E2AA1D8000C1325 /* user.png */,
 				B5DCAE5B1E292770000C1325 /* AppDelegate.swift */,
 				B5DCAE5D1E292770000C1325 /* ViewController.swift */,
-				B5DCAE5F1E292770000C1325 /* Main.storyboard */,
+				B5938CD81E4D0B6300FFD6C5 /* ChatViewController.swift */,
 				B5DCAE651E292771000C1325 /* Assets.xcassets */,
 				B5DCAE671E292771000C1325 /* LaunchScreen.storyboard */,
 				B5DCAE6A1E292771000C1325 /* Info.plist */,
 				B5DCAE621E292770000C1325 /* NoIce.xcdatamodeld */,
+				B5DCAE901E2A8D49000C1325 /* CUser.swift */,
+				B59F9A8E1E3BB43600FECA5F /* CSolicitud.swift */,
+				B56EBD571E4629BF003C85D8 /* CMensaje.swift */,
+				B545E93F1E48E4E1002DB5FE /* CChat.swift */,
 			);
 			path = NoIce;
 			sourceTree = "<group>";
@@ -128,6 +178,25 @@
 			path = NoIceUITests;
 			sourceTree = "<group>";
 		};
+		CD80F499F0A58147F73A63CB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B59F9A8C1E30013B00FECA5F /* CloudKit.framework */,
+				B5DCAE8C1E293CC6000C1325 /* Pods_NoIce.framework */,
+				B21AAB06A2A493A47FC79467 /* Pods_NoIce.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF06F99C53DD39C152CD1578 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				79814D2D875FE8A75DF416A6 /* Pods-NoIce.debug.xcconfig */,
+				FF11C155B493ADC191566ED0 /* Pods-NoIce.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +204,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5DCAE831E292771000C1325 /* Build configuration list for PBXNativeTarget "NoIce" */;
 			buildPhases = (
+				116C0CFAEC11F1481AC26FC7 /* [CP] Check Pods Manifest.lock */,
 				B5DCAE541E292770000C1325 /* Sources */,
 				B5DCAE551E292770000C1325 /* Frameworks */,
 				B5DCAE561E292770000C1325 /* Resources */,
+				BA431880541A32A75F2CC6B7 /* [CP] Embed Pods Frameworks */,
+				DD4104B0C241E988557598ED /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -198,6 +270,14 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 48G34LX7UB;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					B5DCAE6E1E292771000C1325 = {
 						CreatedOnToolsVersion = 8.2;
@@ -240,7 +320,8 @@
 			files = (
 				B5DCAE691E292771000C1325 /* LaunchScreen.storyboard in Resources */,
 				B5DCAE661E292771000C1325 /* Assets.xcassets in Resources */,
-				B5DCAE611E292770000C1325 /* Main.storyboard in Resources */,
+				B5DCAE951E2AA1D8000C1325 /* user.png in Resources */,
+				B57B4EB71E50F5F6003FAF01 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,13 +341,67 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		116C0CFAEC11F1481AC26FC7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BA431880541A32A75F2CC6B7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NoIce/Pods-NoIce-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD4104B0C241E988557598ED /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NoIce/Pods-NoIce-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B5DCAE541E292770000C1325 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B59F9A8F1E3BB45500FECA5F /* CSolicitud.swift in Sources */,
+				B5DCAE911E2A8D49000C1325 /* CUser.swift in Sources */,
+				B5938CD91E4D0B6300FFD6C5 /* ChatViewController.swift in Sources */,
 				B5DCAE5E1E292770000C1325 /* ViewController.swift in Sources */,
+				B56EBD581E4629BF003C85D8 /* CMensaje.swift in Sources */,
+				B545E9401E48E4E1002DB5FE /* CChat.swift in Sources */,
 				B5DCAE641E292771000C1325 /* NoIce.xcdatamodeld in Sources */,
+				B57B4EBC1E510039003FAF01 /* MSGViewController.swift in Sources */,
 				B5DCAE5C1E292770000C1325 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,10 +438,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B5DCAE5F1E292770000C1325 /* Main.storyboard */ = {
+		B57B4EB51E50F5F6003FAF01 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B5DCAE601E292770000C1325 /* Base */,
+				B57B4EB61E50F5F6003FAF01 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -415,12 +550,15 @@
 		};
 		B5DCAE841E292771000C1325 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79814D2D875FE8A75DF416A6 /* Pods-NoIce.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NoIce/NoIce.entitlements;
 				DEVELOPMENT_TEAM = 48G34LX7UB;
 				INFOPLIST_FILE = NoIce/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Kapsule.NoIce;
+				PRODUCT_BUNDLE_IDENTIFIER = www.donelkys.NoIce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -428,12 +566,15 @@
 		};
 		B5DCAE851E292771000C1325 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF11C155B493ADC191566ED0 /* Pods-NoIce.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NoIce/NoIce.entitlements;
 				DEVELOPMENT_TEAM = 48G34LX7UB;
 				INFOPLIST_FILE = NoIce/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Kapsule.NoIce;
+				PRODUCT_BUNDLE_IDENTIFIER = www.donelkys.NoIce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -516,6 +657,7 @@
 				B5DCAE851E292771000C1325 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B5DCAE861E292771000C1325 /* Build configuration list for PBXNativeTarget "NoIceTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +666,7 @@
 				B5DCAE881E292771000C1325 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B5DCAE891E292771000C1325 /* Build configuration list for PBXNativeTarget "NoIceUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +675,7 @@
 				B5DCAE8B1E292771000C1325 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

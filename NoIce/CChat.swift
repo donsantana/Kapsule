@@ -1,0 +1,78 @@
+//
+//  CChat.swift
+//  NoIce
+//
+//  Created by Done Santana on 6/2/17.
+//  Copyright © 2017 Done Santana. All rights reserved.
+//
+
+import Foundation
+import CloudKit
+import UIKit
+
+class CChat{
+    var ChatID: String!
+    var EmisorImagen: UIImage!
+    var DestinoImagen: UIImage!
+    var MensajesChat: [CMensaje]
+    var ChatContainer = CKContainer.default()
+    
+    init(chatID: String,emisorImagen: UIImage, destinoImagen: UIImage) {
+        self.ChatID = chatID
+        self.EmisorImagen = emisorImagen
+        self.DestinoImagen = destinoImagen
+        self.MensajesChat = [CMensaje]()
+        self.GuardarChat()
+    }
+    
+    func AgregarMensaje(newMensaje: CMensaje){
+        self.MensajesChat.append(newMensaje)
+    }
+    
+    func GuardarChat(){
+        let predicateChatID = NSPredicate(format: "chatID == %@", self.ChatID)
+        
+        let queryChatID = CKQuery(recordType: "CChat",predicate: predicateChatID)
+        
+        self.ChatContainer.publicCloudDatabase.perform(queryChatID, inZoneWith: nil, completionHandler: ({results, error in
+            
+            if (error == nil) {
+                if results?.count != 0{
+                    
+                }else{
+                    let emisorImagenURL = self.saveImageToFile(self.EmisorImagen!)
+                    let emisorImagen = CKAsset(fileURL: emisorImagenURL)
+                    
+                    let destinoImagenURL = self.saveImageToFile(self.DestinoImagen!)
+                    let destinoImagen = CKAsset(fileURL: destinoImagenURL)
+                    
+                    let recordChat = CKRecord(recordType: "CChat")
+                    recordChat.setObject(self.ChatID as CKRecordValue, forKey: "chatID")
+                    recordChat.setObject(emisorImagen as CKRecordValue, forKey: "emisorImagen")
+                    recordChat.setObject(destinoImagen as CKRecordValue, forKey: "destinoImagen")
+                    
+                    let chatRecordsOperation = CKModifyRecordsOperation(
+                        recordsToSave: [recordChat],
+                        recordIDsToDelete: nil)
+                    self.ChatContainer.publicCloudDatabase.add(chatRecordsOperation)
+                }
+            }
+        }))
+    }
+    
+    func saveImageToFile(_ image: UIImage) -> URL
+    {
+        let filemgr = FileManager.default
+        
+        let dirPaths = filemgr.urls(for: .documentDirectory,
+                                    in: .userDomainMask)
+        
+        let fileURL = dirPaths[0].appendingPathComponent("currentImage.jpg")
+        
+        if let renderedJPEGData =
+            UIImageJPEGRepresentation(image, 0.5) {
+            try! renderedJPEGData.write(to: fileURL)
+        }
+        return fileURL
+    }
+}
