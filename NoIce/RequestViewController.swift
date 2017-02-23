@@ -1,22 +1,20 @@
 //
-//  ChatViewController.swift
+//  RequestViewController.swift
 //  NoIce
 //
-//  Created by Done Santana on 9/2/17.
+//  Created by Done Santana on 16/2/17.
 //  Copyright © 2017 Done Santana. All rights reserved.
 //
 
 import UIKit
 
-class ChatViewController: UITableViewController {
+class RequestViewController: UITableViewController {
     
-    var controlador = ViewController()
-    
-    @IBOutlet var ChatOpenTable: UITableView!
+    var PendientRequest = [CSolicitud]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(myvariables.chatsOpen.count)
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -38,37 +36,22 @@ class ChatViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return myvariables.chatsOpen.count
+        return self.PendientRequest.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "OpenChat", for: indexPath)
-        // Configure the cell...
-        
-        if myvariables.chatsOpen[indexPath.row].EmailEmisor == myvariables.userperfil.Email{
-            cell.imageView?.image = myvariables.chatsOpen[indexPath.row].DestinoImagen
-        }else{
-            cell.imageView?.image = myvariables.chatsOpen[indexPath.row].EmisorImagen
-        }
-        cell.imageView?.layer.cornerRadius = 10//(cell.imageView?.frame.width)!/2
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RQTS", for: indexPath)
+
+        cell.imageView?.image = self.PendientRequest[indexPath.row].FotoEmisor
+        cell.imageView?.layer.cornerRadius = 20 //(cell.imageView?.frame.height)! / 2.0
         cell.imageView?.clipsToBounds = true
-        cell.textLabel?.text = "Clic to open the chat"
+        cell.textLabel?.text = "Clic to open the Request"
+
+
         return cell
     }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "MSGView") as! MSGViewController
-        
-        vc.chatIDOpen = myvariables.chatsOpen[indexPath.row].ChatID
-        vc.CargarMensajes()
-        if myvariables.userperfil.Email == myvariables.chatsOpen[indexPath.row].EmailEmisor{
-            vc.destinoChat = "E"
-        }else{
-           vc.destinoChat = "D"
-        }
-        self.navigationController?.show(vc, sender: nil)
-    }
+    
 
     /*
     // Override to support conditional editing of the table view.

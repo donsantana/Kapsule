@@ -11,9 +11,11 @@
 		B56EBD581E4629BF003C85D8 /* CMensaje.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56EBD571E4629BF003C85D8 /* CMensaje.swift */; };
 		B57B4EB71E50F5F6003FAF01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57B4EB51E50F5F6003FAF01 /* Main.storyboard */; };
 		B57B4EBC1E510039003FAF01 /* MSGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57B4EBB1E510039003FAF01 /* MSGViewController.swift */; };
+		B58F94611E562B4400CF8316 /* RequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F94601E562B4400CF8316 /* RequestViewController.swift */; };
 		B5938CD91E4D0B6300FFD6C5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5938CD81E4D0B6300FFD6C5 /* ChatViewController.swift */; };
 		B59F9A8D1E30013B00FECA5F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59F9A8C1E30013B00FECA5F /* CloudKit.framework */; };
 		B59F9A8F1E3BB45500FECA5F /* CSolicitud.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59F9A8E1E3BB43600FECA5F /* CSolicitud.swift */; };
+		B5C4397B1E5F42A50040ECD7 /* MSGTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C4397A1E5F42A50040ECD7 /* MSGTableViewCell.swift */; };
 		B5DCAE5C1E292770000C1325 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE5B1E292770000C1325 /* AppDelegate.swift */; };
 		B5DCAE5E1E292770000C1325 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE5D1E292770000C1325 /* ViewController.swift */; };
 		B5DCAE641E292771000C1325 /* NoIce.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE621E292770000C1325 /* NoIce.xcdatamodeld */; };
@@ -51,9 +53,11 @@
 		B57B4EB61E50F5F6003FAF01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B57B4EBB1E510039003FAF01 /* MSGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSGViewController.swift; sourceTree = "<group>"; };
 		B58DC2D91E2FCBBB0038BBE2 /* NoIce.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NoIce.entitlements; sourceTree = "<group>"; };
+		B58F94601E562B4400CF8316 /* RequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestViewController.swift; sourceTree = "<group>"; };
 		B5938CD81E4D0B6300FFD6C5 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		B59F9A8C1E30013B00FECA5F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B59F9A8E1E3BB43600FECA5F /* CSolicitud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSolicitud.swift; sourceTree = "<group>"; };
+		B5C4397A1E5F42A50040ECD7 /* MSGTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSGTableViewCell.swift; sourceTree = "<group>"; };
 		B5DCAE581E292770000C1325 /* NoIce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoIce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5DCAE5B1E292770000C1325 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5DCAE5D1E292770000C1325 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				B57B4EBB1E510039003FAF01 /* MSGViewController.swift */,
+				B58F94601E562B4400CF8316 /* RequestViewController.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -111,6 +116,7 @@
 		B5938CD51E4CFE8B00FFD6C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B5C4397A1E5F42A50040ECD7 /* MSGTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -396,8 +402,10 @@
 			files = (
 				B59F9A8F1E3BB45500FECA5F /* CSolicitud.swift in Sources */,
 				B5DCAE911E2A8D49000C1325 /* CUser.swift in Sources */,
+				B58F94611E562B4400CF8316 /* RequestViewController.swift in Sources */,
 				B5938CD91E4D0B6300FFD6C5 /* ChatViewController.swift in Sources */,
 				B5DCAE5E1E292770000C1325 /* ViewController.swift in Sources */,
+				B5C4397B1E5F42A50040ECD7 /* MSGTableViewCell.swift in Sources */,
 				B56EBD581E4629BF003C85D8 /* CMensaje.swift in Sources */,
 				B545E9401E48E4E1002DB5FE /* CChat.swift in Sources */,
 				B5DCAE641E292771000C1325 /* NoIce.xcdatamodeld in Sources */,

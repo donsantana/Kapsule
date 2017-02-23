@@ -22,7 +22,9 @@ class CSolicitud {
     //Metodos
     init(fotoEmisor: UIImage, fotoDestino: UIImage,emailEmisor: String, emailDestino: String, estado: String) {
         self.FotoEmisor = fotoEmisor
+        print(self.FotoEmisor.description)
         self.FotoDestino = fotoDestino
+        print(self.FotoDestino.description)
         self.EmailEmisor = emailEmisor
         self.EmailDestino = emailDestino
         self.Estado = estado
@@ -102,7 +104,7 @@ class CSolicitud {
         let dirPaths = filemgr.urls(for: .documentDirectory,
                                     in: .userDomainMask)
         
-        let fileURL = dirPaths[0].appendingPathComponent("currentImage.jpg")
+        let fileURL = dirPaths[0].appendingPathComponent(image.description)
         
         if let renderedJPEGData =
             UIImageJPEGRepresentation(image, 0.5) {

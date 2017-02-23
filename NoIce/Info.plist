@@ -43,10 +43,10 @@
 	<string>take user photo</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>userlocation</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>userlocation</string>
 	<key>NSLocationUsageDescription</key>
 	<string>user distance</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>userlocation</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>userphoto</string>
 	<key>UILaunchStoryboardName</key>
@@ -60,8 +60,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

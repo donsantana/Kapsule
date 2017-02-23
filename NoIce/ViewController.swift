@@ -30,7 +30,7 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
     //var mensajesChat = [CMensaje]()
     //var chatsOpen = [CChat]()
     
-    @IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
+    //@IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
     
     //CLOUD VARIABLES
     var cloudContainer = CKContainer.default()
@@ -81,6 +81,8 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
         self.MapaView.isMyLocationEnabled = true
+        
+        myvariables.chatsOpen = [CChat]()
         //self.userMarker = GMSMarker()
         let JSONStyle = "[" +
             "  {" +
@@ -279,7 +281,7 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
         // Do any additional setup after loading the view, typically from a nib.
         
        //PARA MOSTRAR Y OCULTAR EL TECLADO
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        /*NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)*/
     }
 
     //MARK: - ACTUALIZACION DE GEOLOCALIZACION
@@ -293,37 +295,50 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
             }else{
                 self.UserConnectedTable.reloadData()
             }
-            if self.solicitudesAceptadas.count == 0{
-            myvariables.userperfil.BuscarSolAceptadas(completionHandler: {
-                (respuesta) -> Void in
-                print("Estoy metio aqui" + String(respuesta.count))
-                if respuesta.count > 0{
-                    let chatIDTemp = (respuesta.first?.EmailEmisor)! + "+" + (respuesta.first?.EmailDestino)!
-                    if respuesta.count > myvariables.chatsOpen.count{
-                        let newChat = CChat(chatID: chatIDTemp, emisorImagen: (respuesta.first?.FotoEmisor)!, destinoImagen: (respuesta.first?.FotoDestino)!)
-                        myvariables.chatsOpen.append(newChat)
-                    }
-                    
-                self.solicitudesAceptadas = respuesta
-                let alertaOpcionesChat = UIAlertController (title: NSLocalizedString("Request Acepted",comment:"Request Acepted"), message: NSLocalizedString("Your request to meet this person were acepted. Now you can send:", comment:"Mensaje de salir"), preferredStyle: UIAlertControllerStyle.actionSheet)
-                alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Text Message", comment:"Text Message"), style: UIAlertActionStyle.default, handler: {alerAction in
-                    //self.ChatView.isHidden = false
-                    //self.DestinoImage.image = self.solicitudesAceptadas.first?.FotoDestino
-                    
-                }))
-                
-                /*alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Voice Message", comment:"Voice Message"), style: UIAlertActionStyle.default, handler: {alerAction in
-                    
-                }))*/
-                
-                alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: UIAlertActionStyle.default, handler: {alerAction in
-                    
-                }))
-                
-                self.present(alertaOpcionesChat, animated: true, completion: nil)
+
+            //FUNCION PARA BUSCAR SOLICITUDES RECIBIDAS
+            myvariables.userperfil.BuscarSolRecibidas(completionHandler: {
+                (respuesta)->Void in
+                self.solicitudesRecibidas = respuesta
+                if self.solicitudesRecibidas.count != 0{
+                    self.EmisorPhoto.image = self.solicitudesRecibidas.first?.FotoEmisor
+                    self.SolicitudView.isHidden = false
+                }else{
+                    print("NADA")
                 }
             })
-            }
+            
+            myvariables.userperfil.BuscarSolAceptadas(completionHandler: {
+                (respuesta) -> Void in
+                if respuesta.count > 0{
+                    let chatIDTemp = (respuesta.first?.EmailEmisor)! + "+" + (respuesta.first?.EmailDestino)!
+                    
+                        if respuesta.first?.Estado == "A"{
+                            let newChat = CChat(chatID: chatIDTemp, emisorImagen: (respuesta.first?.FotoEmisor)!, destinoImagen: (respuesta.first?.FotoDestino)!)
+                            self.AgregarChat(newChat: newChat)
+                            let alertaOpcionesChat = UIAlertController (title: NSLocalizedString("Request Acepted",comment:"Request Acepted"), message: NSLocalizedString("Your request to meet this person were acepted. Now you can chat.", comment:"Mensaje de salir"), preferredStyle: UIAlertControllerStyle.alert)
+                            alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Acept", comment:"Text Message"), style: UIAlertActionStyle.default, handler: {alerAction in
+                                let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "MSGView") as! MSGViewController
+                                vc.destinoChat = "E"
+                                self.navigationController?.show(vc, sender: nil)
+                                myvariables.userperfil.DeletedSolicitud(solicitud: (respuesta.first)!)
+                            }))
+                            self.present(alertaOpcionesChat, animated: true, completion: nil)
+
+                        }else{
+                            if respuesta.first?.Estado == "R" {
+                                let alertaOpcionesChat = UIAlertController (title: NSLocalizedString("Request Declined",comment:"Request Declined"), message: NSLocalizedString("Your request to meet this person were decline.", comment:"Mensaje de salir"), preferredStyle: UIAlertControllerStyle.alert)
+                                alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Acept", comment:"Text Message"), style: UIAlertActionStyle.default, handler: {alerAction in
+                                    myvariables.userperfil.DeletedSolicitud(solicitud: (respuesta.first)!)
+                                }))
+                                self.present(alertaOpcionesChat, animated: true, completion: nil)
+                            }
+                            
+                        }
+                        self.solicitudesAceptadas = respuesta
+                }
+            })
+
         }
     }
     
@@ -363,6 +378,7 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
                             let photo = results?[0].value(forKey: "foto") as! CKAsset
                             let photoPerfil = try Data(contentsOf: photo.fileURL as URL)
                             self.userPerfilPhoto.image = UIImage(data: photoPerfil)
+                            myvariables.userperfil.FotoPerfil = UIImage(data: photoPerfil)!
                             self.LoadingView.isHidden = true
                             self.UserPerfilView.isHidden = false
                         }catch{
@@ -371,17 +387,7 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
                             self.UserPerfilView.isHidden = false
                         }
                     }
-                        //FUNCION PARA BUSCAR SOLICITUDES RECIBIDAS
-                        myvariables.userperfil.BuscarSolRecibidas(completionHandler: {
-                          (respuesta)->Void in
-                            self.solicitudesRecibidas = respuesta
-                            if self.solicitudesRecibidas.count != 0{
-                                self.EmisorPhoto.image = self.solicitudesRecibidas.first?.FotoEmisor
-                                self.SolicitudView.isHidden = false
-                            }else{
-                                print("NADA")
-                            }
-                        })
+                        
                     }
                 }else{
                     print("ERROR DE CONSULTA " + error.debugDescription)
@@ -389,7 +395,9 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
             }))
             //self.userperfil.ActualizarConectado()
             
-            print(self.usuariosMostrar.count)
+            let exito = myvariables.userperfil.ChatOpens(completionHandler: {
+                return true
+            })
         }else{
             print("ERROR DE LOGIN")
         }
@@ -416,7 +424,7 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
         let dirPaths = filemgr.urls(for: .documentDirectory,
                                     in: .userDomainMask)
         
-        let fileURL = dirPaths[0].appendingPathComponent("currentImage.jpg")
+        let fileURL = dirPaths[0].appendingPathComponent(image.description)
         
         if let renderedJPEGData =
             UIImageJPEGRepresentation(image, 0.5) {
@@ -449,7 +457,6 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
                     self.usuariosMostrar.removeAll()
                     for usuarios in results!{
                         if usuarios.value(forKey: "email") as! String != myvariables.userperfil.Email{
-                            print("yessssss")
                             let ususarioLocation = usuarios.value(forKey: "posicion") as! CLLocation
                             let distancia = ususarioLocation.distance(from: myvariables.userperfil.Posicion)
                             print(distancia.description)
@@ -467,13 +474,7 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
                                 }
                             }
                         }else{
-                            let alertaClose = UIAlertController (title: NSLocalizedString("No user connected",comment:"Close the Application"), message: NSLocalizedString("There aren't any user connected near you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
-                            alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
-                                self.UserPerfilView.isHidden = false
-                                self.UserConnectView.isHidden = true
-                                self.LoadingView.isHidden = true
-                            }))
-                            self.present(alertaClose, animated: true, completion: nil)
+                            
                         }
                         }
                     }
@@ -495,41 +496,96 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
                 let chatIDTemp = (respuesta.first?.EmailEmisor)! + "+" + (respuesta.first?.EmailDestino)!
                 if respuesta.count > myvariables.chatsOpen.count{
                     let newChat = CChat(chatID: chatIDTemp, emisorImagen: (respuesta.first?.FotoEmisor)!, destinoImagen: (respuesta.first?.FotoDestino)!)
-                    myvariables.chatsOpen.append(newChat)
+                    self.AgregarChat(newChat: newChat)
                 }
             }
         })
     }
     
+    func AgregarChat(newChat: CChat) {
+        var cant = 0
+        while (cant <  myvariables.chatsOpen.count) && (myvariables.chatsOpen[cant]).ChatID != newChat.ChatID{
+            cant += 1
+        }
+        if cant == myvariables.chatsOpen.count{
+            myvariables.chatsOpen.append(newChat)
+        }
+    }
+    
+    /*func BuscarSolEnChat(solicitud: CSolicitud)->Bool{
+        var resultado = false
+        for sol in myvariables.chatsOpen{
+            if sol.ChatID == solicitud.EmailEmisor+solicitud.EmailDestino{
+                resultado = true
+            }
+        }
+        return resultado
+    }*/
+    
 //MARK: - ACTION BOTONES GRAFICOS
     @IBAction func ShowMenuBtn(_ sender: Any) {
         myvariables.userperfil.ActualizarDesconectado()
         sleep(3)
-        let alertaClose = UIAlertController (title: NSLocalizedString("Close the Application",comment:"Close the Application"), message: NSLocalizedString("Do you want to save your data for the next time you start the application?", comment:"Mensaje de salir"), preferredStyle: UIAlertControllerStyle.alert)
+        exit(0)
+        /*let alertaClose = UIAlertController (title: NSLocalizedString("Close the Application",comment:"Close the Application"), message: NSLocalizedString("Do you want to save your data for the next time you start the application?", comment:"Mensaje de salir"), preferredStyle: UIAlertControllerStyle.alert)
         alertaClose.addAction(UIAlertAction(title: NSLocalizedString("YES", comment:"Yes"), style: UIAlertActionStyle.default, handler: {alerAction in
-            exit(0)
+            
         }))
         
         alertaClose.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: {alerAction in
-            GIDSignIn.sharedInstance().signOut()
-            GIDSignIn.sharedInstance().disconnect()
+            
         }))
         
-        self.present(alertaClose, animated: true, completion: nil)
+        self.present(alertaClose, animated: true, completion: nil)*/
     }
     @IBAction func ShowOpenChat(_ sender: Any) {
-        print(String(myvariables.chatsOpen.count))
-        //self.OpenChatTable.reloadData()
-        //self.OpenChatView.isHidden = false
+        if myvariables.chatsOpen.count == 0{
+            let alertaClose = UIAlertController (title: NSLocalizedString("No chats avaliable",comment:"Close the Application"), message: NSLocalizedString("There aren't any chat avaliable for you at this moment.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
+            alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+
+            }))
+            self.present(alertaClose, animated: true, completion: nil)
+        }else{
+            let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
+            self.navigationController?.show(vc, sender: nil)
+        }
+       
     }
     
+    @IBAction func FindSolRecibidas(_ sender: Any) {
+        if self.solicitudesRecibidas.count == 0{
+            let alertaClose = UIAlertController (title: NSLocalizedString("No Request",comment:"Close the Application"), message: NSLocalizedString("There aren't any request for you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
+            alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+              
+            }))
+            self.present(alertaClose, animated: true, completion: nil)
+        }else{
+            let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "RequestViewController") as! RequestViewController
+            vc.PendientRequest = self.solicitudesRecibidas
+            self.navigationController?.show(vc, sender: nil)
+        }
+    }
+    
+    @IBAction func CerrarSesion(_ sender: Any) {
+        GIDSignIn.sharedInstance().signOut()
+        GIDSignIn.sharedInstance().disconnect()
+    }
+    
+    
     @IBAction func FindUserConnected(_ sender: Any) {
-        self.UserPerfilView.isHidden = true
-        self.UserConnectView.isHidden = false
+        
         if self.usuariosMostrar.count == 0{
-            self.LoadingView.isHidden = false
+            let alertaClose = UIAlertController (title: NSLocalizedString("No user connected",comment:"Close the Application"), message: NSLocalizedString("There aren't any user connected near you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
+            alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+                self.UserPerfilView.isHidden = false
+                self.UserConnectView.isHidden = true
+                self.LoadingView.isHidden = true
+            }))
+            self.present(alertaClose, animated: true, completion: nil)
         }else{
             self.LoadingView.isHidden = true
+            self.UserPerfilView.isHidden = true
+            self.UserConnectView.isHidden = false
         }
         self.UserConnectedTable.reloadData()
         
@@ -543,17 +599,16 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
         self.solicitudesRecibidas.first?.ActualizarEstado(newEstado: "A")
         
         var newChat = CChat(chatID: (self.solicitudesRecibidas.first?.EmailEmisor)! + "+" + (self.solicitudesRecibidas.first?.EmailDestino)!, emisorImagen: (self.solicitudesRecibidas.first?.FotoEmisor)!, destinoImagen: myvariables.userperfil.FotoPerfil)
-        myvariables.chatsOpen.append(newChat)
-        
-        let alertaOpcionesChat = UIAlertController (title: NSLocalizedString("Request Acepted",comment:"Request Acepted"), message: NSLocalizedString("You have acepted to meet this person. Now you can send:", comment:"Mensaje de salir"), preferredStyle: UIAlertControllerStyle.actionSheet)
-        alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Text Message", comment:"Text Message"), style: UIAlertActionStyle.default, handler: {alerAction in
-            //self.ChatView.isHidden = false
-            //self.DestinoImage.image = newChat.EmisorImagen
-        }))
-        /*alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Voice Message", comment:"Voice Message"), style: UIAlertActionStyle.default, handler: {alerAction in
+        self.AgregarChat(newChat: newChat)
+        let alertaOpcionesChat = UIAlertController (title: NSLocalizedString("Request Acepted",comment:"Request Acepted"), message: NSLocalizedString("You have acepted to meet this person. Now you can chat.", comment:"Mensaje de salir"), preferredStyle: UIAlertControllerStyle.alert)
+        alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Acept", comment:"Text Message"), style: UIAlertActionStyle.default, handler: {alerAction in
 
-        }))*/
-        
+            let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "MSGView") as! MSGViewController
+            vc.destinoChat = "D"
+            self.navigationController?.show(vc, sender: nil)
+            
+        }))
+
         alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: UIAlertActionStyle.default, handler: {alerAction in
             
         }))
@@ -568,7 +623,7 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
     }
     //CHAT BUTTONs
     @IBAction func CloseChat(_ sender: Any) {
-        //self.ChatView.isHidden = true
+ 
     }
    
    /* @IBAction func SendMensage(_ sender: Any) {
@@ -607,43 +662,24 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
             cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             // Configure the cell...
             cell.imageView?.image = usuariosMostrar[indexPath.row].FotoPerfil
-            cell.imageView?.layer.cornerRadius = 20 //(cell.imageView?.frame.height)! / 2.0
+            cell.imageView?.layer.cornerRadius = (cell.imageView?.frame.width)! / 8
             cell.imageView?.clipsToBounds = true
             cell.textLabel?.text = "Clic to send friend´s request"
-        }else{
-            if tableView.isEqual(self.OpenChatTable){
-                cell = tableView.dequeueReusableCell(withIdentifier: "OpenChat", for: indexPath)
-                // Configure the cell...
-                cell.imageView?.image = myvariables.chatsOpen[indexPath.row].DestinoImagen
-                cell.imageView?.layer.cornerRadius = 20 //(cell.imageView?.frame.height)! / 2.0
-                cell.imageView?.clipsToBounds = true
-                cell.textLabel?.text = "Clic to open the chat"
-            }else{
-                /*self.DestinoImage.image = UIImage(named: "user")
-                self.DestinoImage.layer.cornerRadius = self.DestinoImage.frame.height / 2.0
-                cell = tableView.dequeueReusableCell(withIdentifier: "MSG", for: indexPath)
-                //cell.imageView?.image = self.mensajesChat[indexPath.row].UserImagen
-                cell.textLabel?.text = self.mensajesChat[indexPath.row].Mensaje
-                cell.textLabel?.layer.cornerRadius = 15
-                cell.textLabel?.clipsToBounds = true
-                //cell.imageView?.layer.cornerRadius = 25
-            
-                if self.mensajesChat[indexPath.row].EmailEmisor == myvariables.userperfil.Email{
-                    cell.textLabel?.textAlignment = .right
-                    cell.textLabel?.backgroundColor = UIColor.cyan
-                    //cell.textLabel?.addSubview(self.DestinoImage)
-                }else{
-                    cell.textLabel?.backgroundColor = UIColor.brown
-                }*/
-            }
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if tableView.isEqual(UserConnectedTable){
-            var solicitud = CSolicitud(fotoEmisor: self.userPerfilPhoto.image!, fotoDestino: (tableView.cellForRow(at: indexPath)?.imageView?.image)!, emailEmisor: myvariables.userperfil.Email, emailDestino: self.usuariosMostrar[indexPath.row].Email, estado: "S")
+            var solicitud = CSolicitud(fotoEmisor: myvariables.userperfil.FotoPerfil, fotoDestino: (tableView.cellForRow(at: indexPath)?.imageView?.image)!, emailEmisor: myvariables.userperfil.Email, emailDestino: self.usuariosMostrar[indexPath.row].Email, estado: "S")
             solicitud.EnviarSolicitud()
+            
+            let alertaOpcionesChat = UIAlertController (title: NSLocalizedString("Request Sent",comment:"Request Acepted"), message: NSLocalizedString("You have acepted to meet this person. Now you can chat.", comment:"Mensaje de salir"), preferredStyle: UIAlertControllerStyle.alert)
+            alertaOpcionesChat.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment:"Text Message"), style: UIAlertActionStyle.default, handler: {alerAction in
+                
+            }))
+            
+            self.present(alertaOpcionesChat, animated: true, completion: nil)
         }
         else{
             
@@ -694,7 +730,7 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
         UIView.commitAnimations()
     }
     
-    func keyboardNotification(notification: NSNotification){
+    /*func keyboardNotification(notification: NSNotification){
         if let userInfo = notification.userInfo{
             let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
@@ -712,11 +748,6 @@ class ViewController: UIViewController, GIDSignInDelegate, CLLocationManagerDele
                            animations: { self.view.layoutIfNeeded() },
                            completion: nil)
         }
-    }
-    
-    func DevolverOpenChat() -> [CChat] {
-        return myvariables.chatsOpen
-    }
-
+    }*/
 }
 
