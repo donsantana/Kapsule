@@ -1,17 +1,16 @@
 //
-//  MSGTableViewCell.swift
+//  EmisorTableViewCell.swift
 //  NoIce
 //
-//  Created by Done Santana on 23/2/17.
+//  Created by Done Santana on 24/2/17.
 //  Copyright © 2017 Done Santana. All rights reserved.
 //
 
 import UIKit
 
-class MSGTableViewCell: UITableViewCell {
+class EmisorTableViewCell: UITableViewCell {
 
     @IBOutlet weak var MSGText: UITextView!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,5 +22,5 @@ class MSGTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }

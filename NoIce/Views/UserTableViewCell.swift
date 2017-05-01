@@ -1,17 +1,18 @@
 //
-//  MSGTableViewCell.swift
+//  UserTableViewCell.swift
 //  NoIce
 //
-//  Created by Done Santana on 23/2/17.
+//  Created by Done Santana on 24/2/17.
 //  Copyright © 2017 Done Santana. All rights reserved.
 //
 
 import UIKit
 
-class MSGTableViewCell: UITableViewCell {
+class UserTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var MSGText: UITextView!
-    
+    @IBOutlet weak var UserConectedImage: UIImageView!
+    @IBOutlet weak var NewMsg: UIView!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,5 +24,5 @@ class MSGTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }

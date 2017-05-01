@@ -21,6 +21,7 @@ class CUser{
     var Posicion: CLLocation
     var UserContainer = CKContainer.default()
     var conectado: String!
+    var NewMsg: Bool!
     
     //Métodos
     init(nombreapellidos: String, email: String){
@@ -30,6 +31,7 @@ class CUser{
         self.FotoPerfil = UIImage(named: "user")!
         self.Posicion = CLLocation()
         self.conectado = "1"
+        self.NewMsg = false
     }
     
     func RegistrarUser(NombreApellidos: String, Email: String, photo: CKAsset){
@@ -46,8 +48,9 @@ class CUser{
         self.UserContainer.publicCloudDatabase.add(userRecordsOperation)
 
     }
-    func ActulizarFotoPerfil(photo: UIImage){
+    func GuardarFotoPerfil(photo: UIImage){
         self.FotoPerfil = photo
+        
     }
     
     func ActualizarTelefono(movil: String){
@@ -162,153 +165,80 @@ class CUser{
         }))
     }
     
-    func BuscarSolRecibidas(completionHandler:@escaping ([CSolicitud]) -> ()) {
-        var solicitudesRecibidas = [CSolicitud]()
-        var imagenEmisor: UIImage!
-        var imagenDestino: UIImage!
-        let predicateSolRecibida = NSPredicate(format: "emailDestino == %@", self.Email)
+    func ActualizarPhoto(newphoto: UIImage){
+        let imagenURL = self.saveImageToFile(newphoto)
+        let photoUser = CKAsset(fileURL: imagenURL)
         
-        let queryKapsuleVista = CKQuery(recordType: "CSolicitud",predicate: predicateSolRecibida)
+        let predicateVista = NSPredicate(format: "email == %@", myvariables.userperfil.Email)
         
-        self.UserContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
+        let queryVista = CKQuery(recordType: "CUsuarios",predicate: predicateVista)
+        
+        self.UserContainer.publicCloudDatabase.perform(queryVista, inZoneWith: nil, completionHandler: ({results, error in
+            
             if (error == nil) {
                 if results?.count != 0{
+                    let recordID = results?[0].recordID
                     
-                    for solicitud in results!{
-                        if solicitud.value(forKey: "estado") as! String == "S"{
-                            //DispatchQueue.main.async {
-                                do{
-                                    let photo = solicitud.value(forKey: "fotoEmisor") as! CKAsset
-                                    let photoPerfil = try Data(contentsOf: photo.fileURL as URL)
-                                    imagenEmisor = UIImage(data: photoPerfil)
+                    self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
+                        if error != nil {
+                            print("Error fetching record: \(error?.localizedDescription)")
+                        } else {
+                            record?.setObject(photoUser as CKRecordValue?, forKey: "foto")
+                            
+                            // Save this record again
+                            self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
+                                if saveError != nil {
                                     
-                                    let photo2 = solicitud.value(forKey: "fotoDestino") as! CKAsset
-                                    let photoPerfil2 = try Data(contentsOf: photo2.fileURL as URL)
-                                    imagenDestino = UIImage(data: photoPerfil2)
-                                    
-                                }catch{
-                                    imagenEmisor = UIImage(named: "user1")
-                                    imagenDestino = UIImage(named: "user1")
+                                } else {
+                                    self.FotoPerfil = newphoto
                                 }
-                            var solitudTemporal = CSolicitud(fotoEmisor: imagenEmisor,fotoDestino: imagenDestino, emailEmisor: solicitud.value(forKey: "emailEmisor") as! String, emailDestino: solicitud.value(forKey: "emailDestino") as! String, estado: solicitud.value(forKey: "estado") as! String)
-                            solicitudesRecibidas.append(solitudTemporal)
-                        }else{
-                            print("POR AWUI")
+                            })
                         }
-                    }
-                    //print("SE DEVUELVE" + String(solicitudesRecibidas.count))
+                        
+                    })
                 }else{
-                    
+                    print("NO SE ENCONTRO EL USER")
                 }
             }
-            print("SE DEVUELVE" + String(solicitudesRecibidas.count))
-            completionHandler(solicitudesRecibidas)
         }))
-    }
 
-    //BUSCAR SOLICITUDES ACEPTADAS
-    func BuscarSolAceptadas(completionHandler:@escaping ([CSolicitud]) -> ()) {
-        var solicitudesAceptadas = [CSolicitud]()
-        var imagenEmisor: UIImage!
-        var imagenDestino: UIImage!
-        
-        let predicateSolRecibida = NSPredicate(format: "emailEmisor == %@", self.Email)
-        
-        let queryKapsuleVista = CKQuery(recordType: "CSolicitud",predicate: predicateSolRecibida)
-        
-        self.UserContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
-            if (error == nil) {
-                if results?.count != 0{
-                    
-                    for solicitud in results!{
-                        if solicitud.value(forKey: "estado") as! String == "A" || solicitud.value(forKey: "estado") as! String == "R"{
-                            //DispatchQueue.main.async {
-                            do{
-                                let photo = solicitud.value(forKey: "fotoEmisor") as! CKAsset
-                                let photoPerfil = try Data(contentsOf: photo.fileURL as URL)
-                                imagenEmisor = UIImage(data: photoPerfil)
-                                
-                                let photo2 = solicitud.value(forKey: "fotoDestino") as! CKAsset
-                                let photoPerfil2 = try Data(contentsOf: photo2.fileURL as URL)
-                                imagenDestino = UIImage(data: photoPerfil2)
-                                
-                            }catch{
-                                imagenEmisor = UIImage(named: "user1")
-                                imagenDestino = UIImage(named: "user1")
-                            }
-                            var solitudTemporal = CSolicitud(fotoEmisor: imagenEmisor,fotoDestino: imagenDestino, emailEmisor: solicitud.value(forKey: "emailEmisor") as! String, emailDestino: solicitud.value(forKey: "emailDestino") as! String, estado: solicitud.value(forKey: "estado") as! String)
-                            solicitudesAceptadas.append(solitudTemporal)
-                        }else{
-                            print("POR AWUI")
-                        }
-                    }
-                    //print("SE DEVUELVE" + String(solicitudesRecibidas.count))
-                }else{
-                    print("NO HAY SOLICITUDES ACEPTADAS")
-                }
-            }
-            print("SE DEVUELVE" + String(solicitudesAceptadas.count))
-            completionHandler(solicitudesAceptadas)
-        }))
     }
     
-    func DeletedSolicitud(solicitud: CSolicitud) {
-        let predicateSolRecibida = NSPredicate(format: "emailEmisor == %@ AND emailDestino == %@", solicitud.EmailEmisor, solicitud.EmailDestino)
+    //RENDER IMAGEN
+    func saveImageToFile(_ image: UIImage) -> URL
+    {
+        let filemgr = FileManager.default
         
-        let queryKapsuleVista = CKQuery(recordType: "CSolicitud",predicate: predicateSolRecibida)
+        let dirPaths = filemgr.urls(for: .documentDirectory,
+                                    in: .userDomainMask)
+        
+        let fileURL = dirPaths[0].appendingPathComponent("currentImage.jpg")
+        
+        if let renderedJPEGData =
+            UIImageJPEGRepresentation(image, 0.5) {
+            try! renderedJPEGData.write(to: fileURL)
+        }
+        
+        return fileURL
+    }
+
+    
+    func BuscarNuevosMSG(EmailDestino: String) {
+        
+        let predicateMesajes = NSPredicate(format: "destinoEmail == %@ and emisorEmail ==%@",EmailDestino,self.Email)
+        
+        let queryKapsuleVista = CKQuery(recordType: "CMensaje",predicate: predicateMesajes)
         
         self.UserContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
             if (error == nil) {
-                if results?.count != 0{
-                    self.UserContainer.publicCloudDatabase.delete(withRecordID: (results?.first?.recordID)!, completionHandler: ({
-                        returnrecord, deleteerror in
-                        if deleteerror == nil{
-                            print("Solicitud Eliminada")
-                        }else{
-                            print("Error Eliminando Solicitud")
-                        }
-                    }))
+                if (results?.count)! > 0{
+                    print("Encontre algunos mensajes")
+                    self.NewMsg = true
                 }
+                
             }
         }))
-    }
-    func ChatOpens(completionHandler: (Void) -> (Bool)) {
-        var imagenEmisor: UIImage!
-        var imagenDestino: UIImage!
-        let predicateSolRecibida = NSPredicate(format: "emisorDestino contains %@", self.Email)
-        
-        let queryChatVista = CKQuery(recordType: "CChat",predicate: predicateSolRecibida)
-        
-        self.UserContainer.publicCloudDatabase.perform(queryChatVista, inZoneWith: nil, completionHandler: ({results, error in
-            if (error == nil) {
-                if results?.count != 0{
-                    for resultemp in results!{
-                        do{
-                            let photo = resultemp.value(forKey: "emisorImagen") as! CKAsset
-                            let photoPerfil = try Data(contentsOf: photo.fileURL as URL)
-                            imagenEmisor = UIImage(data: photoPerfil)
-                            
-                            let photo2 = resultemp.value(forKey: "destinoImagen") as! CKAsset
-                            let photoPerfil2 = try Data(contentsOf: photo2.fileURL as URL)
-                            imagenDestino = UIImage(data: photoPerfil2)
-                            
-                        }catch{
-                            imagenEmisor = UIImage(named: "user1")
-                            imagenDestino = UIImage(named: "user1")
-                        }
-
-                        let chatTemp = CChat(chatID: resultemp.value(forKey: "chatID") as! String, emisorImagen: imagenEmisor, destinoImagen: imagenDestino)
-                        myvariables.chatsOpen.append(chatTemp)
-                    }
   
-                }else{
-                    print("NO HAY CHAT OPENSsssssssssssssssssss")
-                }
-            }else{
-                print("ERROR DE CONSULTA CHAT OPENS")
-            }
-        }))
-        completionHandler()
     }
     
 }

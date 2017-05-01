@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 import CloudKit
 
-class MSGViewController: UIViewController, UITextFieldDelegate {
+class MSGViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate {
     
-    var mensajesChat = [CMensaje]()
-    var destinoChat: String!
-    var mensajesContainer = CKContainer.default()
-    var chatIDOpen: String!
+    var chatOpenPos: Int!
+    var mensajesMostrados = [CMensaje]()
+    var MSGTimer : Timer!
+    var MSGContainer = CKContainer.default()
     
     //MARK:- VARIABLES INTERFAZ
     @IBOutlet weak var ChatView: UIView!
@@ -29,51 +29,67 @@ class MSGViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.MensageText.delegate = self
-        //self.CargarMensajes()
-        self.ChatTable.reloadData()
-        if destinoChat == "E"{
-            self.DestinoImage.image = myvariables.chatsOpen.first?.DestinoImagen
-        }else{
-            self.DestinoImage.image = myvariables.chatsOpen.first?.EmisorImagen
-        }
-        self.DestinoImage.layer.cornerRadius = self.DestinoImage.frame.width / 8
+        self.ChatTable.delegate = self
+        self.DestinoImage.image = myvariables.usuariosMostrar[self.chatOpenPos].FotoPerfil
+        self.DestinoImage.layer.cornerRadius = self.DestinoImage.frame.width / 2
+        self.DestinoImage.contentMode = .scaleAspectFill
         self.DestinoImage.clipsToBounds = true
+        
         
         //MASK: - PARA MOSTRAR Y OCULTAR EL TECLADO
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        MSGTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarNewMSG), userInfo: nil, repeats: true)
     }
     
-    func CargarMensajes(){
-        let predicateMesajes = NSPredicate(format: "chatID == %@", self.chatIDOpen)
+    override func viewDidDisappear(_ animated: Bool) {
+        self.MSGTimer.invalidate()
+    }
+    
+    func BuscarNewMSG() {
+        let predicateMesajes = NSPredicate(format: "destinoEmail == %@ and emisorEmail == %@", myvariables.userperfil.Email, myvariables.usuariosMostrar[chatOpenPos].Email)
         
         let queryKapsuleVista = CKQuery(recordType: "CMensaje",predicate: predicateMesajes)
         
-        self.mensajesContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
+        self.MSGContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
             if (error == nil) {
-                if results?.count != 0{
-                    for mensajetemp in results!{
-                        let mensajenew = CMensaje(chatId: mensajetemp.value(forKey: "chatID") as! String, mensaje: mensajetemp.value(forKey: "textoMensaje") as! String, emisor: mensajetemp.value(forKey: "emisor") as! String)
-                        self.mensajesChat.append(mensajenew)
+                if (results?.count)! > 0{
+                    var i = 0
+                    while i < (results?.count)!{
+                        let MSG = CMensaje(emailEmisor: results?[i].value(forKey: "emisorEmail") as! String, emailDestino: results?[i].value(forKey: "destinoEmail") as! String, mensaje: results?[i].value(forKey: "textoMensaje") as! String)
+                        self.EliminarMSGRead(record: (results?[i].recordID)!)
+                        self.mensajesMostrados.append(MSG)
+                        myvariables.usuariosMostrar[self.chatOpenPos].NewMsg = false
+                        i += 1
                     }
-                    self.ChatTable.reloadData()
                 }
-                
             }
         }))
-        
+        DispatchQueue.main.async {
+            self.ChatTable.reloadData()
+        }
+       
+    }
+
+    func EliminarMSGRead(record : CKRecordID) {
+        self.MSGContainer.publicCloudDatabase.delete(withRecordID: record, completionHandler: { _,_ in })
+    }
+    
+    func SendNewMessage() {
+        self.MensageText.resignFirstResponder()
+        if !(self.MensageText.text?.isEmpty)!{
+            let newmensaje = CMensaje(emailEmisor: myvariables.userperfil.Email, emailDestino: myvariables.usuariosMostrar[chatOpenPos].Email, mensaje: self.MensageText.text!)
+            newmensaje.EnviarMensaje()
+            self.mensajesMostrados.append(newmensaje)
+            self.ChatTable.reloadData()
+            self.MensageText.text?.removeAll()
+        }
     }
     
     //MARK: - ACTION DE BOTONES
   
     @IBAction func SendChatMensage(_ sender: Any) {
-        self.MensageText.resignFirstResponder()
-        if !(self.MensageText.text?.isEmpty)!{
-            let newmensaje = CMensaje(chatId: (myvariables.chatsOpen.first?.ChatID)!, mensaje: self.MensageText.text!, emisor: self.destinoChat)
-            newmensaje.EnviarMensaje()
-            self.mensajesChat.append(newmensaje)
-            self.ChatTable.reloadData()
-            self.MensageText.text?.removeAll()
-        }
+        self.SendNewMessage()
     }
     @IBAction func CloseChat(_ sender: Any) {
         self.ChatView.isHidden = true
@@ -82,14 +98,8 @@ class MSGViewController: UIViewController, UITextFieldDelegate {
     
     //MARK:- MOSTRAR Y OCULTAR EL TECLADO
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.MensageText.resignFirstResponder()
-        if !(self.MensageText.text?.isEmpty)!{
-            let newmensaje = CMensaje(chatId: (myvariables.chatsOpen.first?.ChatID)!, mensaje: self.MensageText.text!, emisor: self.destinoChat)
-            newmensaje.EnviarMensaje()
-            self.mensajesChat.append(newmensaje)
-            self.ChatTable.reloadData()
-            self.MensageText.text?.removeAll()
-        }
+        self.SendNewMessage()
+        
         return true
     }
 
@@ -121,40 +131,40 @@ class MSGViewController: UIViewController, UITextFieldDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mensajesChat.count
+        return self.mensajesMostrados.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
-            cell = tableView.dequeueReusableCell(withIdentifier: "MSG", for: indexPath)
-            // Configure the cell...
-            cell.textLabel?.clipsToBounds = true
-            cell.textLabel?.text = self.mensajesChat[indexPath.row].Mensaje
-            cell.textLabel?.layer.cornerRadius = 15
-        if self.mensajesChat[indexPath.row].EmailEmisor == myvariables.userperfil.Email{
+        //var cell: UITableViewCell!
+  
+        if self.mensajesMostrados[indexPath.row].EmailEmisor == myvariables.userperfil.Email{
+            let cell = Bundle.main.loadNibNamed("EmisorTableViewCell", owner: self, options: nil)?.first as! EmisorTableViewCell
+            cell.MSGText.text = self.mensajesMostrados[indexPath.row].Mensaje
             cell.textLabel?.textAlignment = .right
             cell.textLabel?.backgroundColor = UIColor(red: 226, green: 241, blue: 255, alpha: 1)
+            //SHOW LAST CELL
+            let lastRow: Int = tableView.numberOfRows(inSection: 0) - 1
+            let indexPath = IndexPath(row: lastRow, section: 0);
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            return cell
         }else{
+            let cell = Bundle.main.loadNibNamed("DestinoTableViewCell", owner: self, options: nil)?.first as! DestinoTableViewCell
+            cell.MSGText.text = self.mensajesMostrados[indexPath.row].Mensaje
             cell.textLabel?.backgroundColor = UIColor(red: 226, green: 231, blue: 136, alpha: 1)
             cell.textLabel?.textAlignment = .left
+            //SHOW LAST CELL
+            let lastRow: Int = tableView.numberOfRows(inSection: 0) - 1
+            let indexPath = IndexPath(row: lastRow, section: 0);
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            return cell
         }
+        //return cell
         
-        // First figure out how many sections there are
-        let lastSectionIndex = tableView.numberOfSections - 1
-        // Then grab the number of rows in the last section
-        let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
-        
-        // Now just construct the index path
-        //let pathToLastRow = NSIndexPath(indexPathforRow: lastRowIndex, inSection: lastSectionIndex)
-        
-        // Make the last row visible
-        tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        self.MensageText.endEditing(true)
+        self.MensageText.resignFirstResponder()
     }
+
     
 }
