@@ -18,6 +18,7 @@ class ProfileController: UIViewController, UINavigationControllerDelegate, UIIma
     
     //VISUAL VARS
     @IBOutlet weak var UserPerfilView: UIView!
+    @IBOutlet weak var ClosingView: UIView!
     
     @IBOutlet weak var userPerfilPhoto: UIImageView!
     override func viewDidLoad() {
@@ -71,15 +72,6 @@ class ProfileController: UIViewController, UINavigationControllerDelegate, UIIma
     }
 
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     @IBAction func EditPhoto(_ sender: Any) {
         self.camaraController.sourceType = .camera
         self.camaraController.cameraCaptureMode = .photo
@@ -88,6 +80,8 @@ class ProfileController: UIViewController, UINavigationControllerDelegate, UIIma
     }
     
     @IBAction func SignOut(_ sender: Any) {
+        myvariables.userperfil.ActualizarDesconectado()
+        sleep(2)
         GIDSignIn.sharedInstance().signOut()
         GIDSignIn.sharedInstance().disconnect()
     }

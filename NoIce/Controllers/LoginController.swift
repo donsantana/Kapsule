@@ -12,7 +12,7 @@ import GoogleMaps
 import GoogleSignIn
 import CloudKit
 
-class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate {
+class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var loginContainer = CKContainer.default()
     var camaraPerfilController: UIImagePickerController!
@@ -30,6 +30,8 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().clientID = "87612102903-gccdrua07g6t6mpgdrpct985bidkvl3c.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().signInSilently()
     
+        self.camaraPerfilController = UIImagePickerController()
+        self.camaraPerfilController.delegate = self
     
     }
     
@@ -38,7 +40,6 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate {
             self.LoginView.isHidden = true
             self.LoadingView.isHidden = false
             myvariables.userperfil = CUser(nombreapellidos: user.profile.givenName + " " + user.profile.familyName, email: user.profile.email)
-            myvariables.userperfil.ActualizarConectado()
             let predicate = NSPredicate(format: "email = %@",user.profile.email)
             let query = CKQuery(recordType:"CUsuarios", predicate: predicate)
             self.loginContainer.publicCloudDatabase.perform(query, inZoneWith: nil, completionHandler: ({results, error in
@@ -55,6 +56,7 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate {
                             
                         }))
                         EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancelar"), style: UIAlertActionStyle.destructive, handler: { action in
+                            exit(0)
                         }))
                         self.present(EditPhoto, animated: true, completion: nil)
                     }else{
@@ -65,6 +67,7 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate {
                             }catch{
                                 myvariables.userperfil.GuardarFotoPerfil(photo:UIImage(named: "user")!)
                             }
+                        myvariables.userperfil.CargarBloqueados(bloqueados: results?[0].value(forKey: "bloqueados") as! [String])
                         DispatchQueue.main.async {
                             self.LoadingView.isHidden = true
                             let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "InicioView") as! ViewController
@@ -102,6 +105,9 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate {
             let fotoContenido = CKAsset(fileURL: imagenURL)
             myvariables.userperfil.RegistrarUser(NombreApellidos: myvariables.userperfil.NombreApellidos, Email: myvariables.userperfil.Email, photo: fotoContenido)
             myvariables.userperfil.GuardarFotoPerfil(photo: KPhotoPreview!)
+            self.LoadingView.isHidden = true
+            let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "InicioView") as! ViewController
+            self.navigationController?.show(vc, sender: nil)
         }else{
             self.camaraPerfilController.dismiss(animated: true, completion: nil)
             let EditPhoto = UIAlertController (title: NSLocalizedString("Error",comment:"Cambiar la foto de perfil"), message: NSLocalizedString("The profile only accept selfies photo.", comment:""), preferredStyle: UIAlertControllerStyle.alert)

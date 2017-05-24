@@ -31,7 +31,7 @@ class MSGViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         self.MensageText.delegate = self
         self.ChatTable.delegate = self
         self.DestinoImage.image = myvariables.usuariosMostrar[self.chatOpenPos].FotoPerfil
-        self.DestinoImage.layer.cornerRadius = self.DestinoImage.frame.width / 2
+        self.DestinoImage.layer.cornerRadius = self.DestinoImage.frame.width / 4
         self.DestinoImage.contentMode = .scaleAspectFill
         self.DestinoImage.clipsToBounds = true
         
@@ -39,7 +39,7 @@ class MSGViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         //MASK: - PARA MOSTRAR Y OCULTAR EL TECLADO
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
-        MSGTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarNewMSG), userInfo: nil, repeats: true)
+        //MSGTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarNewMSG), userInfo: nil, repeats: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -64,10 +64,11 @@ class MSGViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                     }
                 }
             }
+            DispatchQueue.main.async {
+                self.ChatTable.reloadData()
+            }
         }))
-        DispatchQueue.main.async {
-            self.ChatTable.reloadData()
-        }
+       
        
     }
 
@@ -89,10 +90,23 @@ class MSGViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     //MARK: - ACTION DE BOTONES
   
     @IBAction func SendChatMensage(_ sender: Any) {
-        self.SendNewMessage()
+        //self.SendNewMessage()
     }
-    @IBAction func CloseChat(_ sender: Any) {
-        self.ChatView.isHidden = true
+
+    @IBAction func BloquearUser(_ sender: Any) {        
+        myvariables.userperfil.ActualizarBloqueo(emailBloqueado: myvariables.usuariosMostrar[self.chatOpenPos].Email){ success in
+            if success{
+                self.MSGTimer.invalidate()
+                myvariables.usuariosMostrar.remove(at: self.chatOpenPos)
+                DispatchQueue.main.async {
+                    //let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "UserConnected") as! UserViewController
+                    let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "InicioView") as! ViewController
+                    self.navigationController?.show(vc, sender: nil)
+                }
+            }
+                
+        }
+        
     }
     
     

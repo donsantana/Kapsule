@@ -43,9 +43,7 @@ class UserViewController: UITableViewController  {
         cell.UserConectedImage.contentMode = .scaleAspectFill
         cell.UserConectedImage.clipsToBounds = true
         //cell.textLabel?.text = "Clic to send friend´s request"*/
-        print("Resultado: \(myvariables.usuariosMostrar[indexPath.row].NewMsg)")
         if myvariables.usuariosMostrar[indexPath.row].NewMsg == true {
-            print("mostrar nuevo mensaje")
                 cell.NewMsg.isHidden = false
         }
 
@@ -53,8 +51,9 @@ class UserViewController: UITableViewController  {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        
-        let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "MSGView") as! MSGViewController
+        //let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "MSGView") as! MSGViewController
+
+        let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "Chat") as! ChatViewController
         vc.chatOpenPos = indexPath.row
         self.navigationController?.show(vc, sender: nil)
     }
@@ -87,21 +86,21 @@ class UserViewController: UITableViewController  {
                 if (results?.count)! != myvariables.usuariosMostrar.count{
                 //if (results?.count)! > 0{
                     myvariables.usuariosMostrar.removeAll()
+                    var bloqueados = [String]()
                     var i = 0
                     while i < (results?.count)!{
                         let usuarioTemp = CUser(nombreapellidos: results?[i].value(forKey: "nombreApellidos") as! String, email: results?[i].value(forKey: "email") as! String)
                         usuarioTemp.BuscarNuevosMSG(EmailDestino: myvariables.userperfil.Email)
-                        let imagenEmisor: UIImage!
-                        do{
+                        bloqueados = results?[i].value(forKey: "bloqueados") as! [String]
+                        print("cantidad de usuarios bloqueados: \(bloqueados.contains(myvariables.userperfil.Email))")
+                        if  !bloqueados.contains(myvariables.userperfil.Email) && !myvariables.userperfil.bloqueados.contains(usuarioTemp.Email){
                             let photo = results?[i].value(forKey: "foto") as! CKAsset
-                            let photoPerfil = try Data(contentsOf: photo.fileURL as URL)
-                            imagenEmisor = UIImage(data: photoPerfil)!
-                        }catch{
-                            imagenEmisor = UIImage(named: "user")
+                            let photoPerfil = NSData(contentsOf: photo.fileURL as URL)
+                            let imagenEmisor = UIImage(data: photoPerfil as! Data)!
+                            
+                            usuarioTemp.GuardarFotoPerfil(photo: imagenEmisor)
+                            myvariables.usuariosMostrar.append(usuarioTemp)
                         }
-                        usuarioTemp.BuscarNuevosMSG(EmailDestino: myvariables.userperfil.Email)
-                        usuarioTemp.GuardarFotoPerfil(photo: imagenEmisor!)
-                        myvariables.usuariosMostrar.append(usuarioTemp)
                         i += 1
                     }
 

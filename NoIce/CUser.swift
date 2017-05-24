@@ -22,6 +22,7 @@ class CUser{
     var UserContainer = CKContainer.default()
     var conectado: String!
     var NewMsg: Bool!
+    var bloqueados: [String]!
     
     //Métodos
     init(nombreapellidos: String, email: String){
@@ -32,15 +33,17 @@ class CUser{
         self.Posicion = CLLocation()
         self.conectado = "1"
         self.NewMsg = false
+        self.bloqueados = [String]()
     }
     
     func RegistrarUser(NombreApellidos: String, Email: String, photo: CKAsset){
+        let bloqueados = [""]
         let recordUser = CKRecord(recordType: "CUsuarios")
         recordUser.setObject(Email as CKRecordValue, forKey: "email")
         recordUser.setObject(NombreApellidos as CKRecordValue, forKey: "nombreApellidos")
         recordUser.setObject(photo as CKRecordValue, forKey: "foto")
-        //print("PHOTOOOOOOO: " + myFilePathString)
-        //recordUser.setObject(photoTemporal, forKey: "photo")
+        recordUser.setObject(bloqueados as CKRecordValue, forKey: "bloqueados")
+        recordUser.setObject("1" as CKRecordValue, forKey: "conectado")
         
         let userRecordsOperation = CKModifyRecordsOperation(
             recordsToSave: [recordUser],
@@ -50,7 +53,7 @@ class CUser{
     }
     func GuardarFotoPerfil(photo: UIImage){
         self.FotoPerfil = photo
-        
+        self.ActualizarConectado()
     }
     
     func ActualizarTelefono(movil: String){
@@ -239,6 +242,47 @@ class CUser{
             }
         }))
   
+    }
+    
+    func ActualizarBloqueo(emailBloqueado: String, completionHandler: @escaping(Bool)->()){
+
+            let predicateMesajes = NSPredicate(format: "email == %@",self.Email)
+            
+            let queryVista = CKQuery(recordType: "CUsuarios",predicate: predicateMesajes)
+            
+            self.UserContainer.publicCloudDatabase.perform(queryVista, inZoneWith: nil, completionHandler: ({results, error in
+                if (error == nil) {
+                    if (results?.count)! > 0{
+                        let recordID = results?[0].recordID
+                        self.bloqueados = results?[0].value(forKey: "bloqueados") as! [String]
+                        self.bloqueados.append(emailBloqueado)
+
+                        self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
+                            if error != nil {
+                                print("Error fetching record: \(error?.localizedDescription)")
+                            } else {
+                                record?.setObject(self.bloqueados as CKRecordValue?, forKey: "bloqueados")
+                                // Save this record again
+                                self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
+                                    if saveError != nil {
+                                        completionHandler(false)
+                                    } else {
+                                        completionHandler(true)
+                                    }
+                                })
+                            }
+                            
+                        })
+
+                    }else{
+
+                    }
+                }
+            }))
+
+    }
+    func CargarBloqueados(bloqueados: [String]){
+        self.bloqueados = bloqueados
     }
     
 }

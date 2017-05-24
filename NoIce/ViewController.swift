@@ -17,14 +17,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     //MARK: - PROPIEDADES DE LA CLASE
     var locationManager = CLLocationManager()
     var userLocation = CLLocationCoordinate2D()
-    //var userperfil: CUser!
     var camaraPerfilController: UIImagePickerController!
-    //var usuariosMostrar = [CUser]()
     var userTimer : Timer!
     
     
     //CLOUD VARIABLES
     var cloudContainer = CKContainer.default()
+    var userContainer = CKContainer.default()
     var photoAsset: CKAsset!
     
     //Visual variables
@@ -42,10 +41,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
         
         //MARK: -INICIALIZAR GEOLOCALIZACION
         self.locationManager.delegate = self
-        self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
+        
+        myvariables.userperfil.ActualizarPosicion(posicionActual: self.locationManager.location!)
 
         //self.userTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
 
@@ -56,7 +56,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.userTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
+        self.TimerStart(estado: 1)
     }
     
     //MARK: - ACTUALIZACION DE GEOLOCALIZACION
@@ -65,7 +65,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
             if myvariables.userperfil.Posicion.distance(from: locations.last!) > 10{
                 myvariables.userperfil.ActualizarPosicion(posicionActual: locations.last!)
             }
-            
         }
     }
     
@@ -74,8 +73,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     // The sign-in flow has finished and was successful if |error| is |nil|.
    
    //FUNCTION TIMER
-    func TimerStart(stado: Int){
-        if stado == 1{
+    func TimerStart(estado: Int){
+        if estado == 1{
             self.userTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
             print("Activando Timer")
         }else{
@@ -88,28 +87,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     //MARK: - BUSCAR USUARIOS CONECTADOS
     //MEJORAR ESTA FUNCION CAMBIAR EL CICLO FOR:
     func BuscarUsuariosConectados(){
-       
+        
             let predicateUsuarioIn = NSPredicate(format: "distanceToLocation:fromLocation:(posicion, %@) < 40 and conectado == %@ and email != %@", myvariables.userperfil.Posicion, "1", myvariables.userperfil.Email)
-            self.userTimer.invalidate()
+            self.TimerStart(estado: 0)
             //let predicateUsuarioIn = NSPredicate(format: "conectado == %@ and email != %@", "1", myvariables.userperfil.Email)
             let queryUsuarioIn = CKQuery(recordType: "CUsuarios",predicate: predicateUsuarioIn)
             self.cloudContainer.publicCloudDatabase.perform(queryUsuarioIn, inZoneWith: nil, completionHandler: ({results, error in
                 if (error == nil) {
-                    print((results?.count)!)
+                        var bloqueados = [String]()
                     if (results?.count)! != myvariables.usuariosMostrar.count{
                         myvariables.usuariosMostrar.removeAll()
                         var i = 0
                         while i < (results?.count)!{
+                            
                             let usuarioTemp = CUser(nombreapellidos: results?[i].value(forKey: "nombreApellidos") as! String, email: results?[i].value(forKey: "email") as! String)
                             usuarioTemp.BuscarNuevosMSG(EmailDestino: myvariables.userperfil.Email)
-                            //let imagenEmisor: UIImage!
+                            bloqueados = results?[i].value(forKey: "bloqueados") as! [String]
+                             print("aqui estoys")
+                            if  !bloqueados.contains(myvariables.userperfil.Email) && !myvariables.userperfil.bloqueados.contains(usuarioTemp.Email){
+                                let photo = results?[i].value(forKey: "foto") as! CKAsset
+                                let photoPerfil = NSData(contentsOf: photo.fileURL as URL)
+                                let imagenEmisor = UIImage(data: photoPerfil! as Data)!
                             
-                            let photo = results?[i].value(forKey: "foto") as! CKAsset
-                            let photoPerfil = NSData(contentsOf: photo.fileURL as URL)
-                            let imagenEmisor = UIImage(data: photoPerfil as! Data)!
-                            
-                            usuarioTemp.GuardarFotoPerfil(photo: imagenEmisor)
-                            myvariables.usuariosMostrar.append(usuarioTemp)
+                                usuarioTemp.GuardarFotoPerfil(photo: imagenEmisor)
+                                myvariables.usuariosMostrar.append(usuarioTemp)
+                            }
                             i += 1
                         }
                     }else{
@@ -148,18 +150,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
         sleep(3)
         exit(0)
     }
-    
-    func animateViewMoving (_ up:Bool, moveValue :CGFloat, view: UIView){
-        let movementDuration:TimeInterval = 0.3
-        let movement:CGFloat = ( up ? -moveValue : moveValue)
-        UIView.beginAnimations( "animateView", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(movementDuration )
-        view.frame = self.view.frame.offsetBy(dx: 0,  dy: movement)
-        UIView.commitAnimations()
-    }
-    
-    
-  
+
 }
 
