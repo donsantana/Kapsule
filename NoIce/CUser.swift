@@ -9,7 +9,6 @@
 
 import Foundation
 import UIKit
-import GoogleMaps
 import CloudKit
 
 class CUser{
@@ -24,6 +23,8 @@ class CUser{
     var NewMsg: Bool!
     var bloqueados: [String]!
     
+    var recordName: String!
+    
     //Métodos
     init(nombreapellidos: String, email: String){
         self.NombreApellidos = nombreapellidos
@@ -34,26 +35,31 @@ class CUser{
         self.conectado = "1"
         self.NewMsg = false
         self.bloqueados = [String]()
+        
+        self.recordName = "new"
     }
     
-    func RegistrarUser(NombreApellidos: String, Email: String, photo: CKAsset){
-        let bloqueados = [""]
+    func RegistrarUser(NombreApellidos: String, Email: String, photo: CKAsset, pos: CLLocation){
+        let bloqueados = ["nadie"]
+        self.Posicion = pos
         let recordUser = CKRecord(recordType: "CUsuarios")
         recordUser.setObject(Email as CKRecordValue, forKey: "email")
         recordUser.setObject(NombreApellidos as CKRecordValue, forKey: "nombreApellidos")
         recordUser.setObject(photo as CKRecordValue, forKey: "foto")
         recordUser.setObject(bloqueados as CKRecordValue, forKey: "bloqueados")
         recordUser.setObject("1" as CKRecordValue, forKey: "conectado")
+        recordUser.setObject(pos as CKRecordValue, forKey: "posicion")
         
         let userRecordsOperation = CKModifyRecordsOperation(
             recordsToSave: [recordUser],
             recordIDsToDelete: nil)
         self.UserContainer.publicCloudDatabase.add(userRecordsOperation)
+        
+        self.recordName = recordUser.recordID.recordName
 
     }
     func GuardarFotoPerfil(photo: UIImage){
         self.FotoPerfil = photo
-        self.ActualizarConectado()
     }
     
     func ActualizarTelefono(movil: String){
@@ -71,6 +77,8 @@ class CUser{
                 if (error == nil) {
                     if results?.count != 0{
                         let recordID = results?[0].recordID
+                        
+                        print("Este RecordId \(recordID?.recordName)")
                         
                         self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
                             if error != nil {
@@ -97,75 +105,26 @@ class CUser{
 
     }
     
-    func ActualizarConectado(){
-        self.conectado = "1"
-        let predicateKapsuleVista = NSPredicate(format: "email == %@", self.Email)
+    func ActualizarConectado(estado: String){
         
-        let queryKapsuleVista = CKQuery(recordType: "CUsuarios",predicate: predicateKapsuleVista)
-        
-        self.UserContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
-            
-            if (error == nil) {
-                if results?.count != 0{
-                    let recordID = results?[0].recordID
+        let recordID = CKRecordID(recordName: self.recordName)
                     
-                    self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
-                        if error != nil {
-                            print("Error fetching record: \(error?.localizedDescription)")
-                        } else {
-                            record?.setObject("1" as CKRecordValue?, forKey: "conectado")
-                            
-                            // Save this record again
-                            self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
-                                if saveError != nil {
-                                    print("Error saving conectado: \(saveError?.localizedDescription)")
-                                } else {
-                                    print("ACTUALIZADO CONECTADO")
-                                }
-                            })
-                        }
-                        
-                    })
-                }else{
-
-                }
+        self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID, completionHandler: { (record, error) in
+            print("Entre aqui")
+            if error != nil {
+                print("Error fetching record: \(String(describing: error?.localizedDescription))")
+            } else {
+                record?.setObject(estado as CKRecordValue?, forKey: "conectado")
+                self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
+                    if saveError != nil {
+                        print("Error saving conectado: \(String(describing: saveError?.localizedDescription))")
+                    } else {
+                        print("ACTUALIZADO CONECTADO")
+                        self.conectado = estado
+                    }
+                })
             }
-        }))
-    }
-    func ActualizarDesconectado(){
-        self.conectado = "0"
-        let predicateKapsuleVista = NSPredicate(format: "email == %@", self.Email)
-        
-        let queryKapsuleVista = CKQuery(recordType: "CUsuarios",predicate: predicateKapsuleVista)
-        
-        self.UserContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
-            
-            if (error == nil) {
-                if results?.count != 0{
-                    let recordID = results?[0].recordID
-                    
-                    self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
-                        if error != nil {
-                            print("Error fetching record: \(error?.localizedDescription)")
-                        } else {
-                            record?.setObject("0" as CKRecordValue?, forKey: "conectado")
-                            
-                            // Save this record again
-                            self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
-                                if saveError != nil {
-                                    print("Error saving Desconectado: \(saveError?.localizedDescription)")
-                                } else {
-                                    print("ACTUALIZADO DESCONECTADO")
-                                }
-                            })
-                        }
-                        
-                    })
-                }else{
-                    
-                }
-            }
-        }))
+        })
     }
     
     func ActualizarPhoto(newphoto: UIImage){
@@ -235,7 +194,6 @@ class CUser{
         self.UserContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
             if (error == nil) {
                 if (results?.count)! > 0{
-                    print("Encontre algunos mensajes")
                     self.NewMsg = true
                 }
                 

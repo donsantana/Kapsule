@@ -11,18 +11,24 @@ import GGLSignIn
 import GoogleSignIn
 import CloudKit
 import AssetsLibrary
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class ProfileController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     var camaraController: UIImagePickerController!
     
     //VISUAL VARS
+    @IBOutlet weak var fotoperfil: UIImageView!
     @IBOutlet weak var UserPerfilView: UIView!
-    @IBOutlet weak var ClosingView: UIView!
     
     @IBOutlet weak var userPerfilPhoto: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.fotoperfil.contentMode = .scaleAspectFill
+        self.fotoperfil.layer.cornerRadius = self.userPerfilPhoto.frame.height / 4
+        self.fotoperfil.clipsToBounds = true
         
         self.userPerfilPhoto.contentMode = .scaleAspectFill
         self.userPerfilPhoto.layer.cornerRadius = self.userPerfilPhoto.frame.height / 4
@@ -80,12 +86,12 @@ class ProfileController: UIViewController, UINavigationControllerDelegate, UIIma
     }
     
     @IBAction func SignOut(_ sender: Any) {
-        myvariables.userperfil.ActualizarDesconectado()
+        myvariables.userperfil.ActualizarConectado(estado: "0")
         sleep(2)
+        FBSDKLoginManager().logOut()
         GIDSignIn.sharedInstance().signOut()
         GIDSignIn.sharedInstance().disconnect()
     }
-    
     
 
 }

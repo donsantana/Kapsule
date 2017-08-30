@@ -12,49 +12,52 @@ import MobileCoreServices
 import AVKit
 import CloudKit
 
-class ChatViewController: JSQMessagesViewController, UINavigationControllerDelegate {
+class ChatViewController: JSQMessagesViewController, UINavigationControllerDelegate, UITextFieldDelegate {
     
     var chatOpenPos: Int!
     var MSGTimer : Timer!
     var MSGContainer = CKContainer.default()
-    @IBOutlet weak var EmisorImage: UIImageView!
-    @IBOutlet weak var ImagePreview: UIImageView!
-    @IBOutlet var Preview: UIView!
-    @IBOutlet weak var imagenBtn: UIButton!
     
+    @IBOutlet weak var BlocUser: UIBarButtonItem!
     
     var mensajesMostrados = [JSQMessage]()
     
-    //var message1 = JSQMessage(senderId: "1", displayName: "", text: "Hola")
-    //var message2 = JSQMessage(senderId: "2", displayName: "", text: "Hola tu")
-    
-    //let picker = UIImagePickerController();
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.BlocUser.isEnabled = false
         self.senderId = myvariables.userperfil.Email
         self.senderDisplayName = ""
-       /*  mensajesMostrados.append(message2!)*/
-        /*MessagesHandler.Instance.delegate = self;
-        
-        self.senderId = AuthProvider.Instance.userID()
-        self.senderDisplayName = AuthProvider.Instance.userName;
-        
-        MessagesHandler.Instance.observeMessages();
-        MessagesHandler.Instance.observeMediaMessages();*/
-        
-        MSGTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarNewMSG), userInfo: nil, repeats: true)
-        
-        self.EmisorImage.layer.cornerRadius = self.EmisorImage.frame.height/4
-        self.EmisorImage.clipsToBounds = true
-        self.EmisorImage.image = myvariables.usuariosMostrar[self.chatOpenPos].FotoPerfil
 
         //Hide avatar
         collectionView?.collectionViewLayout.incomingAvatarViewSize = .zero
         collectionView?.collectionViewLayout.outgoingAvatarViewSize = .zero
         //Hide adjunte button
         self.inputToolbar.contentView.leftBarButtonItem = nil
+        
+        let image = myvariables.usuariosMostrar[self.chatOpenPos].FotoPerfil
+        let imgBackground:UIImageView = UIImageView(frame: self.view.bounds)
+        imgBackground.image = image
+        imgBackground.contentMode = UIViewContentMode.scaleAspectFill
+        imgBackground.clipsToBounds = true
+        self.collectionView?.backgroundView = imgBackground
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        
+        //Descomentar, si el tap no debe interferir o cancelar otras acciones
+        //tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.BuscarNewMSG()
+        MSGTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarNewMSG), userInfo: nil, repeats: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+       
+           self.MSGTimer.invalidate()
         
     }
     
@@ -67,7 +70,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
         if message.senderId == self.senderId {
             return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
         } else {
-            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor(red: 0.67, green: 0.75, blue: 0.79, alpha: 1))
+            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor(red: 141/255, green: 168/255, blue: 217/255, alpha: 1))
         }
          
     }
@@ -115,60 +118,19 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
     }
     
     // END COLLECTION VIEW FUNCTIONS
+    func dismissKeyboard() {
+        //Las vistas y toda la jerarquía renuncia a responder, para esconder el teclado
+        view.endEditing(true)
+    }
     
     // SENDING BUTTONS FUNCTIONS
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
-        
         mensajesMostrados.append(JSQMessage(senderId: myvariables.userperfil.Email, displayName: "", text: text))
         collectionView.reloadData()
         SendNewMessage(text: text)
         finishSendingMessage()
-    }
-    
-    /*override func didPressAccessoryButton(_ sender: UIButton!) {
-        let alert = UIAlertController(title: "Media Messages", message: "Please Select A Media", preferredStyle: .actionSheet);
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil);
-        
-        let photos = UIAlertAction(title: "Photos", style: .default,    handler: { (alert: UIAlertAction) in
-            self.chooseMedia(type: kUTTypeImage);
-        })
-        
-        let videos = UIAlertAction(title: "Videos", style: .default,    handler: { (alert: UIAlertAction) in
-            self.chooseMedia(type: kUTTypeMovie);
-        })
-        
-        alert.addAction(photos);
-        alert.addAction(videos);
-        alert.addAction(cancel);
-        present(alert, animated: true, completion: nil);
-        
-    }
-    
-    // END SENDING BUTTONS FUNCTIONS
-    
-    // PICKER VIEW FUNCTIONS
-    
-    private func chooseMedia(type: CFString) {
-        picker.mediaTypes = [type as String]
-        present(picker, animated: true, completion: nil);
-    }
- 
-    // END PICKER VIEW FUNCTIONS
-    
-    // DELEGATION FUNCTIONS
-    
-    func messageReceived(senderID: String, senderName: String, text: String) {
-        mensajesMostrados.append(JSQMessage(senderId: senderID, displayName: senderName, text: text));
-        collectionView.reloadData();
-    }*/
-    
-    
-    // END DELEGATION FUNCTIONS
-    
-    @IBAction func backBtn(_ sender: Any) {
-        dismiss(animated: true, completion: nil);
+        self.dismissKeyboard()
     }
     
     //FUNCTION TO SEARCH NEW MESSAGES
@@ -194,16 +156,15 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
                 self.collectionView.reloadData()
             }
         }))
-        
     }
     
     @IBAction func BlockUser(_ sender: Any) {
+        self.BlocUser.isEnabled = false
         myvariables.userperfil.ActualizarBloqueo(emailBloqueado: myvariables.usuariosMostrar[self.chatOpenPos].Email){ success in
             if success{
                 self.MSGTimer.invalidate()
                 myvariables.usuariosMostrar.remove(at: self.chatOpenPos)
                 DispatchQueue.main.async {
-                    //let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "UserConnected") as! UserViewController
                     let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "InicioView") as! ViewController
                     self.navigationController?.show(vc, sender: nil)
                 }
@@ -214,7 +175,13 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
     }
    
     func EliminarMSGRead(record : CKRecordID) {
-        self.MSGContainer.publicCloudDatabase.delete(withRecordID: record, completionHandler: { _,_ in })
+        self.MSGContainer.publicCloudDatabase.delete(withRecordID: record, completionHandler: {results, error in
+            if error == nil{
+
+            }else{
+                print(error)
+            }
+        })
     }
     
     func SendNewMessage(text: String) {

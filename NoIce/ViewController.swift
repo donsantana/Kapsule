@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import GoogleMaps
 import GoogleSignIn
 import CloudKit
 
@@ -45,6 +44,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
         
+        self.navigationItem.setHidesBackButton(true, animated:true)
+        
         myvariables.userperfil.ActualizarPosicion(posicionActual: self.locationManager.location!)
 
         //self.userTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
@@ -57,6 +58,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     
     override func viewDidAppear(_ animated: Bool) {
         self.TimerStart(estado: 1)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.TimerStart(estado: 0)
     }
     
     //MARK: - ACTUALIZACION DE GEOLOCALIZACION
@@ -82,8 +87,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
         }
     }
 
-   
-    
     //MARK: - BUSCAR USUARIOS CONECTADOS
     //MEJORAR ESTA FUNCION CAMBIAR EL CICLO FOR:
     func BuscarUsuariosConectados(){
@@ -99,16 +102,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
                         myvariables.usuariosMostrar.removeAll()
                         var i = 0
                         while i < (results?.count)!{
-                            
                             let usuarioTemp = CUser(nombreapellidos: results?[i].value(forKey: "nombreApellidos") as! String, email: results?[i].value(forKey: "email") as! String)
                             usuarioTemp.BuscarNuevosMSG(EmailDestino: myvariables.userperfil.Email)
                             bloqueados = results?[i].value(forKey: "bloqueados") as! [String]
-                             print("aqui estoys")
                             if  !bloqueados.contains(myvariables.userperfil.Email) && !myvariables.userperfil.bloqueados.contains(usuarioTemp.Email){
                                 let photo = results?[i].value(forKey: "foto") as! CKAsset
                                 let photoPerfil = NSData(contentsOf: photo.fileURL as URL)
                                 let imagenEmisor = UIImage(data: photoPerfil! as Data)!
-                            
                                 usuarioTemp.GuardarFotoPerfil(photo: imagenEmisor)
                                 myvariables.usuariosMostrar.append(usuarioTemp)
                             }
@@ -146,7 +146,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     }
     //MARK: - ACTION BOTONES GRAFICOS
     @IBAction func ShowMenuBtn(_ sender: Any) {
-        myvariables.userperfil.ActualizarDesconectado()
+        myvariables.userperfil.ActualizarConectado(estado: "0")
         sleep(3)
         exit(0)
     }

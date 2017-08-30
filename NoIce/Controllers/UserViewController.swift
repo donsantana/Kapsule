@@ -8,8 +8,10 @@
 
 import UIKit
 import CloudKit
+import UserNotifications
+import NotificationCenter
 
-class UserViewController: UITableViewController  {
+class UserViewController: UITableViewController, UNUserNotificationCenterDelegate {
 
     var userContainer = CKContainer.default()
     var connectedTimer: Timer!
@@ -17,10 +19,19 @@ class UserViewController: UITableViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //NotificationCenter.default.addObserver(self,selector: #selector(BuscarNewMsg),name: Notification.Name.CKAccountChanged,object: nil)
+       /* if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+            UIApplication.shared.registerForRemoteNotifications()
+        } else {
+            print("aqui")
+            connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
+        }*/
         connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
-
     }
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        self.BuscarUsuariosConectados()
+        //connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
         self.tableView.reloadData()
     }
     
@@ -34,7 +45,6 @@ class UserViewController: UITableViewController  {
         return myvariables.usuariosMostrar.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Bundle.main.loadNibNamed("UserTableViewCell", owner: self, options: nil)?.first as! UserTableViewCell
         // Configure the cell...
@@ -42,17 +52,15 @@ class UserViewController: UITableViewController  {
         cell.UserConectedImage.layer.cornerRadius = (cell.UserConectedImage.frame.width) / 4
         cell.UserConectedImage.contentMode = .scaleAspectFill
         cell.UserConectedImage.clipsToBounds = true
-        //cell.textLabel?.text = "Clic to send friend´s request"*/
         if myvariables.usuariosMostrar[indexPath.row].NewMsg == true {
                 cell.NewMsg.isHidden = false
+        }else{
+                cell.NewMsg.isHidden = true
         }
-
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        //let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "MSGView") as! MSGViewController
-
         let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "Chat") as! ChatViewController
         vc.chatOpenPos = indexPath.row
         self.navigationController?.show(vc, sender: nil)
@@ -69,17 +77,20 @@ class UserViewController: UITableViewController  {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete {
-            myvariables.usuariosMostrar.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableViewRowAnimation.automatic)
-            tableView.reloadData()
+            myvariables.userperfil.ActualizarBloqueo(emailBloqueado: myvariables.usuariosMostrar[indexPath.row].Email, completionHandler: {results in
+                myvariables.usuariosMostrar.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath as IndexPath], with: UITableViewRowAnimation.automatic)
+                tableView.reloadData()
+            })
+
         }
-    
     }
     
-    func BuscarUsuariosConectados(){        
+    
+    func BuscarUsuariosConectados(){
+        
         let predicateUsuarioIn = NSPredicate(format: "distanceToLocation:fromLocation:(posicion, %@) < 40 and conectado == %@ and email != %@", myvariables.userperfil.Posicion, "1", myvariables.userperfil.Email)
         
-        //let predicateUsuarioIn = NSPredicate(format: "conectado == %@ and email != %@", "1", myvariables.userperfil.Email)
         let queryUsuarioIn = CKQuery(recordType: "CUsuarios",predicate: predicateUsuarioIn)
         self.userContainer.publicCloudDatabase.perform(queryUsuarioIn, inZoneWith: nil, completionHandler: ({results, error in
             if (error == nil) {
@@ -92,7 +103,7 @@ class UserViewController: UITableViewController  {
                         let usuarioTemp = CUser(nombreapellidos: results?[i].value(forKey: "nombreApellidos") as! String, email: results?[i].value(forKey: "email") as! String)
                         usuarioTemp.BuscarNuevosMSG(EmailDestino: myvariables.userperfil.Email)
                         bloqueados = results?[i].value(forKey: "bloqueados") as! [String]
-                        print("cantidad de usuarios bloqueados: \(bloqueados.contains(myvariables.userperfil.Email))")
+                        
                         if  !bloqueados.contains(myvariables.userperfil.Email) && !myvariables.userperfil.bloqueados.contains(usuarioTemp.Email){
                             let photo = results?[i].value(forKey: "foto") as! CKAsset
                             let photoPerfil = NSData(contentsOf: photo.fileURL as URL)
@@ -103,29 +114,34 @@ class UserViewController: UITableViewController  {
                         }
                         i += 1
                     }
-
             }else{
                 var i = 0
                 while i < (results?.count)!{
                     myvariables.usuariosMostrar[i].BuscarNuevosMSG(EmailDestino: myvariables.userperfil.Email)
                     i += 1
                 }
-                    
             }
             }else{
                 print("ERROR DE CONSULTA " + error.debugDescription)
             }
             DispatchQueue.main.async {
-                print("Actualizando tabla")
                 self.tableView.reloadData()
             }
         }))
     }
     
     func BuscarNewMsg() {
-        print("Buscando MSG")
        self.tableView.reloadData()
     }
-
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        self.BuscarUsuariosConectados()
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("nueva Notificaci'on")
+    }
 
 }
