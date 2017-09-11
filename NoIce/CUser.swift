@@ -10,7 +10,89 @@
 import Foundation
 import UIKit
 import CloudKit
+import SocketIO
 
+class CUser{
+    //Atributos
+    var NombreApellidos: String
+    var Email: String
+    var Telefono: String
+    var FotoPerfil: UIImage
+    var Posicion: CLLocation
+    var bloqueados: [String]!
+    
+    //Métodos
+    init(nombreapellidos: String, email: String){
+        self.NombreApellidos = nombreapellidos
+        self.Email = email
+        self.Telefono = "movil"
+        self.FotoPerfil = UIImage(named: "user")!
+        self.Posicion = CLLocation()
+        self.bloqueados = [String]()
+    }
+    
+    func RegistrarUser(){
+        let registroData: [String: Any] = [
+            "nombreApellidos": self.NombreApellidos,
+            "email": self.Email,
+            "telefono": self.Telefono,
+            "fotoPerfil": self.FotoPerfil,
+            "posicion": self.Posicion
+        ]
+        myvariables.socketConexion.emit("register", registroData)
+    }
+
+    func ActualizarFotoPerfil(photo: UIImage){
+        //Evento fotoUpdate
+        self.FotoPerfil = photo
+        let fotoData = [
+            "foto": self.FotoPerfil
+        ]
+        myvariables.socketConexion.emit("fotoUpdate", fotoData)
+        
+        //enviar foto al servidor
+    }
+    
+    func GuardarFotoPerfil(photo: UIImage){
+        self.FotoPerfil = photo
+    }
+    
+    func ActualizarPosicion(newPosicion: CLLocation) {
+        self.Posicion = newPosicion
+        let posicionData = [
+            "newPosicion": newPosicion
+        ]
+        myvariables.socketConexion.emit("posicion", posicionData)
+    }
+    
+    //RENDER IMAGEN
+    func saveImageToFile(_ image: UIImage) -> URL
+    {
+        let filemgr = FileManager.default
+        
+        let dirPaths = filemgr.urls(for: .documentDirectory,
+                                    in: .userDomainMask)
+        
+        let fileURL = dirPaths[0].appendingPathComponent("currentImage.jpg")
+        
+        if let renderedJPEGData =
+            UIImageJPEGRepresentation(image, 0.5) {
+            try! renderedJPEGData.write(to: fileURL)
+        }
+        
+        return fileURL
+    }
+    
+    func ActualizarBloqueo(emailBloqueado: String, completionHandler: @escaping(Bool)->()){
+        //
+    }
+    func CargarBloqueados(bloqueados: [String]){
+        self.bloqueados = bloqueados
+    }
+    
+}
+
+/*
 class CUser{
     //Atributos
     var NombreApellidos: String
@@ -56,7 +138,7 @@ class CUser{
         self.UserContainer.publicCloudDatabase.add(userRecordsOperation)
         
         self.recordName = recordUser.recordID.recordName
-
+        
     }
     func GuardarFotoPerfil(photo: UIImage){
         self.FotoPerfil = photo
@@ -67,48 +149,48 @@ class CUser{
     }
     
     func ActualizarPosicion(posicionActual: CLLocation) {
-            self.Posicion = posicionActual
-            let predicateKapsuleVista = NSPredicate(format: "email == %@", self.Email)
+        self.Posicion = posicionActual
+        let predicateKapsuleVista = NSPredicate(format: "email == %@", self.Email)
+        
+        let queryKapsuleVista = CKQuery(recordType: "CUsuarios",predicate: predicateKapsuleVista)
+        
+        self.UserContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
             
-            let queryKapsuleVista = CKQuery(recordType: "CUsuarios",predicate: predicateKapsuleVista)
-            
-            self.UserContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
-                
-                if (error == nil) {
-                    if results?.count != 0{
-                        let recordID = results?[0].recordID
-                        
-                        print("Este RecordId \(recordID?.recordName)")
-                        
-                        self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
-                            if error != nil {
-                                print("Error fetching record: \(error?.localizedDescription)")
-                            } else {
-                                record?.setObject(self.Posicion as CKRecordValue?, forKey: "posicion")
-                                
-                                // Save this record again
-                                self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
-                                    if saveError != nil {
-                                        print("Error saving record: \(saveError?.localizedDescription)")
-                                    } else {
-                                        print("ACTUALIZADA POSICION")
-                                    }
-                                })
-                            }
+            if (error == nil) {
+                if results?.count != 0{
+                    let recordID = results?[0].recordID
+                    
+                    print("Este RecordId \(recordID?.recordName)")
+                    
+                    self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
+                        if error != nil {
+                            print("Error fetching record: \(error?.localizedDescription)")
+                        } else {
+                            record?.setObject(self.Posicion as CKRecordValue?, forKey: "posicion")
                             
-                        })
-                    }else{
-                        print("NO SE ENCONTRO EL USUARIO")
-                    }
+                            // Save this record again
+                            self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
+                                if saveError != nil {
+                                    print("Error saving record: \(saveError?.localizedDescription)")
+                                } else {
+                                    print("ACTUALIZADA POSICION")
+                                }
+                            })
+                        }
+                        
+                    })
+                }else{
+                    print("NO SE ENCONTRO EL USUARIO")
                 }
-            }))
-
+            }
+        }))
+        
     }
     
     func ActualizarConectado(estado: String){
         
         let recordID = CKRecordID(recordName: self.recordName)
-                    
+        
         self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID, completionHandler: { (record, error) in
             print("Entre aqui")
             if error != nil {
@@ -163,7 +245,7 @@ class CUser{
                 }
             }
         }))
-
+        
     }
     
     //RENDER IMAGEN
@@ -183,7 +265,7 @@ class CUser{
         
         return fileURL
     }
-
+    
     
     func BuscarNuevosMSG(EmailDestino: String) {
         
@@ -199,48 +281,48 @@ class CUser{
                 
             }
         }))
-  
+        
     }
     
     func ActualizarBloqueo(emailBloqueado: String, completionHandler: @escaping(Bool)->()){
-
-            let predicateMesajes = NSPredicate(format: "email == %@",self.Email)
-            
-            let queryVista = CKQuery(recordType: "CUsuarios",predicate: predicateMesajes)
-            
-            self.UserContainer.publicCloudDatabase.perform(queryVista, inZoneWith: nil, completionHandler: ({results, error in
-                if (error == nil) {
-                    if (results?.count)! > 0{
-                        let recordID = results?[0].recordID
-                        self.bloqueados = results?[0].value(forKey: "bloqueados") as! [String]
-                        self.bloqueados.append(emailBloqueado)
-
-                        self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
-                            if error != nil {
-                                print("Error fetching record: \(error?.localizedDescription)")
-                            } else {
-                                record?.setObject(self.bloqueados as CKRecordValue?, forKey: "bloqueados")
-                                // Save this record again
-                                self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
-                                    if saveError != nil {
-                                        completionHandler(false)
-                                    } else {
-                                        completionHandler(true)
-                                    }
-                                })
-                            }
-                            
-                        })
-
-                    }else{
-
-                    }
+        
+        let predicateMesajes = NSPredicate(format: "email == %@",self.Email)
+        
+        let queryVista = CKQuery(recordType: "CUsuarios",predicate: predicateMesajes)
+        
+        self.UserContainer.publicCloudDatabase.perform(queryVista, inZoneWith: nil, completionHandler: ({results, error in
+            if (error == nil) {
+                if (results?.count)! > 0{
+                    let recordID = results?[0].recordID
+                    self.bloqueados = results?[0].value(forKey: "bloqueados") as! [String]
+                    self.bloqueados.append(emailBloqueado)
+                    
+                    self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
+                        if error != nil {
+                            print("Error fetching record: \(error?.localizedDescription)")
+                        } else {
+                            record?.setObject(self.bloqueados as CKRecordValue?, forKey: "bloqueados")
+                            // Save this record again
+                            self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
+                                if saveError != nil {
+                                    completionHandler(false)
+                                } else {
+                                    completionHandler(true)
+                                }
+                            })
+                        }
+                        
+                    })
+                    
+                }else{
+                    
                 }
-            }))
-
+            }
+        }))
+        
     }
     func CargarBloqueados(bloqueados: [String]){
         self.bloqueados = bloqueados
     }
-    
-}
+}*/
+

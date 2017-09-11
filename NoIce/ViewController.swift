@@ -46,7 +46,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
         
         self.navigationItem.setHidesBackButton(true, animated:true)
         
-        myvariables.userperfil.ActualizarPosicion(posicionActual: self.locationManager.location!)
+        myvariables.userperfil.ActualizarPosicion(newPosicion: self.locationManager.location!)
 
         //self.userTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
 
@@ -68,7 +68,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if myvariables.userperfil != nil{
             if myvariables.userperfil.Posicion.distance(from: locations.last!) > 10{
-                myvariables.userperfil.ActualizarPosicion(posicionActual: locations.last!)
+                myvariables.userperfil.ActualizarPosicion(newPosicion: locations.last!)
             }
         }
     }
