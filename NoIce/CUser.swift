@@ -10,9 +10,8 @@
 import Foundation
 import UIKit
 import CloudKit
-import SocketIO
 
-class CUser{
+/*class CUser{
     //Atributos
     var NombreApellidos: String
     var Email: String
@@ -90,9 +89,8 @@ class CUser{
         self.bloqueados = bloqueados
     }
     
-}
+}*/
 
-/*
 class CUser{
     //Atributos
     var NombreApellidos: String
@@ -324,5 +322,5 @@ class CUser{
     func CargarBloqueados(bloqueados: [String]){
         self.bloqueados = bloqueados
     }
-}*/
+}
 

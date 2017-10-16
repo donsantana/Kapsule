@@ -46,9 +46,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
         
         self.navigationItem.setHidesBackButton(true, animated:true)
         
-        myvariables.userperfil.ActualizarPosicion(newPosicion: self.locationManager.location!)
-
-        //self.userTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
+        myvariables.userperfil.ActualizarPosicion(posicionActual: self.locationManager.location!)
 
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -68,7 +66,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if myvariables.userperfil != nil{
             if myvariables.userperfil.Posicion.distance(from: locations.last!) > 10{
-                myvariables.userperfil.ActualizarPosicion(newPosicion: locations.last!)
+                myvariables.userperfil.ActualizarPosicion(posicionActual: locations.last!)
             }
         }
     }
@@ -91,7 +89,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     //MEJORAR ESTA FUNCION CAMBIAR EL CICLO FOR:
     func BuscarUsuariosConectados(){
         
-            let predicateUsuarioIn = NSPredicate(format: "distanceToLocation:fromLocation:(posicion, %@) < 40 and conectado == %@ and email != %@", myvariables.userperfil.Posicion, "1", myvariables.userperfil.Email)
+            let predicateUsuarioIn = NSPredicate(format: "distanceToLocation:fromLocation:(posicion, %@) < 300 and conectado == %@ and email != %@", myvariables.userperfil.Posicion, "1", myvariables.userperfil.Email)
             self.TimerStart(estado: 0)
             //let predicateUsuarioIn = NSPredicate(format: "conectado == %@ and email != %@", "1", myvariables.userperfil.Email)
             let queryUsuarioIn = CKQuery(recordType: "CUsuarios",predicate: predicateUsuarioIn)

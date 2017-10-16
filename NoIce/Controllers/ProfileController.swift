@@ -84,6 +84,18 @@ class ProfileController: UIViewController, UINavigationControllerDelegate, UIIma
         self.camaraController.cameraDevice = .front
         self.present(self.camaraController, animated: true, completion: nil)
     }
+    @IBAction func ShareApp(_ sender: Any) {
+        if let name = URL(string: "itms://itunes.apple.com/us/app/apple-store/id1290022053?mt=8") {
+            let objectsToShare = [name]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            
+            self.present(activityVC, animated: true, completion: nil)
+        }
+        else
+        {
+            // show alert for not available
+        }
+    }
     
     @IBAction func SignOut(_ sender: Any) {
         myvariables.userperfil.ActualizarConectado(estado: "0")

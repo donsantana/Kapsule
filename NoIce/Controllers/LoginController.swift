@@ -43,6 +43,8 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
                 self.FaceLoginBtn.removeConstraint(const)
             }
         }
+        let buttonText = NSAttributedString(string: "Facebook")
+        self.FaceLoginBtn.setAttributedTitle(buttonText, for: .normal)
         self.getFBUserData()
         
     
@@ -56,7 +58,7 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
         
     }
     
-    func socketEventos() {
+    /*func socketEventos() {
         myvariables.socketConexion.on("connect"){data, ack in
             let temp = data as? [String: Any]
             if (temp?["foto"] as! String) == "null"{
@@ -98,9 +100,9 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
             }
 
             }
-    }
+    }*/
 
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!){
+    /*func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!){
         if error == nil {
             myvariables.userperfil = CUser(nombreapellidos: user.profile.givenName + " " + user.profile.familyName, email: user.profile.email)
             let loginData = [
@@ -108,9 +110,9 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
             ]
             myvariables.socketConexion.emit("connect", loginData)
         }
-    }
+    }*/
     
-    /*func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!){
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!){
         if error == nil {
             self.LoginView.isHidden = true
             self.LoadingView.isHidden = false
@@ -161,7 +163,7 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
         }else{
             print("ERROR DE LOGIN")
         }
-    }*/
+    }
     
     
     // Finished disconnecting |user| from the app successfully if |error| is |nil|.
@@ -183,9 +185,8 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
             let KPhotoPreview = info[UIImagePickerControllerOriginalImage] as? UIImage
             let imagenURL = self.saveImageToFile(KPhotoPreview!)
             let fotoContenido = CKAsset(fileURL: imagenURL)
+            myvariables.userperfil.RegistrarUser(NombreApellidos: myvariables.userperfil.NombreApellidos, Email: myvariables.userperfil.Email, photo: fotoContenido,pos: myvariables.userperfil.Posicion)
             myvariables.userperfil.GuardarFotoPerfil(photo: KPhotoPreview!)
-            myvariables.userperfil.RegistrarUser()
-            myvariables.userperfil.Posicion = self.locationManager.location!
             self.LoadingView.isHidden = true
             let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "InicioView") as! ViewController
             self.navigationController?.show(vc, sender: nil)
@@ -203,9 +204,8 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
             }))
             self.present(EditPhoto, animated: true, completion: nil)
         }
-
+        
     }
-    
     //RENDER IMAGEN
     func saveImageToFile(_ image: UIImage) -> URL
     {
@@ -238,7 +238,7 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
         print("Login Out")
     }
     
-    func getFBUserData(){
+    /*func getFBUserData(){
         
         if((FBSDKAccessToken.current()) != nil){
             self.LoadingView.isHidden = false
@@ -253,9 +253,9 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
                 }
             })
         }
-    }
+    }*/
     
-   /* func getFBUserData(){
+    func getFBUserData(){
         
         if((FBSDKAccessToken.current()) != nil){
             self.LoadingView.isHidden = false
@@ -309,7 +309,7 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
                 }
             })
         }
-    }*/
+    }
 
     
 

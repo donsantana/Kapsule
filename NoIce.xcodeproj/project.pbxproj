@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1FFFAAC61D6D59E45CA1BE52 /* Pods_NoIce.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54835704C69F3ADD43B0445 /* Pods_NoIce.framework */; };
+		AF316D0F1F92A6A900F74FE6 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = AF316D0E1F92A6A900F74FE6 /* user.png */; };
 		B564C41B1EAA501700FABEAB /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B564C41A1EAA501700FABEAB /* LoginController.swift */; };
 		B56EBD581E4629BF003C85D8 /* CMensaje.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56EBD571E4629BF003C85D8 /* CMensaje.swift */; };
 		B56F409A1EB101EE00DA8A8E /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56F40991EB101EE00DA8A8E /* ProfileController.swift */; };
 		B57B4EB71E50F5F6003FAF01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57B4EB51E50F5F6003FAF01 /* Main.storyboard */; };
-		B57BBFAF1F51F4FD00D67003 /* CSocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BBFAE1F51F4FD00D67003 /* CSocketConnection.swift */; };
 		B58668291E60BEBB00D463A4 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58668281E60BEBB00D463A4 /* UserViewController.swift */; };
 		B586682E1E610E3500D463A4 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B586682C1E610E3500D463A4 /* UserTableViewCell.swift */; };
 		B58798601EC8B579008D8073 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587985F1EC8B579008D8073 /* ChatViewController.swift */; };
@@ -37,7 +37,6 @@
 		B5DCAE741E292771000C1325 /* NoIceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE731E292771000C1325 /* NoIceTests.swift */; };
 		B5DCAE7F1E292771000C1325 /* NoIceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE7E1E292771000C1325 /* NoIceUITests.swift */; };
 		B5DCAE911E2A8D49000C1325 /* CUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE901E2A8D49000C1325 /* CUser.swift */; };
-		B5DCAE951E2AA1D8000C1325 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DCAE941E2AA1D8000C1325 /* user.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,11 +58,11 @@
 
 /* Begin PBXFileReference section */
 		79814D2D875FE8A75DF416A6 /* Pods-NoIce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoIce.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoIce/Pods-NoIce.debug.xcconfig"; sourceTree = "<group>"; };
+		AF316D0E1F92A6A900F74FE6 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user.png; path = ../../../Desktop/user.png; sourceTree = "<group>"; };
 		B564C41A1EAA501700FABEAB /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = Controllers/LoginController.swift; sourceTree = "<group>"; };
 		B56EBD571E4629BF003C85D8 /* CMensaje.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMensaje.swift; sourceTree = "<group>"; };
 		B56F40991EB101EE00DA8A8E /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileController.swift; path = Controllers/ProfileController.swift; sourceTree = "<group>"; };
 		B57B4EB61E50F5F6003FAF01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B57BBFAE1F51F4FD00D67003 /* CSocketConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSocketConnection.swift; sourceTree = "<group>"; };
 		B57BBFB11F5385EE00D67003 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		B58668281E60BEBB00D463A4 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserViewController.swift; path = Controllers/UserViewController.swift; sourceTree = "<group>"; };
 		B586682C1E610E3500D463A4 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserTableViewCell.swift; path = Views/UserTableViewCell.swift; sourceTree = "<group>"; };
@@ -102,7 +101,6 @@
 		B5DCAE801E292771000C1325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5DCAE8C1E293CC6000C1325 /* Pods_NoIce.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_NoIce.framework; path = "../../../../../Users/dsantana/Library/Developer/Xcode/DerivedData/NoIce-ckyddqztfylhtfgchfkibaxtrjvd/Build/Products/Debug-iphonesimulator/Pods_NoIce.framework"; sourceTree = "<group>"; };
 		B5DCAE901E2A8D49000C1325 /* CUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CUser.swift; sourceTree = "<group>"; };
-		B5DCAE941E2AA1D8000C1325 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user.png; path = ../../Imagenes/icons/user.png; sourceTree = "<group>"; };
 		C54835704C69F3ADD43B0445 /* Pods_NoIce.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoIce.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF11C155B493ADC191566ED0 /* Pods-NoIce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoIce.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoIce/Pods-NoIce.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,12 +195,12 @@
 		B5DCAE5A1E292770000C1325 /* NoIce */ = {
 			isa = PBXGroup;
 			children = (
+				AF316D0E1F92A6A900F74FE6 /* user.png */,
 				B5D9DB161F4F88F5009955B9 /* DesignableX */,
 				B57B4EB51E50F5F6003FAF01 /* Main.storyboard */,
 				B57B4EB81E50F993003FAF01 /* Model */,
 				B5938CD51E4CFE8B00FFD6C5 /* Views */,
 				B58DC2D91E2FCBBB0038BBE2 /* NoIce.entitlements */,
-				B5DCAE941E2AA1D8000C1325 /* user.png */,
 				B5DCAE5B1E292770000C1325 /* AppDelegate.swift */,
 				B5DCAE5D1E292770000C1325 /* ViewController.swift */,
 				B5DCAE651E292771000C1325 /* Assets.xcassets */,
@@ -211,7 +209,6 @@
 				B5DCAE621E292770000C1325 /* NoIce.xcdatamodeld */,
 				B5DCAE901E2A8D49000C1325 /* CUser.swift */,
 				B56EBD571E4629BF003C85D8 /* CMensaje.swift */,
-				B57BBFAE1F51F4FD00D67003 /* CSocketConnection.swift */,
 			);
 			path = NoIce;
 			sourceTree = "<group>";
@@ -386,8 +383,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5DCAE691E292771000C1325 /* LaunchScreen.storyboard in Resources */,
+				AF316D0F1F92A6A900F74FE6 /* user.png in Resources */,
 				B5D767F81EDB6915000C5239 /* UserTableViewCell.xib in Resources */,
-				B5DCAE951E2AA1D8000C1325 /* user.png in Resources */,
 				B57B4EB71E50F5F6003FAF01 /* Main.storyboard in Resources */,
 				B5D9DB0F1F455310009955B9 /* Assets.xcassets in Resources */,
 			);
@@ -416,13 +413,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NoIce-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BA431880541A32A75F2CC6B7 /* [CP] Embed Pods Frameworks */ = {
@@ -431,9 +431,28 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NoIce/Pods-NoIce-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Canvas/Canvas.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Canvas.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -446,9 +465,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NoIce/Pods-NoIce-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -475,7 +497,6 @@
 				B56EBD581E4629BF003C85D8 /* CMensaje.swift in Sources */,
 				B5DCAE641E292771000C1325 /* NoIce.xcdatamodeld in Sources */,
 				B5D9DB271F4F892E009955B9 /* UIViewControllerX.swift in Sources */,
-				B57BBFAF1F51F4FD00D67003 /* CSocketConnection.swift in Sources */,
 				B56F409A1EB101EE00DA8A8E /* ProfileController.swift in Sources */,
 				B5D9DB231F4F892E009955B9 /* UILabelX.swift in Sources */,
 				B58798601EC8B579008D8073 /* ChatViewController.swift in Sources */,

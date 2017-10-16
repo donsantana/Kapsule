@@ -13,7 +13,6 @@ import GoogleSignIn
 import UserNotifications
 import CloudKit
 import FBSDKLoginKit
-import SocketIO
 
 
 struct myvariables {
@@ -22,7 +21,6 @@ struct myvariables {
     static var usuariosMostrar = [CUser]()
     static var MensajesRecibidos = [CMensaje]()
     static var MensajesEnviados = [CMensaje]()
-    static var socketConexion = SocketIOClient(socketURL: URL(string: "ddlf")!, config: [.log(false), .forcePolling(true)])
 }
 
 @UIApplicationMain
@@ -110,13 +108,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, GIDSig
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        myvariables.socketConexion.connect()
+        //myvariables.socketConexion.connect()
          //myvariables.userperfil.ActualizarConectado(estado: "1")
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        myvariables.socketConexion.disconnect()
+        //myvariables.socketConexion.disconnect()
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         //self.saveContext()

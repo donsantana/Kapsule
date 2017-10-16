@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import SocketIO
 
 
-class CSocket{
+/*class CSocket{
     
     var socketConnect: SocketIOClient!
     
@@ -30,3 +29,4 @@ class CSocket{
         self.socketConnect.emit(evento, datos as! SocketData)
     }
 }
+*/

@@ -12,11 +12,12 @@ import MobileCoreServices
 import AVKit
 import CloudKit
 
-class ChatViewController: JSQMessagesViewController, UINavigationControllerDelegate, UITextFieldDelegate {
+class ChatViewController: JSQMessagesViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     var chatOpenPos: Int!
     var MSGTimer : Timer!
     var MSGContainer = CKContainer.default()
+    var tap: UITapGestureRecognizer!
     
     @IBOutlet weak var BlocUser: UIBarButtonItem!
     
@@ -41,8 +42,8 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
         imgBackground.clipsToBounds = true
         self.collectionView?.backgroundView = imgBackground
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        
+        self.tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        collectionView.addGestureRecognizer(self.tap)
         //Descomentar, si el tap no debe interferir o cancelar otras acciones
         //tap.cancelsTouchesInView = false
         
@@ -64,9 +65,10 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
     // COLLECTION VIEW FUNCTIONS
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
-        
+
         let bubbleFactory = JSQMessagesBubbleImageFactory()
         let message = mensajesMostrados[indexPath.item]
+        collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
         if message.senderId == self.senderId {
             return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
         } else {
@@ -75,9 +77,9 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
          
     }
     
-    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
-        
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource!{
         let message = mensajesMostrados[indexPath.item]
+        
         if message.senderId == self.senderId {
             return nil //JSQMessagesAvatarImageFactory.avatarImage(with: myvariables.userperfil.FotoPerfil, diameter: 70)
         } else {
@@ -90,10 +92,14 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
         return mensajesMostrados[indexPath.item]
     }
     
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapCellAt indexPath: IndexPath!, touchLocation: CGPoint) {
+        self.dismissKeyboard()
+    }
+    
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
         
         let msg = mensajesMostrados[indexPath.item]
-        
+        self.dismissKeyboard()
         if msg.isMediaMessage {
             if let mediaItem = msg.media as? JSQVideoMediaItem {
                 let player = AVPlayer(url: mediaItem.fileURL)
@@ -130,7 +136,6 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
         collectionView.reloadData()
         SendNewMessage(text: text)
         finishSendingMessage()
-        self.dismissKeyboard()
     }
     
     //FUNCTION TO SEARCH NEW MESSAGES
