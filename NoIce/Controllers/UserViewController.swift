@@ -30,9 +30,13 @@ class UserViewController: UITableViewController, UNUserNotificationCenterDelegat
         connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.BuscarUsuariosConectados()
-        //connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
+        //self.BuscarUsuariosConectados()
+        connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
         self.tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        connectedTimer.invalidate()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -86,7 +90,6 @@ class UserViewController: UITableViewController, UNUserNotificationCenterDelegat
         }
     }
     
-    
     func BuscarUsuariosConectados(){
         
         let predicateUsuarioIn = NSPredicate(format: "distanceToLocation:fromLocation:(posicion, %@) < 40 and conectado == %@ and email != %@", myvariables.userperfil.Posicion, "1", myvariables.userperfil.Email)
@@ -94,8 +97,8 @@ class UserViewController: UITableViewController, UNUserNotificationCenterDelegat
         let queryUsuarioIn = CKQuery(recordType: "CUsuarios",predicate: predicateUsuarioIn)
         self.userContainer.publicCloudDatabase.perform(queryUsuarioIn, inZoneWith: nil, completionHandler: ({results, error in
             if (error == nil) {
-                if (results?.count)! != myvariables.usuariosMostrar.count{
-                //if (results?.count)! > 0{
+                //if (results?.count)! != myvariables.usuariosMostrar.count{
+                if (results?.count)! > 0{
                     myvariables.usuariosMostrar.removeAll()
                     var bloqueados = [String]()
                     var i = 0
@@ -114,12 +117,6 @@ class UserViewController: UITableViewController, UNUserNotificationCenterDelegat
                         }
                         i += 1
                     }
-            }else{
-                var i = 0
-                while i < (results?.count)!{
-                    myvariables.usuariosMostrar[i].BuscarNuevosMSG(EmailDestino: myvariables.userperfil.Email)
-                    i += 1
-                }
             }
             }else{
                 print("ERROR DE CONSULTA " + error.debugDescription)

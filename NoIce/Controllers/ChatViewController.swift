@@ -25,7 +25,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.BlocUser.isEnabled = false
+        //self.BlocUser.isEnabled = false
         self.senderId = myvariables.userperfil.Email
         self.senderDisplayName = ""
 
@@ -174,9 +174,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
                     self.navigationController?.show(vc, sender: nil)
                 }
             }
-            
         }
-
     }
    
     func EliminarMSGRead(record : CKRecordID) {
