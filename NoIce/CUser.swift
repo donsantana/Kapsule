@@ -276,7 +276,6 @@ class CUser{
                 if (results?.count)! > 0{
                     self.NewMsg = true
                 }
-                
             }
         }))
         

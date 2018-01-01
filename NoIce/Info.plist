@@ -48,11 +48,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>4</string>
 	<key>FacebookAppID</key>
 	<string>1438673499558995</string>
 	<key>FacebookDisplayName</key>
-	<string>Bice</string>
+	<string>Brice</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -62,13 +62,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>take user photo</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>userlocation</string>
-	<key>NSLocationUsageDescription</key>
-	<string>user distance</string>
+	<string>The app require acces to the camera to take user perfil photo.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>userlocation</string>
+	<string>The app need to acces your Location to search the people closer to your position.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>userphoto</string>
 	<key>UILaunchStoryboardName</key>

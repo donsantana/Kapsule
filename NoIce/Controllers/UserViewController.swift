@@ -8,10 +8,8 @@
 
 import UIKit
 import CloudKit
-import UserNotifications
-import NotificationCenter
 
-class UserViewController: UITableViewController, UNUserNotificationCenterDelegate {
+class UserViewController: UITableViewController {
 
     var userContainer = CKContainer.default()
     var connectedTimer: Timer!
@@ -19,15 +17,7 @@ class UserViewController: UITableViewController, UNUserNotificationCenterDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //NotificationCenter.default.addObserver(self,selector: #selector(BuscarNewMsg),name: Notification.Name.CKAccountChanged,object: nil)
-       /* if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().delegate = self
-            UIApplication.shared.registerForRemoteNotifications()
-        } else {
-            print("aqui")
-            connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
-        }*/
-        connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
+        //connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
     }
     override func viewWillAppear(_ animated: Bool) {
         //self.BuscarUsuariosConectados()
@@ -57,6 +47,7 @@ class UserViewController: UITableViewController, UNUserNotificationCenterDelegat
         cell.UserConectedImage.contentMode = .scaleAspectFill
         cell.UserConectedImage.clipsToBounds = true
         if myvariables.usuariosMostrar[indexPath.row].NewMsg == true {
+            print("hereeee")
                 cell.NewMsg.isHidden = false
         }else{
                 cell.NewMsg.isHidden = true
@@ -97,9 +88,9 @@ class UserViewController: UITableViewController, UNUserNotificationCenterDelegat
         let queryUsuarioIn = CKQuery(recordType: "CUsuarios",predicate: predicateUsuarioIn)
         self.userContainer.publicCloudDatabase.perform(queryUsuarioIn, inZoneWith: nil, completionHandler: ({results, error in
             if (error == nil) {
+                myvariables.usuariosMostrar.removeAll()
                 //if (results?.count)! != myvariables.usuariosMostrar.count{
                 if (results?.count)! > 0{
-                    myvariables.usuariosMostrar.removeAll()
                     var bloqueados = [String]()
                     var i = 0
                     while i < (results?.count)!{
@@ -117,28 +108,25 @@ class UserViewController: UITableViewController, UNUserNotificationCenterDelegat
                         }
                         i += 1
                     }
-            }
+                }else{
+                    self.connectedTimer.invalidate()
+                    let alertaClose = UIAlertController (title: NSLocalizedString("No user connected",comment:"Close the Application"), message: NSLocalizedString("There aren't any user connected near you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
+                    alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+                            let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "ProfileView") as! ProfileController
+                            self.navigationController?.show(vc, sender: nil)
+                    }))
+                    self.present(alertaClose, animated: true, completion: nil)
+                }
             }else{
                 print("ERROR DE CONSULTA " + error.debugDescription)
             }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
         }))
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func BuscarNewMsg() {
        self.tableView.reloadData()
     }
-    
-    @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        self.BuscarUsuariosConectados()
-    }
-    
-    @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("nueva Notificaci'on")
-    }
-
 }

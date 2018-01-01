@@ -51,7 +51,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
         // Do any additional setup after loading the view, typically from a nib.
         
        //PARA MOSTRAR Y OCULTAR EL TECLADO
-        /*NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)*/
+    
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,7 +79,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
     func TimerStart(estado: Int){
         if estado == 1{
             self.userTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
-            print("Activando Timer")
         }else{
             self.userTimer.invalidate()
         }
@@ -96,8 +95,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
             self.cloudContainer.publicCloudDatabase.perform(queryUsuarioIn, inZoneWith: nil, completionHandler: ({results, error in
                 if (error == nil) {
                         var bloqueados = [String]()
-                    if (results?.count)! != myvariables.usuariosMostrar.count{
-                        myvariables.usuariosMostrar.removeAll()
+                    myvariables.usuariosMostrar.removeAll()
+                    if (results?.count)! > 0{
                         var i = 0
                         while i < (results?.count)!{
                             let usuarioTemp = CUser(nombreapellidos: results?[i].value(forKey: "nombreApellidos") as! String, email: results?[i].value(forKey: "email") as! String)
@@ -113,34 +112,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIImagePicker
                             i += 1
                         }
                     }else{
-                        var i = 0
-                        while i < myvariables.usuariosMostrar.count{
-                            myvariables.usuariosMostrar[i].BuscarNuevosMSG(EmailDestino: myvariables.userperfil.Email)
-                            i += 1
-                        }
+                        self.locationManager.stopUpdatingLocation()
+                        let alertaClose = UIAlertController (title: NSLocalizedString("No user connected",comment:"Close the Application"), message: NSLocalizedString("There aren't any user connected near you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
+                        alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+                                let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "ProfileView") as! ProfileController
+                                self.navigationController?.show(vc, sender: nil)
+                        }))
+                        self.present(alertaClose, animated: true, completion: nil)
                     }
                 }else{
                     print("ERROR DE CONSULTA " + error.debugDescription)
                 }
-                if myvariables.usuariosMostrar.count == 0{
-                    self.locationManager.stopUpdatingLocation()
-                    let alertaClose = UIAlertController (title: NSLocalizedString("No user connected",comment:"Close the Application"), message: NSLocalizedString("There aren't any user connected near you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
-                    alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
-                        DispatchQueue.main.async {
-                            let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "ProfileView") as! ProfileController
-                            self.navigationController?.show(vc, sender: nil)
-                        }
-                    }))
-                    self.present(alertaClose, animated: true, completion: nil)
-                }else{
-                    DispatchQueue.main.async {
-                        let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "UserConnected") as! UserViewController
-                        self.navigationController?.show(vc, sender: nil)
-                    }
+                DispatchQueue.main.async {
+                    let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "UserConnected") as! UserViewController
+                    self.navigationController?.show(vc, sender: nil)
                 }
             }))
-
-        
     }
     //MARK: - ACTION BOTONES GRAFICOS
     @IBAction func ShowMenuBtn(_ sender: Any) {

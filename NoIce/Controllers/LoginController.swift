@@ -58,59 +58,6 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
         
     }
     
-    /*func socketEventos() {
-        myvariables.socketConexion.on("connect"){data, ack in
-            let temp = data as? [String: Any]
-            if (temp?["foto"] as! String) == "null"{
-                let EditPhoto = UIAlertController (title: NSLocalizedString("Select the profile photo",comment:"Cambiar la foto de perfil"), message: NSLocalizedString("Is required you have a photo in your profile. Take a profile picture.", comment:""), preferredStyle: UIAlertControllerStyle.alert)
-                
-                EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Take a picture", comment:"Yes"), style: UIAlertActionStyle.default, handler: {alerAction in
-                    
-                    self.camaraPerfilController.sourceType = .camera
-                    self.camaraPerfilController.cameraCaptureMode = .photo
-                    self.camaraPerfilController.cameraDevice = .front
-                    self.present(self.camaraPerfilController, animated: true, completion: nil)
-                    
-                }))
-                EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancelar"), style: UIAlertActionStyle.destructive, handler: { action in
-                    exit(0)
-                }))
-                self.present(EditPhoto, animated: true, completion: nil)
-            }else{
-                //data: nombreApellidos, email, foto, posicion, telefono, conectado, bloqueados
-                let results = data as? [String: Any]
-                //myvariables.userperfil.NombreApellidos = results?["nombreApellidos"] as! String
-                
-                //myvariables.userperfil.ActualizarConectado(estado: "1")
-                
-                //myvariables.userperfil.ActualizarPosicion(posicionActual: self.locationManager.location!)
-                do{
-                    let photo = results?["foto"] as! CKAsset
-                    let photoPerfil = try Data(contentsOf: photo.fileURL as URL)
-                    myvariables.userperfil.GuardarFotoPerfil(photo: UIImage(data: photoPerfil)!)
-                }catch{
-                    myvariables.userperfil.GuardarFotoPerfil(photo:UIImage(named: "user")!)
-                }
-                /*myvariables.userperfil.CargarBloqueados(bloqueados: results?[0].value(forKey: "bloqueados") as! [String])
-                DispatchQueue.main.async {
-                    self.LoadingView.isHidden = true
-                    let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "InicioView") as! ViewController
-                    self.navigationController?.show(vc, sender: nil)
-                }*/
-            }
-
-            }
-    }*/
-
-    /*func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!){
-        if error == nil {
-            myvariables.userperfil = CUser(nombreapellidos: user.profile.givenName + " " + user.profile.familyName, email: user.profile.email)
-            let loginData = [
-                "email": user.profile.email
-            ]
-            myvariables.socketConexion.emit("connect", loginData)
-        }
-    }*/
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!){
         if error == nil {
@@ -237,23 +184,6 @@ class LoginController: UIViewController,GIDSignInDelegate,GIDSignInUIDelegate,UI
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         print("Login Out")
     }
-    
-    /*func getFBUserData(){
-        
-        if((FBSDKAccessToken.current()) != nil){
-            self.LoadingView.isHidden = false
-            FBSDKGraphRequest(graphPath: "me",parameters: ["fields": "id, name, email"]).start(completionHandler: { (connection, result, error) -> Void in
-                if (error == nil){
-                    var facePerfil = result as! NSDictionary
-                    myvariables.userperfil = CUser(nombreapellidos: facePerfil["name"] as! String, email: facePerfil["email"] as! String)
-                    let loginData = [
-                        "email": facePerfil["email"] as! String
-                    ]
-                    myvariables.socketConexion.emit("connect", loginData)
-                }
-            })
-        }
-    }*/
     
     func getFBUserData(){
         

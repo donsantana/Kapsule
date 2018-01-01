@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ufB-ub-qpE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ufB-ub-qpE">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -110,11 +111,12 @@
                         <outlet property="SearchingView" destination="xhr-zI-Tf5" id="3zT-NJ-7wZ"/>
                         <outlet property="UserPerfilView" destination="nsV-Pp-RQ2" id="MEW-6j-PLk"/>
                         <outlet property="userPerfilPhoto" destination="ZZR-3r-LGJ" id="DxS-nf-IfD"/>
+                        <segue destination="24q-gZ-uk4" kind="show" id="4cJ-J0-k3x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="763.768115942029" y="-141.03260869565219"/>
+            <point key="canvasLocation" x="613" y="-140"/>
         </scene>
         <!--Profile-->
         <scene sceneID="ToE-xZ-rm3">
@@ -308,13 +310,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="People Connected" id="33x-rW-vJr">
-                        <barButtonItem key="backBarButtonItem" title="Item" image="users" style="plain" id="kz2-T2-GMx">
+                        <barButtonItem key="backBarButtonItem" image="users" style="plain" id="kz2-T2-GMx">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                         <barButtonItem key="leftBarButtonItem" image="menu" id="O2s-Wf-9vW">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="24q-gZ-uk4" kind="show" id="PuS-XF-l0X"/>
+                                <segue destination="24q-gZ-uk4" kind="show" id="xdy-ok-gxI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -376,7 +378,7 @@
                                         <rect key="frame" x="0.0" y="1" width="414" height="678"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dIe-P6-hah">
-                                        <rect key="frame" x="0.0" y="459" width="414" height="213"/>
+                                        <rect key="frame" x="0.0" y="339.66666666666669" width="414" height="213.00000000000006"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsX-NZ-1qv">
                                                 <rect key="frame" x="165" y="0.0" width="84" height="22.333333333333332"/>
@@ -419,9 +421,9 @@
                                     <constraint firstAttribute="bottom" secondItem="oUK-5D-6xF" secondAttribute="bottom" id="P1d-Sj-O9c"/>
                                     <constraint firstItem="dIe-P6-hah" firstAttribute="leading" secondItem="TLl-w8-ZmX" secondAttribute="leading" id="RSo-oM-7vJ"/>
                                     <constraint firstAttribute="trailing" secondItem="dIe-P6-hah" secondAttribute="trailing" id="WZo-sq-HVq"/>
-                                    <constraint firstAttribute="bottom" secondItem="dIe-P6-hah" secondAttribute="bottom" constant="7" id="lyv-MF-1ky"/>
                                     <constraint firstAttribute="trailing" secondItem="oUK-5D-6xF" secondAttribute="trailing" id="sh0-PA-JwF"/>
                                     <constraint firstItem="oUK-5D-6xF" firstAttribute="top" secondItem="TLl-w8-ZmX" secondAttribute="top" constant="1" id="svj-Pv-6f1"/>
+                                    <constraint firstItem="dIe-P6-hah" firstAttribute="top" secondItem="TLl-w8-ZmX" secondAttribute="centerY" id="uC2-GM-J1m"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ib-Dg-FHY" customClass="UIViewX" customModule="NoIce" customModuleProvider="target">
@@ -535,7 +537,6 @@
                     <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" translucent="NO" id="FBn-Kh-DRn">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.88679236173629761" green="0.95609003305435181" blue="0.9760698676109314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="b36-Xi-k1V">
@@ -578,5 +579,8 @@
         <image name="user.png" width="512" height="512"/>
         <image name="users" width="50" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="xdy-ok-gxI"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
