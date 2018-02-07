@@ -1,0 +1,37 @@
+/* 
+  Localizable.strings
+  NoIce
+
+  Created by Done Santana on 1/16/18.
+  Copyright © 2018 Done Santana. All rights reserved.
+*/
+
+"No user connected" = "No hay ususarios conectados";
+
+"There aren't any user connected near you." = "No hay ningún ususario conectado cerca de usted.";
+
+"Close" = "Cerrar";
+
+"Application version" = "Versión de la aplicación";
+
+"Dear customer, it is necessary to update to the latest version of the application available in the AppStore. Do you want to do it at this time?" = "Estimado cliente es necesario que actualice a la última versión de la aplicación disponible en la AppStore. ¿Desea hacerlo en este momento?";
+
+"Yes" = "Si";
+
+"No" = "No";
+
+"Profile photo" = "Foto de perfil";
+
+"Is required you have a photo in your profile. Take a profile photo." = "Es necesario tener una foto de perfil. Hágase un selfie para su perfil";
+
+"Take a photo" = "Hacer foto";
+
+"Close" = "Cerrar";
+
+"The profile only accepts selfies photo." = "El perfil solo acepta una foto tomada con la cámara frontal.";
+
+"Take a picture again" = "Repetir la foto";
+
+"Terms of Use" = "Política de uso";
+
+"To use this application is required you are older than 14 years old." = "Para usar esta aplicación es necesario tener más de 14 años de edad.";

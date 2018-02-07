@@ -143,9 +143,10 @@ class ChatViewController: JSQMessagesViewController, UINavigationControllerDeleg
         let predicateMesajes = NSPredicate(format: "destinoEmail == %@ and emisorEmail == %@", myvariables.userperfil.Email, myvariables.usuariosMostrar[chatOpenPos].Email)
         
         let queryKapsuleVista = CKQuery(recordType: "CMensaje",predicate: predicateMesajes)
-        
+        queryKapsuleVista.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         self.MSGContainer.publicCloudDatabase.perform(queryKapsuleVista, inZoneWith: nil, completionHandler: ({results, error in
             if (error == nil) {
+                
                 if (results?.count)! > 0{
                     var i = 0
                     while i < (results?.count)!{

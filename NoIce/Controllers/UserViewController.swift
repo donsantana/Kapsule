@@ -21,8 +21,16 @@ class UserViewController: UITableViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         //self.BuscarUsuariosConectados()
-        connectedTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
-        self.tableView.reloadData()
+
+        if myvariables.usuariosMostrar.count == 0{
+            let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "InicioView") as! ViewController
+            self.navigationController?.show(vc, sender: nil)
+        }else{
+            connectedTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(BuscarUsuariosConectados), userInfo: nil, repeats: true)
+            self.tableView.reloadData()
+        }
+
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,7 +91,7 @@ class UserViewController: UITableViewController {
     
     func BuscarUsuariosConectados(){
         
-        let predicateUsuarioIn = NSPredicate(format: "distanceToLocation:fromLocation:(posicion, %@) < 40 and conectado == %@ and email != %@", myvariables.userperfil.Posicion, "1", myvariables.userperfil.Email)
+        let predicateUsuarioIn = NSPredicate(format: "distanceToLocation:fromLocation:(posicion, %@) < 300 and conectado == %@ and email != %@", myvariables.userperfil.Posicion, "1", myvariables.userperfil.Email)
         
         let queryUsuarioIn = CKQuery(recordType: "CUsuarios",predicate: predicateUsuarioIn)
         self.userContainer.publicCloudDatabase.perform(queryUsuarioIn, inZoneWith: nil, completionHandler: ({results, error in
@@ -110,8 +118,9 @@ class UserViewController: UITableViewController {
                     }
                 }else{
                     self.connectedTimer.invalidate()
-                    let alertaClose = UIAlertController (title: NSLocalizedString("No user connected",comment:"Close the Application"), message: NSLocalizedString("There aren't any user connected near you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
+                    let alertaClose = UIAlertController (title: NSLocalizedString("No user connected",comment:"No user connected"), message: NSLocalizedString("There aren't any user connected near you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
                     alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+                            self.tableView.reloadData()
                             let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "ProfileView") as! ProfileController
                             self.navigationController?.show(vc, sender: nil)
                     }))

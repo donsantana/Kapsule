@@ -199,7 +199,6 @@ class CUser{
                     if saveError != nil {
                         print("Error saving conectado: \(String(describing: saveError?.localizedDescription))")
                     } else {
-                        print("ACTUALIZADO CONECTADO")
                         self.conectado = estado
                     }
                 })

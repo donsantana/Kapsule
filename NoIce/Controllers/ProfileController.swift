@@ -60,7 +60,7 @@ class ProfileController: UIViewController, UINavigationControllerDelegate, UIIma
                 self.userPerfilPhoto.image = newimage
                 }else{
                     self.camaraController.dismiss(animated: true, completion: nil)
-                    let EditPhoto = UIAlertController (title: NSLocalizedString("Error",comment:"Cambiar la foto de perfil"), message: NSLocalizedString("The profile only accept selfies photo.", comment:""), preferredStyle: UIAlertControllerStyle.alert)
+                    let EditPhoto = UIAlertController (title: NSLocalizedString("Error",comment:"Cambiar la foto de perfil"), message: NSLocalizedString("The profile only accepts selfies photo.", comment:""), preferredStyle: UIAlertControllerStyle.alert)
                     
                     EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Take a picture again", comment:"Yes"), style: UIAlertActionStyle.default, handler: {alerAction in
                         self.camaraController.sourceType = .camera
