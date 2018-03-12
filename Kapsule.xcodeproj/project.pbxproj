@@ -13,7 +13,10 @@
 		AF099DE12050FBA6004BF357 /* CUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF099DE02050FBA6004BF357 /* CUser.swift */; };
 		AF099DE3205219EA004BF357 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF099DE2205219EA004BF357 /* LoginController.swift */; };
 		AF316D0F1F92A6A900F74FE6 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = AF316D0E1F92A6A900F74FE6 /* user.png */; };
+		AF46F7ED2055DEB40040309B /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF46F7EC2055DEB40040309B /* PhotoController.swift */; };
 		AF6E2F0A204BAC96006459D7 /* InicioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6E2F09204BAC96006459D7 /* InicioController.swift */; };
+		AF6EF67B2054B6940032461E /* CFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6EF67A2054B6940032461E /* CFile.swift */; };
+		AF6EF67D2055A8860032461E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF6EF67C2055A8850032461E /* GoogleService-Info.plist */; };
 		AF73D1E1200F07B300886627 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AF73D1E3200F07B300886627 /* Localizable.strings */; };
 		B57B4EB71E50F5F6003FAF01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57B4EB51E50F5F6003FAF01 /* Main.storyboard */; };
 		B586682E1E610E3500D463A4 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B586682C1E610E3500D463A4 /* UserTableViewCell.swift */; };
@@ -32,8 +35,8 @@
 		B5DCAE5C1E292770000C1325 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE5B1E292770000C1325 /* AppDelegate.swift */; };
 		B5DCAE641E292771000C1325 /* NoIce.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE621E292770000C1325 /* NoIce.xcdatamodeld */; };
 		B5DCAE691E292771000C1325 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5DCAE671E292771000C1325 /* LaunchScreen.storyboard */; };
-		B5DCAE741E292771000C1325 /* NoIceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE731E292771000C1325 /* NoIceTests.swift */; };
-		B5DCAE7F1E292771000C1325 /* NoIceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE7E1E292771000C1325 /* NoIceUITests.swift */; };
+		B5DCAE741E292771000C1325 /* KapsuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE731E292771000C1325 /* KapsuleTests.swift */; };
+		B5DCAE7F1E292771000C1325 /* KapsuleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE7E1E292771000C1325 /* KapsuleUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +58,6 @@
 
 /* Begin PBXFileReference section */
 		751D9E535C48E8C1ABB03A5D /* Pods-Kapsule.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kapsule.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kapsule/Pods-Kapsule.release.xcconfig"; sourceTree = "<group>"; };
-		79814D2D875FE8A75DF416A6 /* Pods-NoIce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoIce.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoIce/Pods-NoIce.debug.xcconfig"; sourceTree = "<group>"; };
 		8202F35B2FA05FE1193EC4AE /* Pods_Kapsule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kapsule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF07BB892043C15B0007EA73 /* Kapsule.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kapsule.entitlements; sourceTree = "<group>"; };
 		AF07BB8A2043C1790007EA73 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -63,18 +65,16 @@
 		AF099DE02050FBA6004BF357 /* CUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CUser.swift; sourceTree = "<group>"; };
 		AF099DE2205219EA004BF357 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		AF316D0E1F92A6A900F74FE6 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user.png; path = "../../Imagenes Brice/user.png"; sourceTree = "<group>"; };
+		AF46F7EC2055DEB40040309B /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		AF6E2F09204BAC96006459D7 /* InicioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InicioController.swift; sourceTree = "<group>"; };
+		AF6EF67A2054B6940032461E /* CFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFile.swift; sourceTree = "<group>"; };
+		AF6EF67C2055A8850032461E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AF73D1E2200F07B300886627 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AF73D1E4200F07BB00886627 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1A50E71DAC3E1D90F1F1545 /* Pods-Kapsule.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kapsule.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Kapsule/Pods-Kapsule.debug.xcconfig"; sourceTree = "<group>"; };
 		B57B4EB61E50F5F6003FAF01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B57BBFB11F5385EE00D67003 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		B586682C1E610E3500D463A4 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserTableViewCell.swift; path = Views/UserTableViewCell.swift; sourceTree = "<group>"; };
-		B58798611EC8B672008D8073 /* Pods_NoIce.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_NoIce.framework; path = "Pods/../build/Release-iphoneos/Pods_NoIce.framework"; sourceTree = "<group>"; };
-		B58798631EC8B710008D8073 /* JSQMessagesViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQMessagesViewController.framework; path = "Pods/../build/Release-iphoneos/JSQMessagesViewController/JSQMessagesViewController.framework"; sourceTree = "<group>"; };
-		B58798651EC8B721008D8073 /* Pods_NoIce.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_NoIce.framework; path = "Pods/../build/Release-iphoneos/Pods_NoIce.framework"; sourceTree = "<group>"; };
-		B58798681EC8B8E8008D8073 /* JSQMessagesViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQMessagesViewController.framework; path = "Pods/../build/Release-iphoneos/JSQMessagesViewController/JSQMessagesViewController.framework"; sourceTree = "<group>"; };
-		B58DC2D91E2FCBBB0038BBE2 /* NoIce.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NoIce.entitlements; sourceTree = "<group>"; };
 		B5D767F71EDB653D000C5239 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		B5D767F91EDB6915000C5239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UserTableViewCell.xib; sourceTree = "<group>"; };
 		B5D767FC1EDB6951000C5239 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/UserTableViewCell.strings; sourceTree = "<group>"; };
@@ -95,14 +95,11 @@
 		B5DCAE681E292771000C1325 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5DCAE6A1E292771000C1325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5DCAE6F1E292771000C1325 /* KapsuleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KapsuleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5DCAE731E292771000C1325 /* NoIceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoIceTests.swift; sourceTree = "<group>"; };
+		B5DCAE731E292771000C1325 /* KapsuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KapsuleTests.swift; sourceTree = "<group>"; };
 		B5DCAE751E292771000C1325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5DCAE7A1E292771000C1325 /* KapsuleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KapsuleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5DCAE7E1E292771000C1325 /* NoIceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoIceUITests.swift; sourceTree = "<group>"; };
+		B5DCAE7E1E292771000C1325 /* KapsuleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KapsuleUITests.swift; sourceTree = "<group>"; };
 		B5DCAE801E292771000C1325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B5DCAE8C1E293CC6000C1325 /* Pods_NoIce.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_NoIce.framework; path = "../../../../../Users/dsantana/Library/Developer/Xcode/DerivedData/NoIce-ckyddqztfylhtfgchfkibaxtrjvd/Build/Products/Debug-iphonesimulator/Pods_NoIce.framework"; sourceTree = "<group>"; };
-		C54835704C69F3ADD43B0445 /* Pods_NoIce.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoIce.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF11C155B493ADC191566ED0 /* Pods-NoIce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoIce.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoIce/Pods-NoIce.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +134,7 @@
 			children = (
 				AF6E2F09204BAC96006459D7 /* InicioController.swift */,
 				AF099DE2205219EA004BF357 /* LoginController.swift */,
+				AF46F7EC2055DEB40040309B /* PhotoController.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -193,13 +191,13 @@
 		B5DCAE5A1E292770000C1325 /* Kapsule */ = {
 			isa = PBXGroup;
 			children = (
+				AF6EF67C2055A8850032461E /* GoogleService-Info.plist */,
 				AF07BB892043C15B0007EA73 /* Kapsule.entitlements */,
 				AF316D0E1F92A6A900F74FE6 /* user.png */,
 				B5D9DB161F4F88F5009955B9 /* DesignableX */,
 				B57B4EB51E50F5F6003FAF01 /* Main.storyboard */,
 				B57B4EB81E50F993003FAF01 /* Model */,
 				B5938CD51E4CFE8B00FFD6C5 /* Views */,
-				B58DC2D91E2FCBBB0038BBE2 /* NoIce.entitlements */,
 				B5DCAE5B1E292770000C1325 /* AppDelegate.swift */,
 				B5DCAE651E292771000C1325 /* Assets.xcassets */,
 				B5DCAE671E292771000C1325 /* LaunchScreen.storyboard */,
@@ -207,6 +205,7 @@
 				B5DCAE621E292770000C1325 /* NoIce.xcdatamodeld */,
 				AF07BB8C2043C3CF0007EA73 /* CKapsule.swift */,
 				AF099DE02050FBA6004BF357 /* CUser.swift */,
+				AF6EF67A2054B6940032461E /* CFile.swift */,
 			);
 			path = Kapsule;
 			sourceTree = "<group>";
@@ -214,7 +213,7 @@
 		B5DCAE721E292771000C1325 /* KapsuleTests */ = {
 			isa = PBXGroup;
 			children = (
-				B5DCAE731E292771000C1325 /* NoIceTests.swift */,
+				B5DCAE731E292771000C1325 /* KapsuleTests.swift */,
 				B5DCAE751E292771000C1325 /* Info.plist */,
 			);
 			path = KapsuleTests;
@@ -223,7 +222,7 @@
 		B5DCAE7D1E292771000C1325 /* KapsuleUITests */ = {
 			isa = PBXGroup;
 			children = (
-				B5DCAE7E1E292771000C1325 /* NoIceUITests.swift */,
+				B5DCAE7E1E292771000C1325 /* KapsuleUITests.swift */,
 				B5DCAE801E292771000C1325 /* Info.plist */,
 			);
 			path = KapsuleUITests;
@@ -233,12 +232,6 @@
 			isa = PBXGroup;
 			children = (
 				AF07BB8A2043C1790007EA73 /* CloudKit.framework */,
-				B58798681EC8B8E8008D8073 /* JSQMessagesViewController.framework */,
-				B58798651EC8B721008D8073 /* Pods_NoIce.framework */,
-				B58798631EC8B710008D8073 /* JSQMessagesViewController.framework */,
-				B58798611EC8B672008D8073 /* Pods_NoIce.framework */,
-				B5DCAE8C1E293CC6000C1325 /* Pods_NoIce.framework */,
-				C54835704C69F3ADD43B0445 /* Pods_NoIce.framework */,
 				8202F35B2FA05FE1193EC4AE /* Pods_Kapsule.framework */,
 			);
 			name = Frameworks;
@@ -247,8 +240,6 @@
 		FF06F99C53DD39C152CD1578 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				79814D2D875FE8A75DF416A6 /* Pods-NoIce.debug.xcconfig */,
-				FF11C155B493ADC191566ED0 /* Pods-NoIce.release.xcconfig */,
 				B1A50E71DAC3E1D90F1F1545 /* Pods-Kapsule.debug.xcconfig */,
 				751D9E535C48E8C1ABB03A5D /* Pods-Kapsule.release.xcconfig */,
 			);
@@ -389,6 +380,7 @@
 				B5D767F81EDB6915000C5239 /* UserTableViewCell.xib in Resources */,
 				B57B4EB71E50F5F6003FAF01 /* Main.storyboard in Resources */,
 				B5D9DB0F1F455310009955B9 /* Assets.xcassets in Resources */,
+				AF6EF67D2055A8860032461E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +460,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Kapsule/Pods-Kapsule-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -489,6 +482,7 @@
 				B5D9DB261F4F892E009955B9 /* UIViewAnchorPoint.swift in Sources */,
 				B5D9DB2A1F4F892E009955B9 /* UIVisualEffectViewX.swift in Sources */,
 				B586682E1E610E3500D463A4 /* UserTableViewCell.swift in Sources */,
+				AF46F7ED2055DEB40040309B /* PhotoController.swift in Sources */,
 				B5D9DB211F4F892E009955B9 /* UIButtonX.swift in Sources */,
 				B5D9DB251F4F892E009955B9 /* UITextFieldX.swift in Sources */,
 				B5D9DB291F4F892E009955B9 /* UIViewXRadialGradient.swift in Sources */,
@@ -497,6 +491,7 @@
 				AF099DE12050FBA6004BF357 /* CUser.swift in Sources */,
 				B5D9DB271F4F892E009955B9 /* UIViewControllerX.swift in Sources */,
 				B5D9DB231F4F892E009955B9 /* UILabelX.swift in Sources */,
+				AF6EF67B2054B6940032461E /* CFile.swift in Sources */,
 				AF099DE3205219EA004BF357 /* LoginController.swift in Sources */,
 				AF6E2F0A204BAC96006459D7 /* InicioController.swift in Sources */,
 				B5D9DB221F4F892E009955B9 /* UIImageViewX.swift in Sources */,
@@ -510,7 +505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5DCAE741E292771000C1325 /* NoIceTests.swift in Sources */,
+				B5DCAE741E292771000C1325 /* KapsuleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,7 +513,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5DCAE7F1E292771000C1325 /* NoIceUITests.swift in Sources */,
+				B5DCAE7F1E292771000C1325 /* KapsuleUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
