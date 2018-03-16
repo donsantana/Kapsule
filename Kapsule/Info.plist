@@ -48,7 +48,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>FacebookAppID</key>
 	<string>153264638704725</string>
 	<key>FacebookDisplayName</key>
@@ -67,6 +67,13 @@
 	<string>The app need to acces your Location to search the kapsules closer to your position.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>userphoto</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MavenPro-Black</string>
+		<string>MavenPro-Bold</string>
+		<string>MavenPro-Medium</string>
+		<string>MavenPro-Regular</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

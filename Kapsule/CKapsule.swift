@@ -25,6 +25,7 @@ class CKapsule {
     var contenido:CKAsset
     var vista:String //SI/NO
     var estado: String //in, out, read
+    var creada: String
     
     var KapsuleContainer = CKContainer.default()
     
@@ -42,9 +43,10 @@ class CKapsule {
         self.estado = ""
         self.direccion = ""
         self.recordName = ""
+        self.creada = ""
     }
     
-    init(destinatarioEmail:String,destinatarioName:String,emisorEmail:String,emisorName:String,asunto:String,geoposicion:CLLocationCoordinate2D, direccion: String, tipoK:String, urlContenido:CKAsset, vista:String) {
+    init(destinatarioEmail:String,destinatarioName:String,emisorEmail:String,emisorName:String,asunto:String,geoposicion:CLLocationCoordinate2D, direccion: String, tipoK:String, urlContenido:CKAsset, vista:String, creada: String) {
         self.destinatarioEmail = destinatarioEmail
         self.destinatarioName = destinatarioName
         self.emisorEmail = emisorEmail
@@ -58,6 +60,7 @@ class CKapsule {
         self.estado = "new"
         self.direccion = direccion
         self.recordName = "new"
+        self.creada = creada
     }
     
     func actulizarEstado(estado:String){

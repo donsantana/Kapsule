@@ -111,7 +111,7 @@ class PhotoController: UIViewController, UINavigationControllerDelegate, UIImage
         
         let imagenURL = self.saveImageToFile(self.kapsulePhotoView.image!)
         let contenido = CKAsset(fileURL: imagenURL)
-        var newKapsule = CKapsule(destinatarioEmail: myvariables.destinatariosMostrar[indexPath.row].email, destinatarioName: myvariables.destinatariosMostrar[indexPath.row].name, emisorEmail: myvariables.userperfil.email, emisorName: myvariables.userperfil.name, asunto: self.asuntoText.text!,geoposicion: myvariables.userperfil.location, direccion: myvariables.userAddress,tipoK: "K-Photo", urlContenido: contenido, vista: "NO")
+        var newKapsule = CKapsule(destinatarioEmail: myvariables.destinatariosMostrar[indexPath.row].email, destinatarioName: myvariables.destinatariosMostrar[indexPath.row].name, emisorEmail: myvariables.userperfil.email, emisorName: myvariables.userperfil.name, asunto: self.asuntoText.text!,geoposicion: myvariables.userperfil.location, direccion: myvariables.userAddress,tipoK: "K-Photo", urlContenido: contenido, vista: "NO", creada: "")
         newKapsule.sendKapsule()
         
         let alertaClose = UIAlertController (title: NSLocalizedString("Kapsule enviada",comment:"Close the Application"), message: NSLocalizedString("La Kapsule fue enviada a su destinatario.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)

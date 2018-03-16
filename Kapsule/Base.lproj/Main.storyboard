@@ -12,9 +12,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-            <string>HelveticaNeue-Bold</string>
+        <array key="MavenPro-Bold.ttf">
+            <string>MavenProBold</string>
+        </array>
+        <array key="MavenPro-Regular.ttf">
+            <string>MavenProRegular</string>
         </array>
     </customFonts>
     <scenes>
@@ -118,7 +120,7 @@
                                             <constraint firstAttribute="width" constant="115" id="E5u-fH-yv8"/>
                                             <constraint firstAttribute="height" constant="42" id="ht9-k2-hc6"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="20"/>
                                         <color key="textColor" red="0.87658280129999999" green="0.56639111040000001" blue="0.43128973250000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -130,7 +132,7 @@
                                             <constraint firstAttribute="height" constant="233" id="nBk-1A-dlb"/>
                                         </constraints>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="19"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgy-sX-0Jb">
@@ -139,7 +141,7 @@
                                             <constraint firstAttribute="width" constant="300" id="OUw-1y-B62"/>
                                             <constraint firstAttribute="height" constant="50" id="cvk-HJ-Vk5"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="20"/>
                                         <state key="normal" title="Enviar Kapsule" backgroundImage="btnColor">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -147,9 +149,12 @@
                                             <action selector="EnviarKapsule:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CUB-L0-cdr"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YvH-cU-RKo">
-                                        <rect key="frame" x="332" y="3" width="30" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YvH-cU-RKo">
+                                        <rect key="frame" x="322" y="5" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="52Q-tn-YSD"/>
+                                            <constraint firstAttribute="width" constant="40" id="78E-QX-liz"/>
+                                        </constraints>
                                         <state key="normal" image="close"/>
                                         <connections>
                                             <action selector="CerrarKText:" destination="BYZ-38-t0r" eventType="touchUpInside" id="js7-vZ-8kA"/>
@@ -183,6 +188,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="fgy-sX-0Jb" secondAttribute="trailing" constant="35" id="6lI-j1-JcI"/>
                                     <constraint firstItem="fgy-sX-0Jb" firstAttribute="leading" secondItem="dGw-dN-w9b" secondAttribute="leading" constant="35" id="71V-fh-D1j"/>
+                                    <constraint firstItem="YvH-cU-RKo" firstAttribute="top" secondItem="dGw-dN-w9b" secondAttribute="top" constant="5" id="F4r-vl-UjW"/>
                                     <constraint firstItem="AOX-MZ-LdU" firstAttribute="leading" secondItem="dGw-dN-w9b" secondAttribute="leading" constant="22" id="GQX-cL-Dng"/>
                                     <constraint firstAttribute="trailing" secondItem="AOX-MZ-LdU" secondAttribute="trailing" constant="22" id="Hyp-XN-2Sg"/>
                                     <constraint firstAttribute="trailing" secondItem="2j1-XS-58z" secondAttribute="trailing" constant="22" id="Kxc-K5-Ubj"/>
@@ -190,6 +196,7 @@
                                     <constraint firstAttribute="height" constant="384" id="Vcf-W0-tGz"/>
                                     <constraint firstItem="2j1-XS-58z" firstAttribute="leading" secondItem="dGw-dN-w9b" secondAttribute="leading" constant="26" id="c23-yU-xks"/>
                                     <constraint firstAttribute="width" constant="370" id="cIV-p0-Lod"/>
+                                    <constraint firstAttribute="trailing" secondItem="YvH-cU-RKo" secondAttribute="trailing" constant="8" id="ihp-mw-UO8"/>
                                     <constraint firstItem="pcb-xh-BNh" firstAttribute="leading" secondItem="dGw-dN-w9b" secondAttribute="leading" constant="26" id="mxe-HX-eEE"/>
                                     <constraint firstItem="pcb-xh-BNh" firstAttribute="top" secondItem="dGw-dN-w9b" secondAttribute="top" constant="8" id="rYh-o1-1bz"/>
                                     <constraint firstItem="AOX-MZ-LdU" firstAttribute="top" secondItem="pcb-xh-BNh" secondAttribute="bottom" constant="8" id="sBN-Pb-OdC"/>
@@ -199,16 +206,17 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2nV-Im-HCD">
                                 <rect key="frame" x="38" y="126" width="337" height="535"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKt-V5-dSw">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKt-V5-dSw">
                                         <rect key="frame" x="10" y="33" width="319" height="494"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" red="0.87658280129999999" green="0.56639111040000001" blue="0.43128973250000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="20"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zd-s6-Uwd">
-                                        <rect key="frame" x="302" y="0.0" width="30" height="25"/>
+                                        <rect key="frame" x="301" y="-7" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="20"/>
                                         <state key="normal" image="close"/>
                                         <connections>
                                             <action selector="CerrarKShows:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s7i-IG-Y7k"/>
@@ -223,7 +231,7 @@
                                             <constraint firstAttribute="width" constant="294" id="exZ-MV-A3o"/>
                                             <constraint firstAttribute="height" constant="25" id="wVj-E4-VwL"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="20"/>
                                         <color key="textColor" red="0.87658280129999999" green="0.56639111040000001" blue="0.43128973250000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -326,14 +334,14 @@
                                             <constraint firstAttribute="height" constant="30" id="9V6-Uo-OLK"/>
                                             <constraint firstAttribute="width" constant="140" id="xGk-Zf-s8K"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="20"/>
                                         <color key="textColor" red="0.87658280129999999" green="0.56639111040000001" blue="0.43128973250000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWe-Mo-FOR">
                                         <rect key="frame" x="57" y="629" width="300" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="20"/>
                                         <state key="normal" title="Enviar Kapsule" backgroundImage="btnColor">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -345,7 +353,7 @@
                                         <rect key="frame" x="32" y="584" width="350" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Am0-jV-iBF">
@@ -367,9 +375,12 @@
                                             <outlet property="delegate" destination="rfC-dK-cni" id="8UQ-UQ-ZmY"/>
                                         </connections>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l9t-qW-ihR">
-                                        <rect key="frame" x="360" y="8" width="30" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l9t-qW-ihR">
+                                        <rect key="frame" x="359" y="5" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="PZs-Jo-6g2"/>
+                                            <constraint firstAttribute="height" constant="40" id="pwq-cH-S2z"/>
+                                        </constraints>
                                         <state key="normal" image="close"/>
                                         <connections>
                                             <action selector="Cerrar:" destination="rfC-dK-cni" eventType="touchUpInside" id="5Ju-KX-Aye"/>
@@ -379,8 +390,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Ogh-WX-uBy" firstAttribute="leading" secondItem="xi6-uL-9Ib" secondAttribute="leading" constant="32" id="FJV-2c-vhK"/>
+                                    <constraint firstItem="l9t-qW-ihR" firstAttribute="top" secondItem="xi6-uL-9Ib" secondAttribute="top" constant="5" id="Fc7-SA-gtq"/>
                                     <constraint firstItem="Ogh-WX-uBy" firstAttribute="top" secondItem="XiQ-2p-eVk" secondAttribute="bottom" constant="8" id="OIj-O7-i5T"/>
                                     <constraint firstItem="XiQ-2p-eVk" firstAttribute="top" secondItem="xi6-uL-9Ib" secondAttribute="top" constant="8" id="ec8-DR-a2r"/>
+                                    <constraint firstAttribute="trailing" secondItem="l9t-qW-ihR" secondAttribute="trailing" constant="15" id="p8C-Tm-h0p"/>
                                     <constraint firstItem="XiQ-2p-eVk" firstAttribute="leading" secondItem="xi6-uL-9Ib" secondAttribute="leading" constant="32" id="tgb-WX-Fec"/>
                                 </constraints>
                             </view>
@@ -435,18 +448,18 @@
                                         <rect key="frame" x="0.0" y="358.66666666666669" width="414" height="213.00000000000006"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsX-NZ-1qv">
-                                                <rect key="frame" x="154.66666666666666" y="0.0" width="104.99999999999997" height="27.666666666666668"/>
+                                                <rect key="frame" x="153.33333333333334" y="0.0" width="107.66666666666666" height="28.333333333333332"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="bsX-NZ-1qv" secondAttribute="height" multiplier="83:22" id="4BR-cc-7o1"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="MavenProBold" family="Maven Pro" pointSize="20"/>
                                                 <color key="textColor" red="0.98610705139999999" green="0.98345273730000005" blue="0.98621958489999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkl-op-SNZ">
                                                 <rect key="frame" x="132" y="82.000000000000057" width="150" height="50"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
+                                                <fontDescription key="fontDescription" name="MavenProRegular" family="Maven Pro" pointSize="20"/>
                                                 <state key="normal" title="Gmail">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>

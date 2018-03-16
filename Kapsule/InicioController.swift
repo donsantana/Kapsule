@@ -268,22 +268,25 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
 
     //FUNCIN DETECCION DE TAP SOBRE KAPSULE
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        var kapsuleShow = CKapsule()
+        let emisor = "Desconocido"
+        for kapsule in myvariables.kapsulesMostrar{
+            if kapsule.recordName == marker.snippet{
+                kapsuleShow = kapsule
+            }
+        }
+        
         if marker.title == "kapsuleOut"{
             let distanciaKm = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: CLLocation(latitude: self.miposicion.position.latitude, longitude: self.miposicion.position.longitude))/1000
             let distancia = String(format:"%.2f",distanciaKm)
-            let alertaDos = UIAlertController (title: "Ir a Kapsule", message: "Esta Kapsule se encuentra a una distancia de: \(distancia)km. Desea ir?", preferredStyle: UIAlertControllerStyle.alert)
-            alertaDos.addAction(UIAlertAction(title: "Ir", style: .default, handler: {alerAction in
+            
+            let alertaDos = UIAlertController (title: "Nueva Kapsule de \(kapsuleShow.emisorName)", message: "Creada el día \(kapsuleShow.creada). Ubicada en \(kapsuleShow.direccion)).", preferredStyle: UIAlertControllerStyle.alert)
+            alertaDos.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: {alerAction in
             
             }))
             
             self.present(alertaDos, animated: true, completion: nil)
         }else{
-            var kapsuleShow = CKapsule()
-            for kapsule in myvariables.kapsulesMostrar{
-                if kapsule.recordName == marker.snippet{
-                    kapsuleShow = kapsule
-                }
-            }
             self.TransparenciaView.isHidden = false
             self.showKapsules(kapsule: kapsuleShow)
         }
@@ -360,14 +363,22 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
                         var geoposicion = String(describing: geotemp).components(separatedBy: ",")
                     
                         let kapsulePosition = CLLocationCoordinate2D(latitude: Double(geoposicion[0])!, longitude: Double(geoposicion[1])!)
-                        
-                        let kapsuleTemp = CKapsule(destinatarioEmail: results?[i].value(forKey: "destinatarioEmail") as! String, destinatarioName: results?[i].value(forKey: "destinatarioName") as! String,emisorEmail:results?[i].value(forKey: "emisorEmail") as! String,emisorName:results?[i].value(forKey: "emisorName") as! String,asunto:results?[i].value(forKey: "asunto") as! String, geoposicion: kapsulePosition, direccion: results?[i].value(forKey: "direccion") as! String, tipoK: results?[i].value(forKey: "tipoK") as! String, urlContenido:results?[i].value(forKey: "contenido") as! CKAsset, vista: results?[i].value(forKey: "vista") as! String)
+    
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let myString = formatter.string(from: (results?[i].creationDate!)!)
+                        let yourDate: Date? = formatter.date(from: myString)
+                        formatter.dateFormat = "dd-MM-yyyy"
+                        let creada = formatter.string(from: yourDate!)
+
+                        let kapsuleTemp = CKapsule(destinatarioEmail: results?[i].value(forKey: "destinatarioEmail") as! String, destinatarioName: results?[i].value(forKey: "destinatarioName") as! String,emisorEmail:results?[i].value(forKey: "emisorEmail") as! String,emisorName:results?[i].value(forKey: "emisorName") as! String,asunto:results?[i].value(forKey: "asunto") as! String, geoposicion: kapsulePosition, direccion: results?[i].value(forKey: "direccion") as! String, tipoK: results?[i].value(forKey: "tipoK") as! String, urlContenido:results?[i].value(forKey: "contenido") as! CKAsset, vista: results?[i].value(forKey: "vista") as! String, creada: creada)
                         
                         kapsuleTemp.setRecordName(recordName: (results?[i].recordID.recordName)!)
+                        
                     
                         let klocation = CLLocation(latitude: kapsulePosition.latitude, longitude: kapsulePosition.longitude)
                         
-                        if CLLocation(latitude: self.miposicion.position.latitude, longitude: self.miposicion.position.longitude).distance(from:klocation) > 200 {
+                        if CLLocation(latitude: self.miposicion.position.latitude, longitude: self.miposicion.position.longitude).distance(from:klocation) > 1000 {
                             kapsuleTemp.actulizarEstado(estado: "kapsuleOut")
                         }else{
                             kapsuleTemp.actulizarEstado(estado: "kapsuleIn")
@@ -392,7 +403,7 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
     }
     
     func BuscarDestinatarios(){
-        let predicateKapsule = NSPredicate(format: "email != %@","eldony09@gmail.com")
+        let predicateKapsule = NSPredicate(format: "email != %@",myvariables.userperfil.email)
         let queryKapsuleIn = CKQuery(recordType: "kUsers",predicate: predicateKapsule)
         self.cloudContainer.publicCloudDatabase.perform(queryKapsuleIn, inZoneWith: nil, completionHandler: ({results, error in
             if (error == nil) {
@@ -403,8 +414,7 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
                         let newDestinatario = CUser(name: results![i].value(forKey: "name") as! String, email: results![i].value(forKey: "email") as! String)
                         myvariables.destinatariosMostrar.append(newDestinatario)
                         i += 1
-                    }
-                   
+                    }                   
                     self.DestinatarioTable.reloadData()
                 }
             }
@@ -488,7 +498,7 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
         self.ktextMensaje.endEditing(true)
         
         let contenido = CKAsset(fileURL: CFile().createFile(fileContent: self.ktextMensaje.text))
-        var newKapsule = CKapsule(destinatarioEmail: myvariables.destinatariosMostrar[indexPath.row].email, destinatarioName: myvariables.destinatariosMostrar[indexPath.row].name, emisorEmail: myvariables.userperfil.email, emisorName: myvariables.userperfil.name, asunto: self.ktextMensaje.text,geoposicion: myvariables.userperfil.location, direccion: myvariables.userAddress, tipoK: "K-Text", urlContenido: contenido, vista: "NO")
+        var newKapsule = CKapsule(destinatarioEmail: myvariables.destinatariosMostrar[indexPath.row].email, destinatarioName: myvariables.destinatariosMostrar[indexPath.row].name, emisorEmail: myvariables.userperfil.email, emisorName: myvariables.userperfil.name, asunto: self.ktextMensaje.text,geoposicion: myvariables.userperfil.location, direccion: myvariables.userAddress, tipoK: "K-Text", urlContenido: contenido, vista: "NO", creada: "")
         newKapsule.sendKapsule()
         
         let alertaClose = UIAlertController (title: NSLocalizedString("Kapsule enviada",comment:"Close the Application"), message: NSLocalizedString("La Kapsule fue enviada a su destinatario.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)

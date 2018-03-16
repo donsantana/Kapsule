@@ -14,6 +14,10 @@
 		AF099DE3205219EA004BF357 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF099DE2205219EA004BF357 /* LoginController.swift */; };
 		AF316D0F1F92A6A900F74FE6 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = AF316D0E1F92A6A900F74FE6 /* user.png */; };
 		AF46F7ED2055DEB40040309B /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF46F7EC2055DEB40040309B /* PhotoController.swift */; };
+		AF46FCE02056BFD80040309B /* MavenPro-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF46FCDE2056BA9D0040309B /* MavenPro-Black.ttf */; };
+		AF46FCE12056BFD80040309B /* MavenPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF46FCDD2056BA9D0040309B /* MavenPro-Bold.ttf */; };
+		AF46FCE22056BFD80040309B /* MavenPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF46FCDF2056BA9D0040309B /* MavenPro-Medium.ttf */; };
+		AF46FCE32056BFD80040309B /* MavenPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF46FCDC2056BA9D0040309B /* MavenPro-Regular.ttf */; };
 		AF6E2F0A204BAC96006459D7 /* InicioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6E2F09204BAC96006459D7 /* InicioController.swift */; };
 		AF6EF67B2054B6940032461E /* CFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6EF67A2054B6940032461E /* CFile.swift */; };
 		AF6EF67D2055A8860032461E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF6EF67C2055A8850032461E /* GoogleService-Info.plist */; };
@@ -66,6 +70,10 @@
 		AF099DE2205219EA004BF357 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		AF316D0E1F92A6A900F74FE6 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user.png; path = "../../Imagenes Brice/user.png"; sourceTree = "<group>"; };
 		AF46F7EC2055DEB40040309B /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
+		AF46FCDC2056BA9D0040309B /* MavenPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenPro-Regular.ttf"; sourceTree = "<group>"; };
+		AF46FCDD2056BA9D0040309B /* MavenPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenPro-Bold.ttf"; sourceTree = "<group>"; };
+		AF46FCDE2056BA9D0040309B /* MavenPro-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenPro-Black.ttf"; sourceTree = "<group>"; };
+		AF46FCDF2056BA9D0040309B /* MavenPro-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MavenPro-Medium.ttf"; sourceTree = "<group>"; };
 		AF6E2F09204BAC96006459D7 /* InicioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InicioController.swift; sourceTree = "<group>"; };
 		AF6EF67A2054B6940032461E /* CFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFile.swift; sourceTree = "<group>"; };
 		AF6EF67C2055A8850032461E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -129,6 +137,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF46FCDB2056BA570040309B /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				AF46FCDE2056BA9D0040309B /* MavenPro-Black.ttf */,
+				AF46FCDD2056BA9D0040309B /* MavenPro-Bold.ttf */,
+				AF46FCDF2056BA9D0040309B /* MavenPro-Medium.ttf */,
+				AF46FCDC2056BA9D0040309B /* MavenPro-Regular.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		B57B4EB81E50F993003FAF01 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +187,7 @@
 		B5DCAE4F1E292770000C1325 = {
 			isa = PBXGroup;
 			children = (
+				AF46FCDB2056BA570040309B /* fonts */,
 				AF73D1E3200F07B300886627 /* Localizable.strings */,
 				B5DCAE5A1E292770000C1325 /* Kapsule */,
 				B5DCAE721E292771000C1325 /* KapsuleTests */,
@@ -356,6 +376,38 @@
 				en,
 				Base,
 				es,
+				de,
+				he,
+				ar,
+				el,
+				ja,
+				uk,
+				zh_CN,
+				nb,
+				da,
+				it,
+				sk,
+				pt_PT,
+				ms,
+				sv,
+				cs,
+				ko,
+				hu,
+				tr,
+				pl,
+				zh_TW,
+				en_GB,
+				vi,
+				ru,
+				fr,
+				fi,
+				id,
+				nl,
+				th,
+				pt,
+				ro,
+				hr,
+				ca,
 			);
 			mainGroup = B5DCAE4F1E292770000C1325;
 			productRefGroup = B5DCAE591E292770000C1325 /* Products */;
@@ -374,6 +426,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF46FCE02056BFD80040309B /* MavenPro-Black.ttf in Resources */,
+				AF46FCE12056BFD80040309B /* MavenPro-Bold.ttf in Resources */,
+				AF46FCE22056BFD80040309B /* MavenPro-Medium.ttf in Resources */,
+				AF46FCE32056BFD80040309B /* MavenPro-Regular.ttf in Resources */,
 				B5DCAE691E292771000C1325 /* LaunchScreen.storyboard in Resources */,
 				AF73D1E1200F07B300886627 /* Localizable.strings in Resources */,
 				AF316D0F1F92A6A900F74FE6 /* user.png in Resources */,
@@ -678,6 +734,16 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Release-iphoneos",
 					"$(PROJECT_DIR)/build/Release-iphoneos/JSQMessagesViewController",
+					"$(PROJECT_DIR)/Pods/GoogleAppUtilities/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleSymbolUtilities/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseCore/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseInstanceID/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/Google/Frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleInterchangeUtilities/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleMaps/Maps/Frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleMaps/Base/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseAnalytics/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleSignIn/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Kapsule/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -699,6 +765,16 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Release-iphoneos",
 					"$(PROJECT_DIR)/build/Release-iphoneos/JSQMessagesViewController",
+					"$(PROJECT_DIR)/Pods/GoogleAppUtilities/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleSymbolUtilities/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseCore/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseInstanceID/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/Google/Frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleInterchangeUtilities/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleMaps/Maps/Frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleMaps/Base/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseAnalytics/Frameworks/frameworks",
+					"$(PROJECT_DIR)/Pods/GoogleSignIn/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Kapsule/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
