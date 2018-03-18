@@ -13,13 +13,16 @@ import GoogleMaps
 import CloudKit
 import MapKit
 
-class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewDelegate, GMSMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource{
+class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewDelegate, GMSMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     var coreLocationManager = CLLocationManager()
     var origen = GMSMarker()
     var miposicion = GMSMarker()
     var kapsulesAnotations = [GMSMarker]()
     var kapsulesMostrar = [CKapsule]()
+    var camaraController: UIImagePickerController!
     var cloudContainer = CKContainer.default()
+    var kapsuleInCount = 0
+    var kapsuleOutCount = 0
     
     @IBOutlet weak var mapaVista: GMSMapView!
     @IBOutlet weak var ktextBtn: UIButton!
@@ -35,6 +38,14 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
     @IBOutlet weak var asuntoText: UILabel!
     @IBOutlet weak var kShows: UIView!
     
+    //Menu
+    @IBOutlet weak var menuView: UIView!
+    @IBOutlet weak var menuBtn: UIButton!
+    @IBOutlet weak var profilePhoto: UIImageView!
+    @IBOutlet weak var userName: UITextField!
+    @IBOutlet weak var kRecibidasText: UITextField!
+    @IBOutlet weak var kEnvidasText: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //LECTURA DEL FICHERO PARA AUTENTICACION
@@ -43,6 +54,12 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
         coreLocationManager.delegate = self
         self.ktextMensaje.delegate = self
         self.DestinatarioTable.delegate = self
+        self.kRecibidasText.delegate = self
+        self.kEnvidasText.delegate = self
+        
+        //Camara controller
+        self.camaraController = UIImagePickerController()
+        self.camaraController.delegate = self
         
         self.mapaVista.isMyLocationEnabled = true
         coreLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -252,6 +269,8 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
         }
         self.BuscarKapusulesRecibidos()
         self.BuscarDestinatarios()
+        self.ContarKapsulesRecibidos()
+        self.ContarKapsulesEnviados()
     }
 
     //ACTUALICI'ON DE LA LOCALIZACI'ON
@@ -402,6 +421,31 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
         }))
     }
     
+    func ContarKapsulesEnviados(){
+        let predicateKapsule = NSPredicate(format: "emisorEmail == %@",myvariables.userperfil.email)
+        let queryKapsuleIn = CKQuery(recordType: "Kapsule",predicate: predicateKapsule)
+        self.cloudContainer.publicCloudDatabase.perform(queryKapsuleIn, inZoneWith: nil, completionHandler: ({results, error in
+            if (error == nil) {
+                if (results?.count)! > 0{
+                    self.kapsuleOutCount = (results?.count)!
+                }
+            }
+        }))
+    }
+    
+    func ContarKapsulesRecibidos(){
+        let predicateKapsule = NSPredicate(format: "destinatarioEmail == %@",myvariables.userperfil.email)
+        let queryKapsuleIn = CKQuery(recordType: "Kapsule",predicate: predicateKapsule)
+        self.cloudContainer.publicCloudDatabase.perform(queryKapsuleIn, inZoneWith: nil, completionHandler: ({results, error in
+            if (error == nil) {
+                if (results?.count)! > 0{
+                    self.kapsuleInCount = (results?.count)!
+                }
+            }
+        }))
+    }
+                
+    
     func BuscarDestinatarios(){
         let predicateKapsule = NSPredicate(format: "email != %@",myvariables.userperfil.email)
         let queryKapsuleIn = CKQuery(recordType: "kUsers",predicate: predicateKapsule)
@@ -440,6 +484,51 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
         self.kShows.isHidden = false
     }
     
+    func cargarMenu(){
+        self.kRecibidasText.setBottomBorder(borderColor: UIColor(red: 236/255, green: 140/255, blue: 102/255, alpha: 1))
+        self.kEnvidasText.setBottomBorder(borderColor: UIColor(red: 236/255, green: 140/255, blue: 102/255, alpha: 1))
+        self.userName.setBottomBorder(borderColor: UIColor.darkGray)
+        self.kRecibidasText.text = "K's recibidas                  \(self.kapsuleInCount)"
+        self.kEnvidasText.text = "K's enviadas                     \(self.kapsuleOutCount)"
+        self.userName.text = myvariables.userperfil.name
+        self.profilePhoto.contentMode = .scaleAspectFill
+        self.profilePhoto.addDiamondMask()
+        self.profilePhoto.image = myvariables.userperfil.photoPerfil
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        if let type:AnyObject = mediaType {
+            if type is String {
+                if camaraController.cameraDevice == .front{
+                    let stringType = type as! String
+                    self.camaraController.dismiss(animated: true, completion: nil)
+                    let newimage = info[UIImagePickerControllerOriginalImage] as? UIImage
+                    myvariables.userperfil.ActualizarPhoto(newphoto: newimage!)
+                    myvariables.userperfil.photoPerfil = newimage!
+                    self.profilePhoto.contentMode = .scaleAspectFill
+                    self.profilePhoto.addDiamondMask()
+                    self.profilePhoto.image = myvariables.userperfil.photoPerfil
+                }else{
+                    self.camaraController.dismiss(animated: true, completion: nil)
+                    let EditPhoto = UIAlertController (title: NSLocalizedString("Error",comment:"Cambiar la foto de perfil"), message: NSLocalizedString("The profile only accept selfies photo.", comment:""), preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Take a picture again", comment:"Yes"), style: UIAlertActionStyle.default, handler: {alerAction in
+                        self.camaraController.sourceType = .camera
+                        self.camaraController.cameraCaptureMode = .photo
+                        self.camaraController.cameraDevice = .front
+                        self.present(self.camaraController, animated: true, completion: nil)
+                    }))
+                    EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancelar"), style: UIAlertActionStyle.destructive, handler: { action in
+                    }))
+                    self.present(EditPhoto, animated: true, completion: nil)
+                }
+            }
+        }
+        
+    }
+    
     //BUTTONS ACTIONS
     @IBAction func CrearKapsule(_ sender: Any) {
         self.ktextBtn.isHidden = !self.ktextBtn.isHidden
@@ -467,7 +556,29 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
         self.kShows.isHidden = true
         self.TransparenciaView.isHidden = true
     }
+    @IBAction func ShowMenu(_ sender: Any) {
+        self.cargarMenu()
+        self.menuView.isHidden = !self.menuView.isHidden
+        self.TransparenciaView.isHidden = self.menuView.isHidden
+    }
     
+    @IBAction func EditarPerfil(_ sender: Any) {
+        self.camaraController.sourceType = .camera
+        self.camaraController.cameraCaptureMode = .photo
+        self.camaraController.cameraDevice = .front
+        self.present(self.camaraController, animated: true, completion: nil)
+    }
+    
+    @IBAction func CerrarSesion(_ sender: Any) {
+        GIDSignIn.sharedInstance().signOut()
+        GIDSignIn.sharedInstance().disconnect()
+        sleep(2)
+        exit(0)
+    }
+    
+    @IBAction func RefreshKapsules(_ sender: Any) {
+        self.BuscarKapusulesRecibidos()
+    }
     
     //MARK:- FUNCIONES DE LAS TABLAS
     
@@ -535,3 +646,35 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
     }
 }
 
+extension UIView {
+    func addDiamondMask(cornerRadius: CGFloat = 0) {
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: bounds.midX, y: bounds.minY + cornerRadius))
+        path.addLine(to: CGPoint(x: bounds.maxX - cornerRadius, y: bounds.midY))
+        path.addLine(to: CGPoint(x: bounds.midX, y: bounds.maxY - cornerRadius))
+        path.addLine(to: CGPoint(x: bounds.minX + cornerRadius, y: bounds.midY))
+        path.close()
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.fillColor = UIColor.white.cgColor
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.lineWidth = cornerRadius * 2
+        shapeLayer.lineJoin = kCALineJoinRound
+        shapeLayer.lineCap = kCALineCapRound
+        
+        layer.mask = shapeLayer
+    }
+}
+
+extension UITextField {
+    func setBottomBorder(borderColor: UIColor) {
+        self.borderStyle = UITextBorderStyle.none
+        self.backgroundColor = UIColor.clear
+        let width = 1.0
+        let borderLine = UIView()
+        borderLine.frame = CGRect(x: 0, y: Double(self.frame.height) - width, width: Double(self.frame.width), height: width)
+        borderLine.backgroundColor = borderColor
+        self.addSubview(borderLine)
+    }
+}

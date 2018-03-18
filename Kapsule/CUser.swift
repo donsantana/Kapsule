@@ -45,4 +45,61 @@ class CUser {
     func GuardarFotoPerfil(newPhoto: UIImage) {
         self.photoPerfil = newPhoto
     }
+    
+    func ActualizarPhoto(newphoto: UIImage){
+        let imagenURL = self.saveImageToFile(newphoto)
+        let photoUser = CKAsset(fileURL: imagenURL)
+        
+        let predicateVista = NSPredicate(format: "email == %@", self.email)
+        
+        let queryVista = CKQuery(recordType: "kUsers",predicate: predicateVista)
+        
+        self.UserContainer.publicCloudDatabase.perform(queryVista, inZoneWith: nil, completionHandler: ({results, error in
+            
+            if (error == nil) {
+                if results?.count != 0{
+                    let recordID = results?[0].recordID
+                    
+                    self.UserContainer.publicCloudDatabase.fetch(withRecordID: recordID!, completionHandler: { (record, error) in
+                        if error != nil {
+                            print("Error fetching record: \(error?.localizedDescription)")
+                        } else {
+                            record?.setObject(photoUser as CKRecordValue?, forKey: "photo")
+                            
+                            // Save this record again
+                            self.UserContainer.publicCloudDatabase.save(record!, completionHandler: { (savedRecord, saveError) in
+                                if saveError != nil {
+                                    
+                                } else {
+                                    self.photoPerfil = newphoto
+                                }
+                            })
+                        }
+                        
+                    })
+                }else{
+                    print("NO SE ENCONTRO EL USER")
+                }
+            }
+        }))
+        
+    }
+    //RENDER IMAGEN
+    func saveImageToFile(_ image: UIImage) -> URL
+    {
+        let filemgr = FileManager.default
+        
+        let dirPaths = filemgr.urls(for: .documentDirectory,
+                                    in: .userDomainMask)
+        
+        let fileURL = dirPaths[0].appendingPathComponent("currentImage.jpg")
+        
+        if let renderedJPEGData =
+            UIImageJPEGRepresentation(image, 0.5) {
+            try! renderedJPEGData.write(to: fileURL)
+        }
+        
+        return fileURL
+    }
+
 }
