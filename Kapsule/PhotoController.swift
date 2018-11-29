@@ -41,14 +41,17 @@ class PhotoController: UIViewController, UINavigationControllerDelegate, UIImage
         // Do any additional setup after loading the view.
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
-        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        let mediaType = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaType)] as! NSString
         if let type:AnyObject = mediaType {
             if type is String {
                     let stringType = type as! String
                     self.camaraController.dismiss(animated: true, completion: nil)
-                    let newimage = info[UIImagePickerControllerOriginalImage] as? UIImage
+                    let newimage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
                     myvariables.userperfil.GuardarFotoPerfil(newPhoto: newimage!)
                     self.kapsulePhotoView.image = newimage
             }
@@ -67,7 +70,7 @@ class PhotoController: UIViewController, UINavigationControllerDelegate, UIImage
         let fileURL = dirPaths[0].appendingPathComponent("currentImage.jpg")
         
         if let renderedJPEGData =
-            UIImageJPEGRepresentation(image, 0.5) {
+            image.jpegData(compressionQuality: 0.5) {
             try! renderedJPEGData.write(to: fileURL)
         }
     
@@ -114,8 +117,8 @@ class PhotoController: UIViewController, UINavigationControllerDelegate, UIImage
         var newKapsule = CKapsule(destinatarioEmail: myvariables.destinatariosMostrar[indexPath.row].email, destinatarioName: myvariables.destinatariosMostrar[indexPath.row].name, emisorEmail: myvariables.userperfil.email, emisorName: myvariables.userperfil.name, asunto: self.asuntoText.text!,geoposicion: myvariables.userperfil.location, direccion: myvariables.userAddress,tipoK: "K-Photo", urlContenido: contenido, vista: "NO", creada: "")
         newKapsule.sendKapsule()
         
-        let alertaClose = UIAlertController (title: NSLocalizedString("Kapsule enviada",comment:"Close the Application"), message: NSLocalizedString("La Kapsule fue enviada a su destinatario.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
-        alertaClose.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+        let alertaClose = UIAlertController (title: NSLocalizedString("Kapsule enviada",comment:"Close the Application"), message: NSLocalizedString("La Kapsule fue enviada a su destinatario.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertController.Style.alert)
+        alertaClose.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"Cerrar"), style: UIAlertAction.Style.default, handler: {alerAction in
             let vc = UIStoryboard(name:"Main", bundle:nil).instantiateViewController(withIdentifier: "InicioView") as! InicioController
             self.navigationController?.show(vc, sender: nil)
         }))
@@ -139,4 +142,14 @@ class PhotoController: UIViewController, UINavigationControllerDelegate, UIImage
         view.frame = view.frame.offsetBy(dx: 0,  dy: movement)
         UIView.commitAnimations()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

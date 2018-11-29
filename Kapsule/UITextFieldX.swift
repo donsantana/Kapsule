@@ -51,11 +51,11 @@ class UITextFieldX: UITextField {
         setRightImage()
         
         // Placeholder text color
-        attributedPlaceholder = NSAttributedString(string: placeholder != nil ?  placeholder! : "", attributes:[NSForegroundColorAttributeName: tintColor])
+        attributedPlaceholder = NSAttributedString(string: placeholder != nil ?  placeholder! : "", attributes:convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): tintColor]))
     }
     
     func setLeftImage() {
-        leftViewMode = UITextFieldViewMode.always
+        leftViewMode = UITextField.ViewMode.always
         var view: UIView
         
         if let image = leftImage {
@@ -66,7 +66,7 @@ class UITextFieldX: UITextField {
             
             var width = image.size.width + leftPadding
             
-            if borderStyle == UITextBorderStyle.none || borderStyle == UITextBorderStyle.line {
+            if borderStyle == UITextField.BorderStyle.none || borderStyle == UITextField.BorderStyle.line {
                 width += 5
             }
             
@@ -80,7 +80,7 @@ class UITextFieldX: UITextField {
     }
     
     func setRightImage() {
-        rightViewMode = UITextFieldViewMode.always
+        rightViewMode = UITextField.ViewMode.always
         
         var view: UIView
         
@@ -92,7 +92,7 @@ class UITextFieldX: UITextField {
             
             var width = image.size.width + rightPadding
             
-            if borderStyle == UITextBorderStyle.none || borderStyle == UITextBorderStyle.line {
+            if borderStyle == UITextField.BorderStyle.none || borderStyle == UITextField.BorderStyle.line {
                 width += 5
             }
             
@@ -113,4 +113,15 @@ class UITextFieldX: UITextField {
             self.layer.cornerRadius = cornerRadius
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

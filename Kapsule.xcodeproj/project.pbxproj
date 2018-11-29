@@ -39,26 +39,7 @@
 		B5DCAE5C1E292770000C1325 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE5B1E292770000C1325 /* AppDelegate.swift */; };
 		B5DCAE641E292771000C1325 /* NoIce.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE621E292770000C1325 /* NoIce.xcdatamodeld */; };
 		B5DCAE691E292771000C1325 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5DCAE671E292771000C1325 /* LaunchScreen.storyboard */; };
-		B5DCAE741E292771000C1325 /* KapsuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE731E292771000C1325 /* KapsuleTests.swift */; };
-		B5DCAE7F1E292771000C1325 /* KapsuleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCAE7E1E292771000C1325 /* KapsuleUITests.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B5DCAE701E292771000C1325 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B5DCAE501E292770000C1325 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B5DCAE571E292770000C1325;
-			remoteInfo = NoIce;
-		};
-		B5DCAE7B1E292771000C1325 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B5DCAE501E292770000C1325 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B5DCAE571E292770000C1325;
-			remoteInfo = NoIce;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		751D9E535C48E8C1ABB03A5D /* Pods-Kapsule.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kapsule.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kapsule/Pods-Kapsule.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,10 +83,8 @@
 		B5DCAE651E292771000C1325 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5DCAE681E292771000C1325 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5DCAE6A1E292771000C1325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B5DCAE6F1E292771000C1325 /* KapsuleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KapsuleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5DCAE731E292771000C1325 /* KapsuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KapsuleTests.swift; sourceTree = "<group>"; };
 		B5DCAE751E292771000C1325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B5DCAE7A1E292771000C1325 /* KapsuleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KapsuleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5DCAE7E1E292771000C1325 /* KapsuleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KapsuleUITests.swift; sourceTree = "<group>"; };
 		B5DCAE801E292771000C1325 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,20 +96,6 @@
 			files = (
 				AF07BB8B2043C1790007EA73 /* CloudKit.framework in Frameworks */,
 				1CB34A1E635EA201819F6831 /* Pods_Kapsule.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B5DCAE6C1E292771000C1325 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B5DCAE771E292771000C1325 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,8 +167,6 @@
 			isa = PBXGroup;
 			children = (
 				B5DCAE581E292770000C1325 /* Kapsule.app */,
-				B5DCAE6F1E292771000C1325 /* KapsuleTests.xctest */,
-				B5DCAE7A1E292771000C1325 /* KapsuleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -289,42 +252,6 @@
 			productReference = B5DCAE581E292770000C1325 /* Kapsule.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B5DCAE6E1E292771000C1325 /* KapsuleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B5DCAE861E292771000C1325 /* Build configuration list for PBXNativeTarget "KapsuleTests" */;
-			buildPhases = (
-				B5DCAE6B1E292771000C1325 /* Sources */,
-				B5DCAE6C1E292771000C1325 /* Frameworks */,
-				B5DCAE6D1E292771000C1325 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B5DCAE711E292771000C1325 /* PBXTargetDependency */,
-			);
-			name = KapsuleTests;
-			productName = NoIceTests;
-			productReference = B5DCAE6F1E292771000C1325 /* KapsuleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B5DCAE791E292771000C1325 /* KapsuleUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B5DCAE891E292771000C1325 /* Build configuration list for PBXNativeTarget "KapsuleUITests" */;
-			buildPhases = (
-				B5DCAE761E292771000C1325 /* Sources */,
-				B5DCAE771E292771000C1325 /* Frameworks */,
-				B5DCAE781E292771000C1325 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B5DCAE7C1E292771000C1325 /* PBXTargetDependency */,
-			);
-			name = KapsuleUITests;
-			productName = NoIceUITests;
-			productReference = B5DCAE7A1E292771000C1325 /* KapsuleUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -338,6 +265,7 @@
 					B5DCAE571E292770000C1325 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 2VMNV5JH5M;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -353,18 +281,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					B5DCAE6E1E292771000C1325 = {
-						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 48G34LX7UB;
-						ProvisioningStyle = Automatic;
-						TestTargetID = B5DCAE571E292770000C1325;
-					};
-					B5DCAE791E292771000C1325 = {
-						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 48G34LX7UB;
-						ProvisioningStyle = Automatic;
-						TestTargetID = B5DCAE571E292770000C1325;
 					};
 				};
 			};
@@ -415,8 +331,6 @@
 			projectRoot = "";
 			targets = (
 				B5DCAE571E292770000C1325 /* Kapsule */,
-				B5DCAE6E1E292771000C1325 /* KapsuleTests */,
-				B5DCAE791E292771000C1325 /* KapsuleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -437,20 +351,6 @@
 				B57B4EB71E50F5F6003FAF01 /* Main.storyboard in Resources */,
 				B5D9DB0F1F455310009955B9 /* Assets.xcassets in Resources */,
 				AF6EF67D2055A8860032461E /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B5DCAE6D1E292771000C1325 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B5DCAE781E292771000C1325 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,7 +381,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Kapsule/Pods-Kapsule-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Kapsule/Pods-Kapsule-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Canvas/Canvas.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
@@ -506,7 +406,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Kapsule/Pods-Kapsule-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kapsule/Pods-Kapsule-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DD4104B0C241E988557598ED /* [CP] Copy Pods Resources */ = {
@@ -515,17 +415,18 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Kapsule/Pods-Kapsule-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Kapsule/Pods-Kapsule-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Kapsule/Pods-Kapsule-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kapsule/Pods-Kapsule-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -557,36 +458,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B5DCAE6B1E292771000C1325 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B5DCAE741E292771000C1325 /* KapsuleTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B5DCAE761E292771000C1325 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B5DCAE7F1E292771000C1325 /* KapsuleUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B5DCAE711E292771000C1325 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B5DCAE571E292770000C1325 /* Kapsule */;
-			targetProxy = B5DCAE701E292771000C1325 /* PBXContainerItemProxy */;
-		};
-		B5DCAE7C1E292771000C1325 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B5DCAE571E292770000C1325 /* Kapsule */;
-			targetProxy = B5DCAE7B1E292771000C1325 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		AF73D1E3200F07B300886627 /* Localizable.strings */ = {
@@ -750,7 +622,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Done.Kapsule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -781,65 +654,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Done.Kapsule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		B5DCAE871E292771000C1325 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 48G34LX7UB;
-				INFOPLIST_FILE = NoIceTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Kapsule.NoIceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kapsule.app/Kapsule";
-			};
-			name = Debug;
-		};
-		B5DCAE881E292771000C1325 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 48G34LX7UB;
-				INFOPLIST_FILE = NoIceTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Kapsule.NoIceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kapsule.app/Kapsule";
-			};
-			name = Release;
-		};
-		B5DCAE8A1E292771000C1325 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = 48G34LX7UB;
-				INFOPLIST_FILE = NoIceUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Kapsule.NoIceUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = NoIce;
-			};
-			name = Debug;
-		};
-		B5DCAE8B1E292771000C1325 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = 48G34LX7UB;
-				INFOPLIST_FILE = NoIceUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Kapsule.NoIceUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = NoIce;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -860,24 +676,6 @@
 			buildConfigurations = (
 				B5DCAE841E292771000C1325 /* Debug */,
 				B5DCAE851E292771000C1325 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B5DCAE861E292771000C1325 /* Build configuration list for PBXNativeTarget "KapsuleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B5DCAE871E292771000C1325 /* Debug */,
-				B5DCAE881E292771000C1325 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B5DCAE891E292771000C1325 /* Build configuration list for PBXNativeTarget "KapsuleUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B5DCAE8A1E292771000C1325 /* Debug */,
-				B5DCAE8B1E292771000C1325 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -29,11 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     var Appcontainer = CKContainer.default()
     
-    var backgrounTaskIdentifier: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+    var backgrounTaskIdentifier: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
     var myTimer: Timer?
     var BackgroundSeconds = 0
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         GMSServices.provideAPIKey("AIzaSyDR3t4MqcsJfG9CZTjX4BQNiXq09VaXnFc")
         // Override point for customization after application launch.
         GIDSignIn.sharedInstance().delegate = self

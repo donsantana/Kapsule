@@ -108,7 +108,7 @@ class CKapsule {
         let fileURL = dirPaths[0].appendingPathComponent("currentImage.jpg")
         
         if let renderedJPEGData =
-            UIImageJPEGRepresentation(image, 0.5) {
+            image.jpegData(compressionQuality: 0.5) {
             try! renderedJPEGData.write(to: fileURL)
         }
         

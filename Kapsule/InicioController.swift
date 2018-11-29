@@ -299,7 +299,7 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
             let distanciaKm = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: CLLocation(latitude: self.miposicion.position.latitude, longitude: self.miposicion.position.longitude))/1000
             let distancia = String(format:"%.2f",distanciaKm)
             
-            let alertaDos = UIAlertController (title: "Nueva Kapsule de \(kapsuleShow.emisorName)", message: "Creada el día \(kapsuleShow.creada). Ubicada en \(kapsuleShow.direccion)).", preferredStyle: UIAlertControllerStyle.alert)
+            let alertaDos = UIAlertController (title: "Nueva Kapsule de \(kapsuleShow.emisorName)", message: "Creada el día \(kapsuleShow.creada). Ubicada en \(kapsuleShow.direccion)).", preferredStyle: UIAlertController.Style.alert)
             alertaDos.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: {alerAction in
             
             }))
@@ -409,8 +409,8 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
                     self.dibujarK()
                 }else{
                     self.coreLocationManager.stopUpdatingLocation()
-                    let alertaClose = UIAlertController (title: NSLocalizedString("No kapsule found",comment:"Close the Application"), message: NSLocalizedString("There aren't any new kapsule for you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
-                    alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+                    let alertaClose = UIAlertController (title: NSLocalizedString("No kapsule found",comment:"Close the Application"), message: NSLocalizedString("There aren't any new kapsule for you.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertController.Style.alert)
+                    alertaClose.addAction(UIAlertAction(title: NSLocalizedString("Close", comment:"Cerrar"), style: UIAlertAction.Style.default, handler: {alerAction in
                     
                     }))
                     self.present(alertaClose, animated: true, completion: nil)
@@ -496,15 +496,18 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
         self.profilePhoto.image = myvariables.userperfil.photoPerfil
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
-        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        let mediaType = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaType)] as! NSString
         if let type:AnyObject = mediaType {
             if type is String {
                 if camaraController.cameraDevice == .front{
                     let stringType = type as! String
                     self.camaraController.dismiss(animated: true, completion: nil)
-                    let newimage = info[UIImagePickerControllerOriginalImage] as? UIImage
+                    let newimage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
                     myvariables.userperfil.ActualizarPhoto(newphoto: newimage!)
                     myvariables.userperfil.photoPerfil = newimage!
                     self.profilePhoto.contentMode = .scaleAspectFill
@@ -512,15 +515,15 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
                     self.profilePhoto.image = myvariables.userperfil.photoPerfil
                 }else{
                     self.camaraController.dismiss(animated: true, completion: nil)
-                    let EditPhoto = UIAlertController (title: NSLocalizedString("Error",comment:"Cambiar la foto de perfil"), message: NSLocalizedString("The profile only accept selfies photo.", comment:""), preferredStyle: UIAlertControllerStyle.alert)
+                    let EditPhoto = UIAlertController (title: NSLocalizedString("Error",comment:"Cambiar la foto de perfil"), message: NSLocalizedString("The profile only accept selfies photo.", comment:""), preferredStyle: UIAlertController.Style.alert)
                     
-                    EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Take a picture again", comment:"Yes"), style: UIAlertActionStyle.default, handler: {alerAction in
+                    EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Take a picture again", comment:"Yes"), style: UIAlertAction.Style.default, handler: {alerAction in
                         self.camaraController.sourceType = .camera
                         self.camaraController.cameraCaptureMode = .photo
                         self.camaraController.cameraDevice = .front
                         self.present(self.camaraController, animated: true, completion: nil)
                     }))
-                    EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancelar"), style: UIAlertActionStyle.destructive, handler: { action in
+                    EditPhoto.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancelar"), style: UIAlertAction.Style.destructive, handler: { action in
                     }))
                     self.present(EditPhoto, animated: true, completion: nil)
                 }
@@ -612,8 +615,8 @@ class InicioController: UIViewController, CLLocationManagerDelegate, UITextViewD
         var newKapsule = CKapsule(destinatarioEmail: myvariables.destinatariosMostrar[indexPath.row].email, destinatarioName: myvariables.destinatariosMostrar[indexPath.row].name, emisorEmail: myvariables.userperfil.email, emisorName: myvariables.userperfil.name, asunto: self.ktextMensaje.text,geoposicion: myvariables.userperfil.location, direccion: myvariables.userAddress, tipoK: "K-Text", urlContenido: contenido, vista: "NO", creada: "")
         newKapsule.sendKapsule()
         
-        let alertaClose = UIAlertController (title: NSLocalizedString("Kapsule enviada",comment:"Close the Application"), message: NSLocalizedString("La Kapsule fue enviada a su destinatario.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertControllerStyle.alert)
-        alertaClose.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"Cerrar"), style: UIAlertActionStyle.default, handler: {alerAction in
+        let alertaClose = UIAlertController (title: NSLocalizedString("Kapsule enviada",comment:"Close the Application"), message: NSLocalizedString("La Kapsule fue enviada a su destinatario.", comment:"No hay usuarios conectados"), preferredStyle: UIAlertController.Style.alert)
+        alertaClose.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"Cerrar"), style: UIAlertAction.Style.default, handler: {alerAction in
             
         }))
         self.present(alertaClose, animated: true, completion: nil)
@@ -660,8 +663,8 @@ extension UIView {
         shapeLayer.fillColor = UIColor.white.cgColor
         shapeLayer.strokeColor = UIColor.white.cgColor
         shapeLayer.lineWidth = cornerRadius * 2
-        shapeLayer.lineJoin = kCALineJoinRound
-        shapeLayer.lineCap = kCALineCapRound
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
         
         layer.mask = shapeLayer
     }
@@ -669,7 +672,7 @@ extension UIView {
 
 extension UITextField {
     func setBottomBorder(borderColor: UIColor) {
-        self.borderStyle = UITextBorderStyle.none
+        self.borderStyle = UITextField.BorderStyle.none
         self.backgroundColor = UIColor.clear
         let width = 1.0
         let borderLine = UIView()
@@ -677,4 +680,14 @@ extension UITextField {
         borderLine.backgroundColor = borderColor
         self.addSubview(borderLine)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }
