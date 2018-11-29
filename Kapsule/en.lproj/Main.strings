@@ -1,0 +1,48 @@
+
+/* Class = "UIViewController"; title = "Profile"; ObjectID = "24q-gZ-uk4"; */
+"24q-gZ-uk4.title" = "Profile";
+
+/* Class = "UINavigationItem"; title = "People Connected"; ObjectID = "33x-rW-vJr"; */
+"33x-rW-vJr.title" = "People Connected";
+
+/* Class = "UIButton"; normalTitle = "Block"; ObjectID = "3du-25-7WB"; */
+"3du-25-7WB.normalTitle" = "Block";
+
+/* Class = "UILabel"; text = "or"; ObjectID = "43g-1T-TGf"; */
+"43g-1T-TGf.text" = "or";
+
+/* Class = "UITableViewController"; title = "People Connected"; ObjectID = "BOH-5g-gzf"; */
+"BOH-5g-gzf.title" = "People Connected";
+
+/* Class = "UIViewController"; title = "Searching"; ObjectID = "BYZ-38-t0r"; */
+"BYZ-38-t0r.title" = "Searching";
+
+/* Class = "UINavigationItem"; title = "Chat"; ObjectID = "Cex-bi-2Nj"; */
+"Cex-bi-2Nj.title" = "Chat";
+
+/* Class = "UIViewController"; title = "Chat"; ObjectID = "PDV-YC-gDC"; */
+"PDV-YC-gDC.title" = "Chat";
+
+/* Class = "UIButton"; normalTitle = "Edit Photo"; ObjectID = "QKO-Qk-2Os"; */
+"QKO-Qk-2Os.normalTitle" = "Edit Photo";
+
+/* Class = "UILabel"; text = "Loading"; ObjectID = "QXc-Ia-tA2"; */
+"QXc-Ia-tA2.text" = "Loading";
+
+/* Class = "UILabel"; text = "Login with:"; ObjectID = "bsX-NZ-1qv"; */
+"bsX-NZ-1qv.text" = "Login with:";
+
+/* Class = "UIViewController"; title = "Login"; ObjectID = "fdm-NI-ohw"; */
+"fdm-NI-ohw.title" = "Login";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "kz2-T2-GMx"; */
+"kz2-T2-GMx.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "Sign Out"; ObjectID = "nZq-Jq-L0F"; */
+"nZq-Jq-L0F.normalTitle" = "Sign Out";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vTk-yA-XYp"; */
+"vTk-yA-XYp.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Searching people"; ObjectID = "vWt-E2-web"; */
+"vWt-E2-web.text" = "Searching people";
